@@ -89,6 +89,9 @@ class Login extends React.Component {
     simpleAuthClient.configure(secrets);
   }
 
+  componentDidMount(prevProps) {
+  }
+
   render() {
     return (
       <React.View style={styles.content}>
