@@ -8,7 +8,7 @@ import React, {
 } from 'react-native';
 import Camera from 'react-native-camera';
 let simpleAuthClient = require('react-native-simple-auth');
-
+import {Actions} from 'react-native-router-flux';
 const styles = StyleSheet.create({
   button: {
     width: 100,
@@ -81,12 +81,10 @@ export default class Counter extends Component {
 
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        {/*
-        <TouchableOpacity onPress={this._login.bind(this)}>
-          <Text>Facebook</Text>
+        <TouchableOpacity onPress={Actions.Login} style={{height: 40, justifyContent: 'center' }}>
+          <Text>Back to Login</Text>
         </TouchableOpacity>
-        */}
-        <Camera
+        {/*<Camera
           ref={(cam) => {
             this.camera = cam;
           }}
@@ -94,6 +92,7 @@ export default class Counter extends Component {
           aspect={Camera.constants.Aspect.fill}>
           <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[CAPTURE]</Text>
         </Camera>
+        */}
       </View>
     );
   }
