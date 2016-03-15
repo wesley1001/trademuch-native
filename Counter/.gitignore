@@ -36,3 +36,6 @@ npm-debug.log
 
 # config
 config/config.js
+
+# Pods
+Pods/
