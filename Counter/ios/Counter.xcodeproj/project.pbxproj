@@ -744,6 +744,7 @@
 					"-ObjC",
 					"$(inherited)",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.TrunkStudio.TradeMuch.com;
 				PRODUCT_NAME = Counter;
 			};
 			name = Debug;
@@ -767,6 +768,7 @@
 					"-ObjC",
 					"$(inherited)",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.TrunkStudio.TradeMuch.com;
 				PRODUCT_NAME = Counter;
 			};
 			name = Release;
