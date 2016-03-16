@@ -1,5 +1,2 @@
-import counter from './counter';
-
-export {
-  counter
-};
+export * from './counter';
+export * from './routerReducer';

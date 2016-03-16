@@ -2,9 +2,10 @@
 
 ### install package
 ```
+npm install -g npm # if your npm version < 3
 npm install
 sudo gem install cocoapods
-pod insatll
+pod install
 ```
 ### edit config.js in config folder
 

@@ -6,6 +6,9 @@ module.exports = {
   facebook: {
     app_id: ''
   },
+  'facebook-web': {
+    app_id: ''
+  },
   twitter: {
     consumer_key: '',
     consumer_secret: ''
