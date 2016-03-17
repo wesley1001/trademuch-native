@@ -107,11 +107,19 @@ class Login extends React.Component {
             );
           })
         }
+        <React.TouchableHighlight
+          key={'postList'}
+          style={[styles.button, styles['tumblr']]}
+          onPress={Actions.PostList}>
+          <React.Text style={[styles.buttonText]}>PostList</React.Text>
+        </React.TouchableHighlight>
         <React.TouchableOpacity onPress={Actions.Camera}><React.Text>Camera</React.Text></React.TouchableOpacity>
         <React.ActivityIndicatorIOS
             animating={this.state.loading}
             style={[styles.loading]}
             size='large' />
+
+
       </React.View>
     );
   }
