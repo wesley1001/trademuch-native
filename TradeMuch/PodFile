@@ -1,6 +1,6 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
-xcodeproj 'NHSample-CocoaPods'
+xcodeproj 'TradeMuch'
 
 pod 'React', :subspecs => ['Core', 'RCTImage', 'RCTNetwork', 'RCTText', 'RCTWebSocket'], :path => 'node_modules/react-native'
 pod 'react-native-fbsdkcore', :path => 'node_modules/react-native-fbsdkcore'

@@ -64,7 +64,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		13B07FAE1A68108700A75B9A /* NHSample */ = {
+		13B07FAE1A68108700A75B9A /* TradeMuch */ = {
 			isa = PBXGroup;
 			children = (
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -75,7 +75,7 @@
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = NHSample;
+			name = TradeMuch;
 			sourceTree = "<group>";
 		};
 		813F1EAADE53827E10B1ADCF /* Pods */ = {
@@ -91,8 +91,8 @@
 			isa = PBXGroup;
 			children = (
 				C87A08241B683A3800075643 /* plutoBack.png */,
-				C88173AF1B6FBB4E001330B7 /* NHSampleTests */,
-				13B07FAE1A68108700A75B9A /* NHSample */,
+				C88173AF1B6FBB4E001330B7 /* TradeMuchTests */,
+				13B07FAE1A68108700A75B9A /* TradeMuch */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				813F1EAADE53827E10B1ADCF /* Pods */,
 				FC4A9CA8B8E1A75FACA7A6B2 /* Frameworks */,
@@ -110,13 +110,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		C88173AF1B6FBB4E001330B7 /* NHSampleTests */ = {
+		C88173AF1B6FBB4E001330B7 /* TradeMuchTests */ = {
 			isa = PBXGroup;
 			children = (
 				C88173B01B6FBB4E001330B7 /* Supporting Files */,
 				C88173CD1B6FBBEB001330B7 /* RCTFBSDKShareTests.m */,
 			);
-			path = NHSampleTests;
+			path = TradeMuchTests;
 			sourceTree = "<group>";
 		};
 		C88173B01B6FBB4E001330B7 /* Supporting Files */ = {
@@ -191,7 +191,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "NHSample-CocoaPods" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "TradeMuch" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -471,7 +471,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "NHSample-CocoaPods" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "TradeMuch" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
