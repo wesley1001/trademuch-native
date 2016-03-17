@@ -6,8 +6,9 @@ import RNRF, { routerReducer, Route, Container, Animations, Schema, Actions} fro
 const Router = connect()(RNRF.Router);
 
 // View
-import Login from './containers/loginApp';
+// import ReactNativeSimpleAuth from './containers/loginApp';
 import CounterApp from './containers/counterApp';
+import NHSample from './containers/sampleApp';
 
 export default class AppRoutes extends Component {
   constructor(props) {
@@ -22,8 +23,8 @@ export default class AppRoutes extends Component {
     return (
         <Router hideNavBar={true} name="root">
             <Schema name="default" sceneConfig={Navigator.SceneConfigs.FloatFromRight} />
-            <Route name="Login" component={Login} initial={true} title="Login" />
-            <Route name="Counter" component={CounterApp} title="Counter" />
+            <Route name="Login" component={NHSample} initial={true} title="Login" />
+            <Route name="Camera" component={CounterApp} title="Camera" />
         </Router>
     );
   }

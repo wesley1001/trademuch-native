@@ -12,11 +12,9 @@
  */
 'use strict';
 
-import React, {TouchableHighlight} from 'react-native';
-// let simpleAuthClient = require('simpleauthclient');
-import {Actions} from 'react-native-router-flux';
-let simpleAuthClient = require('react-native-simple-auth');
-let secrets = require('../../config/config');
+let React = require('react-native');
+let simpleAuthClient = require('./lib/simpleauthclient');
+let secrets = require('./secrets');
 
 class Profile extends React.Component {
 
@@ -89,9 +87,6 @@ class Login extends React.Component {
     simpleAuthClient.configure(secrets);
   }
 
-  componentDidMount(prevProps) {
-  }
-
   render() {
     return (
       <React.View style={styles.content}>
@@ -99,7 +94,6 @@ class Login extends React.Component {
           this.state.loading ? null : this.props.authProviders.map(provider => {
             return (
               <React.TouchableHighlight
-                key={provider}
                 style={[styles.button, styles[provider]]}
                 onPress={this.onBtnPressed.bind(this, provider)}>
                 <React.Text style={[styles.buttonText]}>{provider.split('-')[0]}</React.Text>
@@ -107,7 +101,6 @@ class Login extends React.Component {
             );
           })
         }
-        <React.TouchableOpacity onPress={Actions.Camera}><React.Text>Camera</React.Text></React.TouchableOpacity>
         <React.ActivityIndicatorIOS
             animating={this.state.loading}
             style={[styles.loading]}

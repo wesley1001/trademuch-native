@@ -1,12 +1,12 @@
 'use strict';
 
-import React, { Component, View, Text, TouchableOpacity } from 'react-native';
+import React, { Component } from 'react-native';
 import {bindActionCreators} from 'redux';
 import Counter from '../components/counter';
 import * as counterActions from '../actions/counterActions';
-import { connect } from 'react-redux';
 import {Actions} from 'react-native-router-flux';
-
+import { connect } from 'react-redux';
+// import ReactNativeSimpleAuth from './loginApp';
 // @connect(state => ({
 //   state: state.counter
 // }))
@@ -18,11 +18,12 @@ class CounterApp extends Component {
   render() {
     const { state, actions } = this.props;
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text>This is Counter.</Text>
-        <TouchableOpacity onPress={Actions.Login}><Text>Go To Login.</Text></TouchableOpacity>
-      </View>
 
+        <Counter
+         counter={state.count}
+         {...actions} />
+
+        //  <ReactNativeSimpleAuth />
     );
   }
 }
