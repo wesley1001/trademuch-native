@@ -6,12 +6,12 @@ import * as counterActions from '../actions/counterActions';
 import {Actions} from 'react-native-router-flux';
 import { connect } from 'react-redux';
 
-// import FBSDKLogin, {
-//   FBSDKLoginButton, FBSDKLoginManager
-// } from 'react-native-fbsdklogin';
-// import FBSDKCore, {
-//   FBSDKAccessToken,
-// } from 'react-native-fbsdkcore';
+import FBSDKLogin, {
+  FBSDKLoginButton, FBSDKLoginManager
+} from 'react-native-fbsdklogin';
+import FBSDKCore, {
+  FBSDKAccessToken,
+} from 'react-native-fbsdkcore';
 
 import ReactNativeSimpleAuth from './loginApp';
 // @connect(state => ({
@@ -30,7 +30,6 @@ class Login extends Component {
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <Text>Login</Text>
         <TouchableOpacity onPress={Actions.Counter}><Text>Counter</Text></TouchableOpacity>
-        {/*
           <FBSDKLoginButton
           onWillLogin={() => {
             FBSDKAccessToken.getCurrentAccessToken((result) => {
@@ -53,25 +52,12 @@ class Login extends Component {
                 alert('Login cancelled.');
               } else {
                 alert('Logged in. Token:');
-                // FBSDKLoginManager.logInWithReadPermissions([], (error, result) => {
-                //   console.log('manager', result);
-                //   if (error) {
-                //     alert('Error logging in.');
-                //   } else {
-                //     if (result.isCancelled) {
-                //       alert('Login cancelled.');
-                //     } else {
-                //       alert('Logged in.');
-                //     }
-                //   }
-                // });
               }
             }
           }}
           onLogoutFinished={() => alert('Logged out.')}
           readPermissions={[]}
           publishPermissions={[]}/>
-          */}
       </View>
     );
   }
