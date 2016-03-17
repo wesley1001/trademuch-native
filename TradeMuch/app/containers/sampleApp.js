@@ -30,8 +30,7 @@ var {
   TouchableOpacity
 } = React;
 import {Actions} from 'react-native-router-flux';
-var Login = require('../components/Login0');
-var Feed = require('../components/Feed');
+var Login = require('../components/login');
 
 /**
  * A sample app that demonstrates use of the FBSDK login button, native share dialog, and graph requests.
@@ -48,12 +47,9 @@ export default class NHSample extends React.Component {
           </TouchableOpacity>
         </View>
         <Login style={styles.loginContainer}/>
-        <Feed style={styles.feedContainer}/>
       </Image>
     );
   }
 }
 
 var styles = StyleSheet.create(require('./styles.js'));
-
-// AppRegistry.registerComponent('NHSample', () => NHSample);

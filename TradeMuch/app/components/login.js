@@ -1,248 +1,87 @@
 /**
- * Sample React Native App using react-native-simple-auth.
- * To run on a mac from the project home dir:
- *
- * 1. Create secrets.js from secrets.example.js template
- * 2. `npm install`
- * 3. `pod install`
- * 3. `open ./ReactNativeSimpleAuth.xcworkspace/`
- * 4. Then in xcode hit cmd + r
- *
- * https://github.com/facebook/react-native
- */
+* Copyright (c) 2015-present, Facebook, Inc. All rights reserved.
+*
+* You are hereby granted a non-exclusive, worldwide, royalty-free license to use,
+* copy, modify, and distribute this software in source code or binary form for use
+* in connection with the web services and APIs provided by Facebook.
+*
+* As with any software that integrates with the Facebook platform, your use of
+* this software is subject to the Facebook Developer Principles and Policies
+* [http://developers.facebook.com/policy/]. This copyright notice shall be
+* included in all copies or substantial portions of the software.
+*
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+* FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+* COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+* IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+* CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
 'use strict';
 
-let React = require('react-native');
-let simpleAuthClient = require('./lib/simpleauthclient');
-let secrets = require('./secrets');
+var React = require('react-native');
+var {
+  StyleSheet,
+  View,
+} = React;
 
-class Profile extends React.Component {
+var FBSDKLogin = require('react-native-fbsdklogin');
+var {
+  FBSDKLoginButton,
+} = FBSDKLogin;
+var FBSDKCore = require('react-native-fbsdkcore');
+var {
+  FBSDKAccessToken,
+} = FBSDKCore;
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: this.getName(props.provider),
-      picture: this.getPictureLink(props.provider)
-    };
-  }
-
-  render() {
+var Login = React.createClass({
+  render: function() {
     return (
-      <React.View style={styles.content}>
-        <React.Image style={styles.pic} source={{uri: this.state.picture }} />
-        <React.Text style={styles.header}>{this.state.name}</React.Text>
-        <React.View style={styles.scroll}>
-          <React.Text style={styles.mono}>{JSON.stringify(this.props.info, null, 4)}</React.Text>
-        </React.View>
-      </React.View>
-    )
-  }
-
-  getName(provider) {
-    switch (provider) {
-      case 'instagram':
-        return this.props.info.data.full_name;
-      case 'linkedin-web':
-        return `${this.props.info.firstName} ${this.props.info.lastName}`;
-      default:
-        return this.props.info.name
-    }
-  }
-
-  getPictureLink(provider) {
-    switch (provider) {
-      case 'google-web':
-        return this.props.info.picture;
-      case 'facebook':
-        return `http://graph.facebook.com/${this.props.info.id}/picture?type=square`
-      case 'twitter':
-        return this.props.info.profile_image_url;
-      case 'instagram':
-        return this.props.info.data.profile_picture;
-      case 'tumblr':
-        return `http://api.tumblr.com/v2/blog/${this.props.info.name}.tumblr.com/avatar/96`;
-      case 'linkedin-web':
-        var profileUrl = `https://api.linkedin.com/v1/people/~:(picture-url)?oauth2_access_token=${this.props.info.token}&format=json`
-        fetch(profileUrl)
-          .then(response => response.json())
-          .then(responseJson => {
-            this.setState({ picture: responseJson.pictureUrl });
-          });
-        return '';
-    }
-  }
-
-}
-
-class Login extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: false
-    };
-  }
-
-  componentWillMount() {
-    simpleAuthClient.configure(secrets);
-  }
-
-  render() {
-    return (
-      <React.View style={styles.content}>
-        {
-          this.state.loading ? null : this.props.authProviders.map(provider => {
-            return (
-              <React.TouchableHighlight
-                style={[styles.button, styles[provider]]}
-                onPress={this.onBtnPressed.bind(this, provider)}>
-                <React.Text style={[styles.buttonText]}>{provider.split('-')[0]}</React.Text>
-              </React.TouchableHighlight>
-            );
-          })
-        }
-        <React.ActivityIndicatorIOS
-            animating={this.state.loading}
-            style={[styles.loading]}
-            size='large' />
-      </React.View>
+      <View style={this.props.style}>
+        <FBSDKLoginButton
+          style={styles.loginButton}
+          onWillLogin={() => {
+            FBSDKAccessToken.getCurrentAccessToken((result) => {
+              console.log('token',result);
+              if (result == null) {
+                console.log('access token', result);
+                alert('Start logging in.');
+              } else {
+                alert('Start logging out.');
+              }
+            });
+            return true;
+          }}
+          onLoginFinished={(error, result) => {
+            if (error) {
+              alert('Error logging in.');
+            } else {
+              if (result.isCancelled) {
+                alert('Login cancelled.');
+              } else {
+                console.log('login result', result);
+                FBSDKAccessToken.getCurrentAccessToken((result) => {
+                  console.log('token', JSON.stringify(result,null,4));
+                  var token = result;
+                  if (result == null) {
+                    alert('Start logging in.');
+                  } else {
+                    alert('Start logging out.');
+                  }
+                });
+                alert('Logged in.');
+              }
+            }
+          }}
+          onLogoutFinished={() => alert('Logged out.')}
+          readPermissions={[]}
+          publishPermissions={[]}/>
+      </View>
     );
-  }
-
-  onBtnPressed(provider) {
-    this.setState({
-      loading: true
-    });
-    simpleAuthClient.authorize(provider)
-      .then(info => {
-        this.props.navigator.push({
-          title: provider,
-          component: Profile,
-          passProps: {
-            info: info,
-            provider: provider
-          }
-        });
-        this.setState({
-          loading: false
-        });
-      })
-      .catch(error => {
-
-        simpleAuthClient.authorize('facebook-web').then((info) => {
-          let token = info.token;
-          let name = info.name;
-        }).catch(error => {
-          React.AlertIOS.alert(
-              'Authorize Error',
-              error && error.description || 'Unknown');
-        });
-
-        this.setState({
-          loading: false
-        });
-      });
-  }
-
-}
-
-export default class ReactNativeSimpleAuth extends React.Component {
-  render() {
-    return (
-      <React.NavigatorIOS
-        style={styles.container}
-        initialRoute={{
-          title: 'Simple Auth',
-          component: Login,
-          passProps: {
-            authProviders: [
-              'google-web',
-              'facebook',
-              'twitter',
-              'instagram',
-              'tumblr',
-              'linkedin-web'
-            ]
-          }
-        }}/>
-    );
-  }
-}
-
-let styles = React.StyleSheet.create({
-  text: {
-    color: 'black',
-    backgroundColor: 'white',
-    fontSize: 30
-  },
-  container: {
-    flex: 1
-  },
-  content: {
-    flex: 1,
-    marginTop: 80,
-    marginRight: 10,
-    marginLeft: 10
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 18,
-    alignSelf: 'center'
-  },
-  button: {
-    height: 36,
-    flexDirection: 'row',
-    borderRadius: 8,
-    marginBottom: 10,
-    justifyContent: 'center'
-  },
-  pic: {
-    width: 100,
-    height: 100
-  },
-  mono: {
-    fontFamily: 'Menlo',
-    paddingTop: 10
-  },
-  scroll: {
-    marginTop: 0,
-    paddingTop: 0,
-    backgroundColor: '#f2f2f2',
-    borderColor: '#888',
-    borderWidth: 1,
-    marginBottom: 10,
-    padding: 10,
-    flexDirection: 'row'
-  },
-  header: {
-    fontWeight: 'bold',
-    marginBottom: 10,
-    marginTop: 10,
-    fontSize: 16
-  },
-  loading: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  'google-web': {
-    backgroundColor: '#ccc'
-  },
-  facebook: {
-    backgroundColor: '#3b5998'
-  },
-  twitter: {
-    backgroundColor: '#48BBEC'
-  },
-  instagram: {
-    backgroundColor: '#3F729B'
-  },
-  tumblr: {
-    backgroundColor: '#36465D'
-  },
-  'linkedin-web': {
-    backgroundColor: '#0077B5'
   }
 });
 
-// React.AppRegistry.registerComponent('ReactNativeSimpleAuth', () => ReactNativeSimpleAuth);
+var styles = StyleSheet.create(require('./styles.js'));
+
+module.exports = Login;
