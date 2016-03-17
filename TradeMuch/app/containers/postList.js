@@ -1,9 +1,12 @@
 'use strict';
 
 import React, { Component, NavigatorIOS, View, Text, Image } from 'react-native';
+import {bindActionCreators} from 'redux';
 import PostListItem from '../components/postListItem';
 import SearchPost from '../components/searchPost';
+import * as counterActions from '../actions/counterActions';
 import {Actions} from 'react-native-router-flux';
+import { connect } from 'react-redux';
 
 class CounterApp extends Component {
   constructor(props) {
@@ -20,6 +23,14 @@ class CounterApp extends Component {
     );
   }
 }
+
+export default connect(state => ({
+    state: state.counter
+  }),
+  (dispatch) => ({
+    actions: bindActionCreators(counterActions, dispatch)
+  })
+)(CounterApp);
 
 let styles = React.StyleSheet.create({
   content: {

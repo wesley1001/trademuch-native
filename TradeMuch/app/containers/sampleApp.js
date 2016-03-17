@@ -46,6 +46,9 @@ export default class NHSample extends React.Component {
           <TouchableOpacity onPress={Actions.Camera}>
             <Text style={styles.disclaimerText}>Images taken from New Horizons Facebook page</Text>
           </TouchableOpacity>
+          <TouchableOpacity onPress={Actions.PostList}>
+            <Text style={styles.disclaimerText}>List Test Page</Text>
+          </TouchableOpacity>
         </View>
         <Login style={styles.loginContainer}/>
         <Feed style={styles.feedContainer}/>
