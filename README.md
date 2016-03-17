@@ -5,6 +5,7 @@
 npm install -g npm # if your npm version < 3
 npm install
 sudo gem install cocoapods
+cd ios/
 pod install
 ```
 ### edit config.js in config folder
@@ -12,4 +13,4 @@ pod install
 
 # Run Project
 
-open `Counter.xcworkspace` in Xcode and run
+open `ios/TradeMuch.xcworkspace` in Xcode and run
