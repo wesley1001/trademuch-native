@@ -29,6 +29,9 @@ class Login extends React.Component {
           <TouchableOpacity onPress={Actions.Camera}>
             <Text style={styles.disclaimerText}>Images taken from New Horizons Facebook page</Text>
           </TouchableOpacity>
+          <TouchableOpacity onPress={Actions.PostList}>
+            <Text style={styles.disclaimerText}>List Test Page</Text>
+          </TouchableOpacity>
         </View>
         <FBLogin style={styles.loginContainer}/>
       </Image>
