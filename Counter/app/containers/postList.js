@@ -1,8 +1,9 @@
 'use strict';
 
-import React, { Component } from 'react-native';
+import React, { Component, NavigatorIOS, View, Text, Image } from 'react-native';
 import {bindActionCreators} from 'redux';
-import PostList from '../components/postList';
+import PostListItem from '../components/postListItem';
+import SearchPost from '../components/searchPost';
 import * as counterActions from '../actions/counterActions';
 import {Actions} from 'react-native-router-flux';
 import { connect } from 'react-redux';
@@ -18,10 +19,10 @@ class CounterApp extends Component {
   render() {
     const { state, actions } = this.props;
     return (
-
-        <PostList/>
-
-        //  <ReactNativeSimpleAuth />
+      <View style={styles.content}>
+        <SearchPost/>
+        <PostListItem/>
+      </View>
     );
   }
 }
@@ -33,3 +34,10 @@ export default connect(state => ({
     actions: bindActionCreators(counterActions, dispatch)
   })
 )(CounterApp);
+
+let styles = React.StyleSheet.create({
+  content: {
+    flex: 1,
+    marginTop: 20,
+  }
+});
