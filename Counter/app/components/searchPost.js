@@ -9,10 +9,17 @@ export default class SearchPost extends SearchBar {
   componentWillMount() {
   }
 
+  _onChangeText(e){
+    console.log(e);
+  }
+
   render() {
     return (
       <SearchBar
         placeholder='搜尋'
+        onChangeText={this._onChangeText.bind(this)}
+        onSearchButtonPress={this._onChangeText.bind(this)}
+        onCancelButtonPress={this._onChangeText.bind(this)}
       />
     );
   }
