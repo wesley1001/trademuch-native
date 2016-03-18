@@ -15,6 +15,10 @@
     "react-native-search-bar": "https://github.com/FuYaoDe/react-native-search-bar.git",
     "react-redux": "^4.4.0",
     "redux": "^3.3.1",
+    "redux-promise": "^0.5.3",
     "redux-thunk": "^2.0.1"
+  },
+  "devDependencies": {
+    "redux-logger": "^2.6.1"
   }
 }
