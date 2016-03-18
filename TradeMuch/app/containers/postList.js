@@ -1,12 +1,17 @@
 'use strict';
 
 import React, { Component, View, Text, Image } from 'react-native';
-// import {bindActionCreators} from 'redux';
 import PostListItem from '../components/postListItem';
 import SearchPost from '../components/searchPost';
-// import * as counterActions from '../actions/counterActions';
 import {Actions} from 'react-native-router-flux';
 import { connect } from 'react-redux';
+
+const styles = React.StyleSheet.create({
+  content: {
+    flex: 1,
+    marginTop: 20,
+  }
+});
 
 class CounterApp extends Component {
   constructor(props) {
@@ -14,27 +19,31 @@ class CounterApp extends Component {
   }
 
   render() {
-    const { state, actions } = this.props;
+    const { postList } = this.props;
+    let postListContainer = [];
+    if(postList.length > 0){
+      postList.forEach((post,i) => {
+        postListContainer.push(
+          <PostListItem key={i} title={post.title} uri={'http://localhost:1337/'+post.gallery[0]}/>
+        )
+      })
+    }
     return (
       <View style={styles.content}>
           <SearchPost/>
-          <PostListItem/>
+          {postListContainer}
       </View>
     );
   }
 }
 
-export default connect(state => ({
-    state: state.counter
-  }),
-  (dispatch) => ({
-    // actions: bindActionCreators(counterActions, dispatch)
-  })
-)(CounterApp);
+function _injectPropsFromStore(state) {
+  return {
+    postList: state.search.postList || [],
+  };
+};
 
-let styles = React.StyleSheet.create({
-  content: {
-    flex: 1,
-    marginTop: 20,
-  }
-});
+const _injectPropsFormActions = {
+};
+
+export default connect(_injectPropsFromStore, _injectPropsFormActions)(CounterApp);

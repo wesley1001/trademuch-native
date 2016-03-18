@@ -11,6 +11,5 @@ export function auth( state = {}, action) {
       }
     default:
       return state
-
   }
 }

@@ -1,5 +1,11 @@
 import React from 'react-native';
 import SearchBar from 'react-native-search-bar';
+import {Actions} from 'react-native-router-flux';
+import { connect } from 'react-redux';
+
+import {
+  requestSearchPost
+} from '../actions/searchPostActions'
 
 export default class SearchPost extends SearchBar {
   constructor(props) {
@@ -11,6 +17,9 @@ export default class SearchPost extends SearchBar {
 
   _onChangeText(e){
     console.log(e);
+    if(e.length > 0){
+      this.props.requestSearchPost('5km',e)
+    }
   }
 
   render() {
@@ -23,3 +32,13 @@ export default class SearchPost extends SearchBar {
     );
   }
 }
+
+function _injectPropsFromStore(state) {
+  return {state: state.postList};
+};
+
+const _injectPropsFormActions = {
+  requestSearchPost
+};
+
+export default connect(_injectPropsFromStore, _injectPropsFormActions)(SearchPost);
