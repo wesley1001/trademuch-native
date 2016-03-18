@@ -18,7 +18,7 @@ export default class SearchPost extends SearchBar {
   _onChangeText(e){
     console.log(e);
     if(e.length > 0){
-      this.props.requestSearchPost('5km',e)
+      this.props.requestSearchPost(e, '20km', null)
     }
   }
 
