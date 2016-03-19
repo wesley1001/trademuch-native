@@ -57,12 +57,11 @@ describe('postListItem', () => {
   beforeEach(() => {
     console.log('=== beforeEach ===');
     postListItem = renderPostListItem(postListItemProps);
-    console.log('postListItem', postListItem);
   });
 
   it('should be fine', () => {
     const {output} = postListItem;
-    expect(output.type).toEqual(View);
+    expect(output.type.toString()).toEqual(View.toString());
   });
 
   // /**
