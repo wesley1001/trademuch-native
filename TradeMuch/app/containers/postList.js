@@ -1,10 +1,10 @@
 'use strict';
 
-import React, { Component, NavigatorIOS, View, Text, Image } from 'react-native';
-import {bindActionCreators} from 'redux';
+import React, { Component, View, Text, Image } from 'react-native';
+// import {bindActionCreators} from 'redux';
 import PostListItem from '../components/postListItem';
 import SearchPost from '../components/searchPost';
-import * as counterActions from '../actions/counterActions';
+// import * as counterActions from '../actions/counterActions';
 import {Actions} from 'react-native-router-flux';
 import { connect } from 'react-redux';
 
@@ -17,8 +17,8 @@ class CounterApp extends Component {
     const { state, actions } = this.props;
     return (
       <View style={styles.content}>
-        <SearchPost/>
-        <PostListItem/>
+          <SearchPost/>
+          <PostListItem/>
       </View>
     );
   }
@@ -28,7 +28,7 @@ export default connect(state => ({
     state: state.counter
   }),
   (dispatch) => ({
-    actions: bindActionCreators(counterActions, dispatch)
+    // actions: bindActionCreators(counterActions, dispatch)
   })
 )(CounterApp);
 

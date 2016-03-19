@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 // @connect(state => ({
 //   state: state.counter
 // }))
+
 class CounterApp extends Component {
   constructor(props) {
     super(props);
@@ -22,16 +23,23 @@ class CounterApp extends Component {
         <Counter
          counter={state.count}
          {...actions} />
-
-        //  <ReactNativeSimpleAuth />
     );
   }
 }
 
-export default connect(state => ({
-    state: state.counter
-  }),
-  (dispatch) => ({
-    actions: bindActionCreators(counterActions, dispatch)
-  })
-)(CounterApp);
+// export default connect(state => ({
+//     state: state.counter
+//   }),
+//   (dispatch) => ({
+//     actions: bindActionCreators(counterActions, dispatch)
+//   })
+// )(CounterApp);
+
+function _injectPropsFromStore(state) {
+  return {state: state.counter};
+};
+
+const _injectPropsFormActions = {
+};
+
+export default connect(_injectPropsFromStore, _injectPropsFormActions)(CounterApp);
