@@ -2,8 +2,24 @@
   "name": "NHSample",
   "version": "0.0.1",
   "private": true,
+  "jest": {
+    "scriptPreprocessor": "node_modules/react-native/jestSupport/preprocessor.js",
+    "setupEnvScriptFile": "node_modules/react-native/jestSupport/env.js",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "packager/react-packager/src/Activity/"
+    ],
+    "testFileExtensions": [
+      "js"
+    ],
+    "unmockedModulePathPatterns": [
+      "promise",
+      "source-map"
+    ]
+  },
   "scripts": {
-    "start": "react-native start"
+    "start": "react-native start",
+    "test": "rm -rf ./node_modules/jest-cli/.haste_cache && jest "
   },
   "dependencies": {
     "react-native": ">=v0.13.0",
@@ -16,5 +32,13 @@
     "react-redux": "^4.4.0",
     "redux": "^3.3.1",
     "redux-thunk": "^2.0.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.4.5",
+    "babel-jest": "^6.0.1",
+    "istanbul": "^0.4.2",
+    "jest-cli": "^0.8.2",
+    "react": "^0.14.7",
+    "react-addons-test-utils": "^0.14.7"
   }
 }
