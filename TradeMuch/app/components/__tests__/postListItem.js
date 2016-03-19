@@ -27,21 +27,21 @@ const utils = require('react-addons-test-utils');
 jest.dontMock('../postListItem');
 
 
-var SearchPost = require('../postListItem');
+var PostListItem = require('../postListItem');
 
 
 /**
  * ## Test
  */
-describe('searchPost', () => {
-  console.log('=== test searchPost ===');
-  let searchPost;
+describe('postListItem', () => {
+  console.log('=== test postListItem ===');
+  let postListItem;
 
-  const searchPostProps = {};
+  const postListItemProps = {};
 
-  function renderFormSearchPost(props) {
+  function renderPostListItem(props) {
     const renderer = utils.createRenderer();
-    renderer.render(<SearchPost {...props}/>);
+    renderer.render(<PostListItem {...props}/>);
     const output = renderer.getRenderOutput();
 
     return {
@@ -56,12 +56,12 @@ describe('searchPost', () => {
    */
   beforeEach(() => {
     console.log('=== beforeEach ===');
-    searchPost = renderFormSearchPost(searchPostProps);
-    console.log('searchPost', searchPost);
+    postListItem = renderPostListItem(postListItemProps);
+    console.log('postListItem', postListItem);
   });
 
   it('should be fine', () => {
-    const {output} = searchPost;
+    const {output} = postListItem;
     expect(output.type).toEqual(View);
   });
 

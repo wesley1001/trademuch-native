@@ -4,6 +4,7 @@
  * This class stubs out the React-Native classes with React classes
  */
 'use strict';
+console.log('=== use Mock ===');
 /**
  * ## Imports
  *

@@ -1,5 +1,6 @@
-import React, {
-  StyleSheet,
+import React from 'react-native';
+
+const { StyleSheet,
   Component,
   Dimensions,
   PixelRatio,
@@ -9,7 +10,8 @@ import React, {
   TouchableHighlight,
   ListView,
   Image
-} from 'react-native';
+} = React;
+
 
 var styles = StyleSheet.create({
   commentContent: {
@@ -44,12 +46,9 @@ var styles = StyleSheet.create({
   }
 });
 
-export default class PostListItem extends Component {
+export default class PostListItem extends React.Component {
   constructor(props) {
     super(props);
-  }
-
-  componentWillMount() {
   }
 
   render() {
