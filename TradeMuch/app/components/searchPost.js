@@ -1,17 +1,18 @@
-import React from 'react-native';
+const React = require('react');
 import SearchBar from 'react-native-search-bar';
 
-export default class SearchPost extends SearchBar {
-  constructor(props) {
-    super(props);
-  }
+var SearchPost = React.createClass({
+// export default class SearchPost extends SearchBar {
+  // constructor(props) {
+  //   super(props);
+  // }
 
   componentWillMount() {
-  }
+  },
 
   _onChangeText(e){
     console.log(e);
-  }
+  },
 
   render() {
     return (
@@ -22,4 +23,6 @@ export default class SearchPost extends SearchBar {
         onCancelButtonPress={this._onChangeText.bind(this)} />
     );
   }
-}
+// }
+});
+module.exports = SearchPost;

@@ -31,7 +31,6 @@ var SearchPost = require('../searchPost');
  * ## Test
  */
 describe('searchPost', () => {
-  console.log('=== test searchPost ===');
   let searchPost;
 
   const searchPostProps = {};
@@ -52,14 +51,12 @@ describe('searchPost', () => {
    * before each test, render the form button with the default props
    */
   beforeEach(() => {
-    console.log('=== beforeEach ===');
     searchPost = renderFormSearchPost(searchPostProps);
-    console.log('searchPost', searchPost);
   });
 
   it('should be fine', () => {
     const {output} = searchPost;
-    expect(output.type).toEqual(View);
+    expect(output.type.toString()).toEqual(View.toString());
   });
 
   // /**

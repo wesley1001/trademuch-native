@@ -46,7 +46,7 @@ var styles = StyleSheet.create({
   }
 });
 
-var FormButton = React.createClass({
+var PostListItem = React.createClass({
 // export default class PostListItem extends React.Component {
   render() {
     return (
@@ -159,4 +159,4 @@ var FormButton = React.createClass({
 // }
 });
 
-module.exports = FormButton;
+module.exports = PostListItem;
