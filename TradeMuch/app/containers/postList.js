@@ -24,7 +24,7 @@ class CounterApp extends Component {
     if(postList.length > 0){
       postList.forEach((post,i) => {
         postListContainer.push(
-          <PostListItem key={i} title={post.title} uri={'http://localhost:1337/'+post.gallery[0]}/>
+          <PostListItem key={i} title={post['_source'].title} uri={'http://localhost:1337/'+post['_source'].pic}/>
         )
       })
     }

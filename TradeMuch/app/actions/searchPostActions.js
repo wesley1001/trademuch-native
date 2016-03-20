@@ -21,7 +21,6 @@ export async function requestSearchPost(keyword, distance, location) {
 }
 
 function receivedSearchPost(postList) {
-  console.log("received",postList.items);
   return {
     type: RECEIVED_SEARCH_POST,
     data: postList.items
