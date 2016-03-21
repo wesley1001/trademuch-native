@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import {
   requestSearchPost
-} from '../actions/searchPostActions'
+} from '../actions/SearchPostActions'
 
 export default class SearchPost extends SearchBar {
   constructor(props) {

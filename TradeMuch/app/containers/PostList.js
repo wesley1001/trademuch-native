@@ -1,8 +1,8 @@
 'use strict';
 
 import React, { Component, View, Text, Image } from 'react-native';
-import PostListItem from '../components/postListItem';
-import SearchPost from '../components/searchPost';
+import PostListItem from '../components/PostListItem';
+import SearchPost from '../components/SearchPost';
 import {Actions} from 'react-native-router-flux';
 import { connect } from 'react-redux';
 

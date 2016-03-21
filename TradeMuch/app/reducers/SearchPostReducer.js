@@ -1,6 +1,6 @@
 import {
   RECEIVED_SEARCH_POST
-} from '../actions/searchPostActions'
+} from '../actions/SearchPostActions'
 
 export function search( state = {}, action) {
   switch (action.type) {

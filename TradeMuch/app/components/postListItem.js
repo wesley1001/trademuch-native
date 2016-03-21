@@ -11,39 +11,6 @@ import React, {
   Image
 } from 'react-native';
 
-const styles = StyleSheet.create({
-  commentContent: {
-    padding: 10,
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "flex-start"
-  },
-  userName: {
-    fontWeight: "700"
-  },
-  commentBody: {
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "center"
-  },
-  commentText: {
-    flex: 1,
-    flexDirection: "row"
-  },
-  cellBorder: {
-    backgroundColor: "rgba(0, 0, 0, 0.2)",
-    // Trick to get the thinest line the device can display
-    height: 1 / PixelRatio.get(),
-    marginLeft: 4,
-  },
-  avatar: {
-    borderRadius: 3,
-    width: 40,
-    height: 40,
-    marginRight: 10
-  }
-});
-
 export default class PostListItem extends Component {
   constructor(props) {
     super(props);
@@ -87,3 +54,36 @@ PostListItem.defaultProps = {
   description: '',
   uri: 'https://unsplash.it/200/300/?random',
 };
+
+const styles = StyleSheet.create({
+  commentContent: {
+    padding: 10,
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "flex-start"
+  },
+  userName: {
+    fontWeight: "700"
+  },
+  commentBody: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center"
+  },
+  commentText: {
+    flex: 1,
+    flexDirection: "row"
+  },
+  cellBorder: {
+    backgroundColor: "rgba(0, 0, 0, 0.2)",
+    // Trick to get the thinest line the device can display
+    height: 1 / PixelRatio.get(),
+    marginLeft: 4,
+  },
+  avatar: {
+    borderRadius: 3,
+    width: 40,
+    height: 40,
+    marginRight: 10
+  }
+});

@@ -9,7 +9,7 @@ const Router = connect()(RNRF.Router);
 // import ReactNativeSimpleAuth from './containers/loginApp';
 import CounterApp from './containers/counterApp';
 import NHSample from './containers/sampleApp';
-import PostList from './containers/postList';
+import PostList from './containers/PostList';
 
 export default class AppRoutes extends Component {
   constructor(props) {
