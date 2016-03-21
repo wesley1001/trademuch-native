@@ -1,6 +1,6 @@
 import {
   RECEIVED_USER_INFO
-} from '../actions/authActions'
+} from '../actions/AuthActions'
 
 export function auth( state = {}, action) {
   switch (action.type) {
@@ -11,6 +11,5 @@ export function auth( state = {}, action) {
       }
     default:
       return state
-
   }
 }
