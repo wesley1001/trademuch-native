@@ -25,7 +25,7 @@ export default class AppRoutes extends Component {
     return (
         <Router hideNavBar={true} name="root">
             <Schema name="default" sceneConfig={Navigator.SceneConfigs.FloatFromRight} />
-            <Route name="Login" component={MessengerSample} title="Login" initial />
+            <Route name="Login" component={PostList} title="Login" initial />
             <Route name="Camera" component={CounterApp} title="Camera" />
             <Route name="PostList" component={PostList} title="PostList"/>
         </Router>
