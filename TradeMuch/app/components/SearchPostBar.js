@@ -5,7 +5,7 @@ import {
   requestSearchPost,
 } from '../actions/SearchPostActions';
 
-export default function SearchPost(props) {
+export default function SearchPostBar(props) {
   function _onChangeText(e) {
     if (e.length > 0) {
       props.requestSearchPost(e, '20km', null);
@@ -31,4 +31,4 @@ const _injectPropsFormActions = {
   requestSearchPost,
 };
 
-export default connect(_injectPropsFromStore, _injectPropsFormActions)(SearchPost);
+export default connect(_injectPropsFromStore, _injectPropsFormActions)(SearchPostBar);

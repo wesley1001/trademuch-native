@@ -1,6 +1,5 @@
 import React, {
   StyleSheet,
-  Component,
   PixelRatio,
   View,
   Text,
@@ -41,41 +40,27 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class PostListItem extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      title: this.props.title,
-      description: this.props.description,
-      uri: this.props.uri,
-    };
-  }
-
-  componentWillMount() {
-  }
-
-  render() {
-    return (
-      <View>
-        <TouchableOpacity underlayColor={"#f3f3f3"}>
-          <View>
-            <View style={styles.commentContent}>
-                <Image source={{ uri: this.state.uri }} style={styles.avatar} />
-              <View style={styles.commentBody}>
-                <Text style={styles.userName}>
-                  {this.state.title}
-                </Text>
-                <Text style={styles.commentText}>
-                  {this.state.description}
-                </Text>
-              </View>
+export default function PostListItem(props) {
+  return (
+    <View>
+      <TouchableOpacity underlayColor={"#f3f3f3"}>
+        <View>
+          <View style={styles.commentContent}>
+              <Image source={{ uri: props.uri }} style={styles.avatar} />
+            <View style={styles.commentBody}>
+              <Text style={styles.userName}>
+                {props.title}
+              </Text>
+              <Text style={styles.commentText}>
+                {props.description}
+              </Text>
             </View>
-            <View style={styles.cellBorder} />
           </View>
-        </TouchableOpacity>
-      </View>
-    );
-  }
+          <View style={styles.cellBorder} />
+        </View>
+      </TouchableOpacity>
+    </View>
+  );
 }
 
 PostListItem.propTypes = {
