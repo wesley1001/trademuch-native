@@ -8,6 +8,7 @@ const Router = connect()(RNRF.Router);
 // View
 import PostList from './containers/PostList';
 import MessengerSample from './components/Messenger/Messenger';
+import Login from './components/Login';
 // import NHSample from './containers/sampleApp';
 
 export default function AppRoutes() {
