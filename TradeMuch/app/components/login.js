@@ -16,7 +16,7 @@ import FBSDKCore, {
 
 import {
   requestUserInfo
-} from '../actions/authActions'
+} from '../actions/AuthActions'
 
 var styles = StyleSheet.create(require('./styles.js'));
 
