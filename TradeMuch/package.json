@@ -20,6 +20,9 @@
     "redux-thunk": "^2.0.1"
   },
   "devDependencies": {
+    "eslint": "^2.4.0",
+    "eslint-config-airbnb": "^6.1.0",
+    "eslint-plugin-react": "^4.2.3",
     "redux-logger": "^2.6.1"
   }
 }
