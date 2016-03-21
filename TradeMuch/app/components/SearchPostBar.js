@@ -21,9 +21,8 @@ export default function SearchPostBar(props) {
   );
 }
 
-function _injectPropsFromStore(state) {
+function _injectPropsFromStore() {
   return {
-    state: state.postList,
   };
 }
 

@@ -9,6 +9,7 @@ const Router = connect()(RNRF.Router);
 // import ReactNativeSimpleAuth from './containers/loginApp';
 import CounterApp from './containers/counterApp';
 import PostList from './containers/PostList';
+import PostDetail from './containers/PostDetail';
 import MessengerSample from './components/Messenger/Messenger';
 // import NHSample from './containers/sampleApp';
 
@@ -25,9 +26,10 @@ export default class AppRoutes extends Component {
     return (
         <Router hideNavBar={true} name="root">
             <Schema name="default" sceneConfig={Navigator.SceneConfigs.FloatFromRight} />
-            <Route name="Login" component={PostList} title="Login" initial />
+            <Route name="Login" component={PostDetail} title="Login" initial />
             <Route name="Camera" component={CounterApp} title="Camera" />
             <Route name="PostList" component={PostList} title="PostList"/>
+            <Route name="PostDetail" component={PostDetail} title="PostDetail"/>
         </Router>
     );
   }
