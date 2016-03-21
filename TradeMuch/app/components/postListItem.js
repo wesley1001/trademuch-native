@@ -11,7 +11,51 @@ import React, {
   Image
 } from 'react-native';
 
-var styles = StyleSheet.create({
+export default class PostListItem extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: this.props.title,
+      description: this.props.description,
+      uri: this.props.uri,
+    }
+  }
+
+  componentWillMount() {
+  }
+
+  render() {
+    return (
+      <View>
+        <TouchableOpacity underlayColor={"#f3f3f3"}>
+          <View>
+            <View style={styles.commentContent}>
+                <Image source={{uri: this.state.uri}}
+                       style={styles.avatar}/>
+              <View style={styles.commentBody}>
+                <Text style={styles.userName}>
+                  {this.state.title}
+                </Text>
+                <Text style={styles.commentText}>
+                  {this.state.description}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.cellBorder} />
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+}
+
+PostListItem.defaultProps = {
+  title: '',
+  description: '',
+  uri: 'https://unsplash.it/200/300/?random',
+};
+
+const styles = StyleSheet.create({
   commentContent: {
     padding: 10,
     flex: 1,
@@ -37,127 +81,9 @@ var styles = StyleSheet.create({
     marginLeft: 4,
   },
   avatar: {
-    borderRadius: 20,
+    borderRadius: 3,
     width: 40,
     height: 40,
     marginRight: 10
   }
 });
-
-export default class PostListItem extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  componentWillMount() {
-  }
-
-  render() {
-    return (
-      <View>
-        <TouchableHighlight underlayColor={"#f3f3f3"}>
-          <View>
-            <View style={styles.commentContent}>
-                <Image source={{uri: 'https://unsplash.it/200/300/?random'}}
-                       style={styles.avatar}/>
-              <View style={styles.commentBody}>
-                <Text style={styles.userName}>
-                  {'title'}
-                </Text>
-                <Text style={styles.commentText}>
-                  {'這裡放簡單的描述'}
-                </Text>
-              </View>
-            </View>
-            <View style={styles.cellBorder} />
-          </View>
-        </TouchableHighlight>
-        <TouchableHighlight underlayColor={"#f3f3f3"}>
-          <View>
-            <View style={styles.commentContent}>
-                <Image source={{uri: 'https://unsplash.it/200/300/?random'}}
-                       style={styles.avatar}/>
-              <View style={styles.commentBody}>
-                <Text style={styles.userName}>
-                  {'title'}
-                </Text>
-                <Text style={styles.commentText}>
-                  {'這裡放簡單的描述'}
-                </Text>
-              </View>
-            </View>
-            <View style={styles.cellBorder} />
-          </View>
-        </TouchableHighlight>
-        <TouchableHighlight underlayColor={"#f3f3f3"}>
-          <View>
-            <View style={styles.commentContent}>
-                <Image source={{uri: 'https://unsplash.it/200/300/?random'}}
-                       style={styles.avatar}/>
-              <View style={styles.commentBody}>
-                <Text style={styles.userName}>
-                  {'title'}
-                </Text>
-                <Text style={styles.commentText}>
-                  {'這裡放簡單的描述'}
-                </Text>
-              </View>
-            </View>
-            <View style={styles.cellBorder} />
-          </View>
-        </TouchableHighlight>
-        <TouchableHighlight underlayColor={"#f3f3f3"}>
-          <View>
-            <View style={styles.commentContent}>
-                <Image source={{uri: 'https://unsplash.it/200/300/?random'}}
-                       style={styles.avatar}/>
-              <View style={styles.commentBody}>
-                <Text style={styles.userName}>
-                  {'title'}
-                </Text>
-                <Text style={styles.commentText}>
-                  {'這裡放簡單的描述'}
-                </Text>
-              </View>
-            </View>
-            <View style={styles.cellBorder} />
-          </View>
-        </TouchableHighlight>
-        <TouchableHighlight underlayColor={"#f3f3f3"}>
-          <View>
-            <View style={styles.commentContent}>
-                <Image source={{uri: 'https://unsplash.it/200/300/?random'}}
-                       style={styles.avatar}/>
-              <View style={styles.commentBody}>
-                <Text style={styles.userName}>
-                  {'title'}
-                </Text>
-                <Text style={styles.commentText}>
-                  {'這裡放簡單的描述'}
-                </Text>
-              </View>
-            </View>
-            <View style={styles.cellBorder} />
-          </View>
-        </TouchableHighlight>
-        <TouchableHighlight underlayColor={"#f3f3f3"}>
-          <View>
-            <View style={styles.commentContent}>
-                <Image source={{uri: 'https://unsplash.it/200/300/?random'}}
-                       style={styles.avatar}/>
-              <View style={styles.commentBody}>
-                <Text style={styles.userName}>
-                  {'title'}
-                </Text>
-                <Text style={styles.commentText}>
-                  {'這裡放簡單的描述'}
-                </Text>
-              </View>
-            </View>
-            <View style={styles.cellBorder} />
-          </View>
-        </TouchableHighlight>
-      </View>
-    );
-  }
-}

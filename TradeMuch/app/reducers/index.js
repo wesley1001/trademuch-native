@@ -1,3 +1,4 @@
 export * from './counter';
 export * from './routerReducer';
-export * from './authReducer';
+export * from './AuthReducer';
+export * from './SearchPostReducer';
