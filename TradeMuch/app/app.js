@@ -1,6 +1,6 @@
-import React, { Component } from 'react-native';
+import React from 'react-native';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
-import { Provider, connect } from 'react-redux';
+import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 import promise from 'redux-promise';
@@ -15,12 +15,10 @@ const store = createStoreWithMiddleware(reducer);
 
 import AppRoutes from './routes';
 
-export default class App extends Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <AppRoutes />
-      </Provider>
-    );
-  }
+export default function App() {
+  return (
+    <Provider store={store}>
+      <AppRoutes />
+    </Provider>
+  );
 }
