@@ -75,6 +75,12 @@ const styles = React.StyleSheet.create({
     position: 'absolute',
     bottom: 0,
   },
+  footBackColor: {
+    height: 200 * PixelRatio.get(),
+    width: 190 * PixelRatio.get(),
+    position: 'absolute',
+    bottom: 0,
+  },
 });
 
 function PostDetail() {
@@ -82,22 +88,23 @@ function PostDetail() {
     <View style={styles.imageContainer}>
       <Image source={{ uri: 'https://images.unsplash.com/photo-1453053507108-9f5456eb481f?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=1080&fit=max&s=e0d75a1d1e2605e4c9f9302de0679508' }} style={styles.itemImg} />
       <TouchableOpacity style={styles.cameraButton} />
+      <LinearGradient
+        colors={['rgba(100, 100, 100, 0)', 'rgba(0, 0, 0, 1)']}
+        style={styles.footBackColor}
+      />
       <View style={styles.itemTitleContainer}>
         <Text style={styles.title}>小火車模型</Text>
       </View>
       <View style={styles.itemPriceContainer}>
         <Text style={styles.price}>＄100</Text>
       </View>
-      <LinearGradient
-        colors={['rgba(100, 100, 100, 0)', 'rgba(0, 0, 0, 1)']}
-        style={styles.footContainer}
-      >
+      <View style={styles.footContainer}>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button}>
             <Text style={styles.buttonText}>發表</Text>
           </TouchableOpacity>
         </View>
-      </LinearGradient>
+      </View>
     </View>
   );
 }
