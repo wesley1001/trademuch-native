@@ -1,10 +1,10 @@
 'use strict';
 
 import React, { Component, View, Text, Image } from 'react-native';
-import PostListItem from '../components/PostListItem';
-import SearchPost from '../components/SearchPost';
 import {Actions} from 'react-native-router-flux';
 import { connect } from 'react-redux';
+import PostListItem from '../components/PostListItem';
+import SearchPost from '../components/SearchPost';
 
 const styles = React.StyleSheet.create({
   content: {
