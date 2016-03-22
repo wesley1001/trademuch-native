@@ -1,5 +1,36 @@
 import React, { StyleSheet, Dimensions, View, Text } from 'react-native';
 import GiftedMessenger from 'react-native-gifted-messenger';
+import io from 'socket.io-client/socket.io';
+
+window.navigator.userAgent = 'react-native';
+
+const socket = io('ws://localhost:1337?__sails_io_sdk_version=0.13.5', {jsonp: false});
+// io.on('connection', function(socket){
+//   socket.on('chat message', function(msg){
+//     console.log('message: ' + msg);
+//   });
+// });
+
+socket.on('connect',function() {
+  console.log('connected');
+
+  const request = {
+    url: '/chat/1/history',
+    headers: { accept: '*/*' }
+  };
+
+  socket.emit('get', request, function(p1, p2){
+    console.log('=== get data ===');
+    console.log(p1);
+    console.log(p2);
+  });
+
+});
+
+
+
+
+// socket.emit('message','hi');
 
 const styles = StyleSheet.create({
   nav: {
