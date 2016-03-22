@@ -4,8 +4,8 @@ import React, {
   View,
   Image,
   TouchableOpacity,
-  PixelRatio,
   Text,
+  TextInput,
 } from 'react-native';
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
@@ -13,80 +13,6 @@ import Dimensions from 'Dimensions';
 import { ImagePickerManager } from 'NativeModules';
 import { requestTakePhoto } from '../actions/TakePhotoActions';
 const windowSize = Dimensions.get('window');
-
-const styles = React.StyleSheet.create({
-  cameraButton: {
-    backgroundColor: 'rgba(255, 255, 255, 1)',
-    height: 50,
-    width: 50,
-    position: 'absolute',
-    top: 50,
-    left: 20,
-  },
-  imageContainer: {
-    flex: 1,
-    alignItems: 'stretch',
-  },
-  itemImg: {
-    flex: 6,
-  },
-  itemTitleContainer: {
-    position: 'absolute',
-    height: 20 * PixelRatio.get(),
-    width: windowSize.width,
-    bottom: 100 * PixelRatio.get(),
-    marginLeft: 10,
-  },
-  title: {
-    color: 'rgba(255, 255, 255, 1)',
-    fontSize: 25,
-    textAlign: 'left',
-  },
-  itemPriceContainer: {
-    position: 'absolute',
-    height: 20 * PixelRatio.get(),
-    width: windowSize.width,
-    bottom: 100 * PixelRatio.get(),
-  },
-  price: {
-    color: 'rgba(255, 255, 255, 1)',
-    fontSize: 25,
-    textAlign: 'right',
-    marginRight: 10,
-  },
-  buttonContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderTopWidth: 2,
-    borderColor: '#d6d7da',
-  },
-  button: {
-    height: 50,
-    width: 180,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 1)',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttonText: {
-    color: 'rgba(255, 255, 255, 1)',
-  },
-  footContainer: {
-    height: 100 * PixelRatio.get(),
-    width: windowSize.width,
-    position: 'absolute',
-    bottom: 0,
-  },
-  footBackColor: {
-    height: 200 * PixelRatio.get(),
-    width: windowSize.width,
-    position: 'absolute',
-    bottom: 0,
-  },
-});
 
 const options = {
   title: '選擇照片', // specify null or empty string to remove the title
@@ -114,6 +40,77 @@ const options = {
 };
 
 
+const styles = React.StyleSheet.create({
+  cameraButtonContainer: {
+    flex: 2.1,
+  },
+  cameraButton: {
+    backgroundColor: 'rgba(255, 255, 255, 1)',
+    height: 50,
+    width: 50,
+    marginTop: 50,
+    marginLeft: 20,
+  },
+  imageContainer: {
+    flex: 1,
+    alignItems: 'stretch',
+  },
+  itemImg: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    width: windowSize.width,
+    height: windowSize.height,
+  },
+  itemDescriptionContainer: {
+    marginLeft: 10,
+  },
+  title: {
+    color: 'rgba(255, 255, 255, 1)',
+    fontSize: 25,
+    marginBottom: 5,
+    textAlign: 'left',
+    height: 30,
+  },
+  price: {
+    color: 'rgba(255, 255, 255, 1)',
+    fontSize: 25,
+    textAlign: 'right',
+    marginRight: 10,
+    bottom: -29,
+  },
+  buttonContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderTopWidth: 2,
+    borderColor: '#d6d7da',
+  },
+  button: {
+    height: 50,
+    width: 180,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 1)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonText: {
+    color: 'rgba(255, 255, 255, 1)',
+  },
+  footContainer: {
+    flex: 1,
+  },
+  footBackColor: {
+    height: windowSize.height / 2,
+    width: windowSize.width,
+    position: 'absolute',
+    bottom: 0,
+  },
+});
+
+
 function PostDetail(props) {
   function selectPhotoButtonHandle() {
     ImagePickerManager.showImagePicker(options, (response) => {
@@ -133,16 +130,25 @@ function PostDetail(props) {
   return (
     <View style={styles.imageContainer}>
       <Image source={props.photo} style={styles.itemImg} />
-      <TouchableOpacity style={styles.cameraButton} onPress={ selectPhotoButtonHandle } />
       <LinearGradient
         colors={['rgba(100, 100, 100, 0)', 'rgba(0, 0, 0, 1)']}
         style={styles.footBackColor}
       />
-      <View style={styles.itemTitleContainer}>
-        <Text style={styles.title}>小火車模型</Text>
+      <View style={styles.cameraButtonContainer}>
+        <TouchableOpacity style={styles.cameraButton} onPress={ selectPhotoButtonHandle } />
       </View>
-      <View style={styles.itemPriceContainer}>
+      <View style={styles.itemDescriptionContainer}>
         <Text style={styles.price}>＄100</Text>
+        <TextInput
+          style={styles.price}
+          placeholder="點擊輸入金額"
+          placeholderTextColor="#FFF"
+        />
+        <TextInput
+          style={styles.title}
+          placeholder="點擊輸入描述"
+          placeholderTextColor="#FFF"
+        />
       </View>
       <View style={styles.footContainer}>
         <View style={styles.buttonContainer}>
