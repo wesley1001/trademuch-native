@@ -10,6 +10,8 @@ import React, {
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Dimensions from 'Dimensions';
+import { ImagePickerManager } from 'NativeModules';
+import { requestTakePhoto } from '../actions/TakePhotoActions';
 const windowSize = Dimensions.get('window');
 
 const styles = React.StyleSheet.create({
@@ -86,11 +88,52 @@ const styles = React.StyleSheet.create({
   },
 });
 
-function PostDetail() {
+const options = {
+  title: '選擇照片', // specify null or empty string to remove the title
+  cancelButtonTitle: '取消',
+  takePhotoButtonTitle: '拍照', // specify null or empty string to remove this button
+  chooseFromLibraryButtonTitle: '從相簿中選擇', // specify null or empty string to remove this button
+  cameraType: 'back', // 'front' or 'back'
+  mediaType: 'photo', // 'photo' or 'video'
+  videoQuality: 'high', // 'low', 'medium', or 'high'
+  durationLimit: 10, // video recording max time in seconds
+  maxWidth: 800, // photos only
+  maxHeight: 800, // photos only
+  quality: 0.8, // 0 to 1, photos only
+  allowsEditing: false, // Built in functionality to resize/reposition the image after selection
+  noData: false,
+  // photos only - disables the base64 `data` field from being generated
+  // (greatly improves performance on large photos)
+  storageOptions: {
+  // if this key is provided, the image will get saved in the documents
+  // directory on ios, and the pictures directory on android (rather than a temporary directory)
+    skipBackup: true, // ios only - image will NOT be backed up to icloud
+    path: 'images',
+    // ios only - will save image at /Documents/images rather than the root
+  }
+};
+
+
+function PostDetail(props) {
+  function selectPhotoButtonHandle() {
+    ImagePickerManager.showImagePicker(options, (response) => {
+      if (!response.didCancel) {
+      //   console.log('User cancelled image picker');
+      // } else if (response.error) {
+      //   console.log('ImagePickerManager Error: ', response.error);
+      // } else if (response.customButton) {
+      //   console.log('User tapped custom button: ', response.customButton);
+      // } else {
+        const source = { uri: response.uri.replace('file://', ''), isStatic: true };
+        props.requestTakePhoto(source);
+      }
+    });
+  }
+
   return (
     <View style={styles.imageContainer}>
-      <Image source={{ uri: 'https://images.unsplash.com/photo-1453053507108-9f5456eb481f?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=1080&fit=max&s=e0d75a1d1e2605e4c9f9302de0679508' }} style={styles.itemImg} />
-      <TouchableOpacity style={styles.cameraButton} />
+      <Image source={props.photo} style={styles.itemImg} />
+      <TouchableOpacity style={styles.cameraButton} onPress={ selectPhotoButtonHandle } />
       <LinearGradient
         colors={['rgba(100, 100, 100, 0)', 'rgba(0, 0, 0, 1)']}
         style={styles.footBackColor}
@@ -114,21 +157,24 @@ function PostDetail() {
 
 function _injectPropsFromStore(state) {
   return {
-    postList: state.search.postList,
+    photo: state.takePhoto.photoSource,
   };
 }
 
 PostDetail.propTypes = {
   title: React.PropTypes.string,
   itemName: React.PropTypes.string,
+  photo: React.PropTypes.object,
 };
 
 PostDetail.defaultProps = {
   title: '',
   itemName: '',
+  photo: { uri: 'https://images.unsplash.com/photo-1453053507108-9f5456eb481f?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=1080&fit=max&s=e0d75a1d1e2605e4c9f9302de0679508' },
 };
 
 const _injectPropsFormActions = {
+  requestTakePhoto,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(PostDetail);
