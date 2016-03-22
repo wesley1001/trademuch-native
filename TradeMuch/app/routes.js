@@ -15,9 +15,9 @@ export default function AppRoutes() {
   return (
     <Router hideNavBar name="root">
       <Schema name="default" sceneConfig={Navigator.SceneConfigs.FloatFromRight} />
-      <Route name="Login" component={MessengerSample} title="Login" initial />
-      <Route name="PostList" component={PostList} title="PostList"/>
-      <Route name="PostDetail" component={PostDetail} title="PostDetail"/>
+      <Route name="Login" component={PostDetail} title="Login" initial />
+      <Route name="PostList" component={PostList} title="PostList" />
+      <Route name="PostDetail" component={PostDetail} title="PostDetail" />
     </Router>
   );
 }
