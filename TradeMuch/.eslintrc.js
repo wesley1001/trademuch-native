@@ -4,7 +4,7 @@ module.exports = {
         "react"
     ],
     "parser": "babel-eslint",
-     "rules": {
-       "strict": 0
-     }
+    "rules": {
+      "strict": 0
+    },
 };

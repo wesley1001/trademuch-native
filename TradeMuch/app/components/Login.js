@@ -1,77 +1,77 @@
 
 import React, {
   StyleSheet,
-  View
+  View,
 } from 'react-native';
 
 import { connect } from 'react-redux';
 
-import FBSDKLogin, {
-  FBSDKLoginButton
+import {
+  FBSDKLoginButton,
 } from 'react-native-fbsdklogin';
 
-import FBSDKCore, {
-  FBSDKAccessToken
+import {
+  FBSDKAccessToken,
 } from 'react-native-fbsdkcore';
 
 import {
-  requestUserInfo
-} from '../actions/AuthActions'
+  requestUserInfo,
+} from '../actions/AuthActions';
 
-var styles = StyleSheet.create(require('./styles.js'));
+const styles = StyleSheet.create(require('./styles.js'));
 
-export default class Login extends React.Component{
-  render() {
-    console.log(this.props);
-    return (
-      <View style={this.props.style}>
+export default function Login() {
+  function handleLoginFinished(error, result) {
+    if (error) {
+      // alert('Error logging in.');
+    } else {
+      if (result.isCancelled) {
+        // alert('Login cancelled.');
+      } else {
+        FBSDKAccessToken.getCurrentAccessToken(async userIdentities => {
+          this.props.requestUserInfo(userIdentities);
+          if (result === null) {
+            // alert('Start logging in.');
+          } else {
+            // alert('Start logging out.');
+          }
+        });
+        // alert('Logged in.');
+      }
+    }
+  }
+
+  return (
+    <View style={this.props.style}>
       <FBSDKLoginButton
         style={styles.loginButton}
-        onWillLogin={() => {
-          FBSDKAccessToken.getCurrentAccessToken((result) => {
-            // console.log('token',result);
-            if (result == null) {
-              // alert('Start logging in.');
-            } else {
-              // alert('Start logging out.');
-            }
-          });
-          return true;
-        }}
-        onLoginFinished={(error, result) => {
-          if (error) {
-            alert('Error logging in.');
-          } else {
-            if (result.isCancelled) {
-              // alert('Login cancelled.');
-            } else {
-              FBSDKAccessToken.getCurrentAccessToken(async userIdentities => {
-                this.props.requestUserInfo(userIdentities);
-                if (result == null) {
-                  // alert('Start logging in.');
-                } else {
-                  // alert('Start logging out.');
-                }
-              });
-              // alert('Logged in.');
-            }
-          }
-        }}
-        onLogoutFinished={() => {}}
+        // onWillLogin={() => {
+        //   FBSDKAccessToken.getCurrentAccessToken((result) => {
+        //     // console.log('token',result);
+        //     if (result === null) {
+        //       // alert('Start logging in.');
+        //     } else {
+        //       // alert('Start logging out.');
+        //     }
+        //   });
+        //   return true;
+        // }}
+        onLoginFinished={handleLoginFinished}
+        // onLogoutFinished={() => {}}
         readPermissions={[]}
-        publishPermissions={[]}/>
-      </View>
-    );
-  }
-};
+        publishPermissions={[]}
+      />
+    </View>
+  );
+}
 
-function _injectPropsFromStore(state) {
+function _injectPropsFromStore() {
   return {
-  }
-};
+  };
+}
 
 const _injectPropsFormActions = {
-  requestUserInfo
+  requestUserInfo,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(Login);
