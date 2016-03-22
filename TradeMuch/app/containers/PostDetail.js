@@ -9,6 +9,8 @@ import React, {
 } from 'react-native';
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
+import Dimensions from 'Dimensions';
+const windowSize = Dimensions.get('window');
 
 const styles = React.StyleSheet.create({
   cameraButton: {
@@ -29,7 +31,7 @@ const styles = React.StyleSheet.create({
   itemTitleContainer: {
     position: 'absolute',
     height: 20 * PixelRatio.get(),
-    width: 180 * PixelRatio.get(),
+    width: windowSize.width,
     bottom: 100 * PixelRatio.get(),
     marginLeft: 10,
   },
@@ -41,13 +43,14 @@ const styles = React.StyleSheet.create({
   itemPriceContainer: {
     position: 'absolute',
     height: 20 * PixelRatio.get(),
-    width: 180 * PixelRatio.get(),
+    width: windowSize.width,
     bottom: 100 * PixelRatio.get(),
   },
   price: {
     color: 'rgba(255, 255, 255, 1)',
     fontSize: 25,
     textAlign: 'right',
+    marginRight: 10,
   },
   buttonContainer: {
     flex: 1,
@@ -71,13 +74,13 @@ const styles = React.StyleSheet.create({
   },
   footContainer: {
     height: 100 * PixelRatio.get(),
-    width: 190 * PixelRatio.get(),
+    width: windowSize.width,
     position: 'absolute',
     bottom: 0,
   },
   footBackColor: {
     height: 200 * PixelRatio.get(),
-    width: 190 * PixelRatio.get(),
+    width: windowSize.width,
     position: 'absolute',
     bottom: 0,
   },
