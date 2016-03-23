@@ -9,6 +9,7 @@
   "dependencies": {
     "react-native": ">=v0.13.0",
     "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
+    "react-native-cookies": "0.0.5",
     "react-native-fbsdkcore": "0.0.8",
     "react-native-fbsdklogin": "0.0.8",
     "react-native-fbsdkshare": "0.0.8",
