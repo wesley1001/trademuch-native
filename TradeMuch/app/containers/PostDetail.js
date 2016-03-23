@@ -42,7 +42,7 @@ const options = {
 
 const styles = React.StyleSheet.create({
   cameraButtonContainer: {
-    flex: 2.1,
+    flex: 0.69,
   },
   cameraButton: {
     backgroundColor: 'rgba(255, 255, 255, 1)',
@@ -64,6 +64,7 @@ const styles = React.StyleSheet.create({
   },
   itemDescriptionContainer: {
     marginLeft: 10,
+    marginBottom: 15,
   },
   title: {
     color: 'rgba(255, 255, 255, 1)',
@@ -88,22 +89,23 @@ const styles = React.StyleSheet.create({
   },
   button: {
     height: 50,
-    width: 180,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 1)',
+    width: 210,
+    backgroundColor: 'rgba(74, 74, 74, 0.3)',
+    borderRadius: 9,
+    borderWidth: 2,
+    borderColor: 'rgba(255, 255, 255, 0.5)',
     alignItems: 'center',
     justifyContent: 'center',
   },
   buttonText: {
     color: 'rgba(255, 255, 255, 1)',
+    fontSize: 18,
   },
   footContainer: {
-    flex: 1,
+    flex: 0.21,
   },
   footBackColor: {
-    height: windowSize.height / 2,
+    height: windowSize.height,
     width: windowSize.width,
     position: 'absolute',
     bottom: 0,
@@ -131,19 +133,13 @@ function PostDetail(props) {
     <View style={styles.imageContainer}>
       <Image source={props.photo} style={styles.itemImg} />
       <LinearGradient
-        colors={['rgba(100, 100, 100, 0)', 'rgba(0, 0, 0, 1)']}
+        colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 1)']}
         style={styles.footBackColor}
       />
       <View style={styles.cameraButtonContainer}>
         <TouchableOpacity style={styles.cameraButton} onPress={ selectPhotoButtonHandle } />
       </View>
       <View style={styles.itemDescriptionContainer}>
-        <Text style={styles.price}>＄100</Text>
-        <TextInput
-          style={styles.price}
-          placeholder="點擊輸入金額"
-          placeholderTextColor="#FFF"
-        />
         <TextInput
           style={styles.title}
           placeholder="點擊輸入描述"
