@@ -4,31 +4,106 @@ import io from 'socket.io-client/socket.io';
 
 window.navigator.userAgent = 'react-native';
 
-const socket = io('ws://localhost:1337?__sails_io_sdk_version=0.13.5', {jsonp: false});
-// io.on('connection', function(socket){
-//   socket.on('chat message', function(msg){
-//     console.log('message: ' + msg);
-//   });
+const socket = io('ws://localhost:1337?__sails_io_sdk_version=0.13.5', { jsonp: false });
+
+// var CookieManager = require('react-native-cookies');
+//
+// // set a cookie (IOS ONLY)
+// CookieManager.set({
+//   name: 'myCookie',
+//   value: 'myValue',
+//   domain: 'some domain',
+//   origin: 'some origin',
+//   path: '/',
+//   version: '1',
+//   expiration: '2015-05-30T12:30:00.00-05:00'
+// }, (err, res) => {
+//   console.log('cookie set!');
+//   console.log(err);
+//   console.log(res);
+// });
+//
+//
+// // list cookies (IOS ONLY)
+// CookieManager.getAll((err, res) => {
+//   console.log('cookies!');
+//   console.log(err);
+//   console.log(res);
 // });
 
-socket.on('connect',function() {
+function composeRequest(url) {
+  return {
+    url,
+    headers: {
+      accept: 'Application/json',
+    },
+  };
+}
+
+
+const newUser = {
+  // username: 'testuser',
+  email: 'test@gmail.com',
+  password: 'testuser',
+};
+
+// fetch('http://localhost:1337/rest/auth/simple', {method: 'post', data: newUser}).then(function(response) {
+  // console.log('res',response);
+// });
+
+socket.on('connect', async function() {
+
   console.log('connected');
 
-  const request = {
-    url: '/chat/1/history',
-    headers: { accept: '*/*' }
-  };
+  socket.emit('post',{
+    url: 'http://localhost:1337/auth/token',
+    data: newUser
+  }, function(response) {
+    console.log('user',response.body.user);
+    const user = response.body.user;
+    socket.emit('post', {
+      url: '/room/1/users',
+      data: {
+          user: user,
+        },
+    }, function(response) {
+      console.log('join room');
+      socket.emit('post', {
+        url: '/chat/1/public',
+        data: {
+          user: user,
+          content: 'content11',
+        },
+      }, function() {
+        console.log('sended');
+        socket.emit('get', {
+          url: '/chat/1/history',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          data: {
+            user: user,
+          },
+        }, function(messageHistory) {
+          console.log('=== get data ===');
+          console.log(messageHistory.body.result);
+      });
 
-  socket.emit('get', request, function(p1, p2){
-    console.log('=== get data ===');
-    console.log(p1);
-    console.log(p2);
-  });
+      });
+    });
+  }
+);
+  // socket.emit('post', {
+  //   url: 'http://localhost:1337/rest/auth/token',
+  //   data: newUser,
+  // },function(authToken) {
+  //   console.log(authToken);
+  // });
+
+
 
 });
-
-
-
 
 // socket.emit('message','hi');
 
