@@ -10,15 +10,15 @@ function receivedCreate(photoSource) {
   };
 }
 
-export function requestCreate(data) {
-  const searchApi = `http://localhost:1337/rest/post/create`;
+export async function requestCreate(data) {
+  const searchApi = 'http://localhost:1337/rest/post/create';
   const response = await fetch(searchApi, {
     method: 'POST',
     headers: {
-      'Accept': 'application/json',
+      Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify(data),
   });
   const responseJson = await response.json();
   return (dispatch) => {

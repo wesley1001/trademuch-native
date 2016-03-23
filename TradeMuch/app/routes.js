@@ -17,7 +17,7 @@ export default function AppRoutes() {
       <Schema name="default" sceneConfig={Navigator.SceneConfigs.FloatFromRight} />
       <Route name="Login" component={MessengerSample} title="Login" />
       <Route name="PostList" component={PostList} title="PostList" />
-      <Route name="PostDetail" component={PostDetail} title="PostDetail" initial/>
+      <Route name="PostDetail" component={PostDetail} title="PostDetail" initial />
     </Router>
   );
 }

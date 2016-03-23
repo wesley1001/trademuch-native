@@ -6,12 +6,15 @@ import React, {
   TouchableOpacity,
   Text,
   TextInput,
+  NativeModules,
 } from 'react-native';
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Dimensions from 'Dimensions';
 import { ImagePickerManager } from 'NativeModules';
 import { requestTakePhoto } from '../actions/TakePhotoActions';
+import { requestCreate } from '../actions/PostActions';
+import base64 from 'base64-js';
 const windowSize = Dimensions.get('window');
 
 const options = {
@@ -36,7 +39,7 @@ const options = {
     skipBackup: true, // ios only - image will NOT be backed up to icloud
     path: 'images',
     // ios only - will save image at /Documents/images rather than the root
-  }
+  },
 };
 
 
@@ -125,7 +128,29 @@ function PostDetail(props) {
       // } else {
         const source = { uri: response.uri.replace('file://', ''), isStatic: true };
         props.requestTakePhoto(source);
+        const imgBase64 = base64.fromByteArray(response.uri);
+        console.log("!!!!!!!!!!!!!!!!!!!!", response.uri, imgBase64);
       }
+    });
+  }
+
+  function postCreateButtonHandle() {
+    props.requestCreate({
+      mode: 'give',
+      hobby: 1,
+      detail: {
+        title: '123',
+        startDate: '2015-12-25',
+        endDate: '2015-12-31',
+        price: '0',
+        radioItem: 1,
+        item: '',
+      },
+      location: {
+        latitude: 24.148657699999998,
+        longitude: 120.67413979999999,
+        accuracy: 30,
+      },
     });
   }
 
@@ -149,7 +174,7 @@ function PostDetail(props) {
       <View style={styles.footContainer}>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>發表</Text>
+            <Text style={styles.buttonText} onPress={ postCreateButtonHandle }>發表</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -177,6 +202,7 @@ PostDetail.defaultProps = {
 
 const _injectPropsFormActions = {
   requestTakePhoto,
+  requestCreate,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(PostDetail);
