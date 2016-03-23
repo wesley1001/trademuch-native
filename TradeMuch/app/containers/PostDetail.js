@@ -133,7 +133,7 @@ function PostDetail(props) {
     <View style={styles.imageContainer}>
       <Image source={props.photo} style={styles.itemImg} />
       <LinearGradient
-        colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 1)']}
+        colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.5)', 'rgba(0, 0, 0, 1)']}
         style={styles.footBackColor}
       />
       <View style={styles.cameraButtonContainer}>
