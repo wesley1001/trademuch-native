@@ -7,12 +7,7 @@ import {
 
 window.navigator.userAgent = 'react-native';
 
-const domain = 'http://localhost:1337';
 const socket = io('ws://localhost:1337?__sails_io_sdk_version=0.13.5', { jsonp: false });
-const newUser = {
-  email: 'test@gmail.com',
-  password: 'testuser',
-};
 
 function composeRequestWithAuthToken(url, data) {
   return {
@@ -42,20 +37,11 @@ function composeRequestWithAuthToken(url, data) {
   };
 }
 
-// async function getAuthToken() {
-//   // const url = `${domain}/auth/token`;
-//   // const request = composeRequestWithAuthToken(url, newUser);
-//   // return await fetch(url, opt);
-//   // socket.emit('post', request, (response) => {
-//   //   console.log('user',response.body);
-//   // });
-// }
-
 async function joinRoom(chatRoomId) {
   const url = `/room/${chatRoomId}/users`;
   const request = composeRequestWithAuthToken(url);
-  return new Promise(function(resolve) {
-    socket.emit('post', request, function(response) {
+  return new Promise((resolve) => {
+    socket.emit('post', request, (response) => {
       resolve(response);
     });
   });
@@ -64,8 +50,8 @@ async function joinRoom(chatRoomId) {
 async function sendMessage(chatRoomId, message) {
   const url = `/chat/${chatRoomId}/public`;
   const request = composeRequestWithAuthToken(url, message);
-  return new Promise(function(resolve, reject) {
-    socket.emit('post', request, function(response) {
+  return new Promise((resolve) => {
+    socket.emit('post', request, (response) => {
       resolve(response);
     });
   });
@@ -74,7 +60,7 @@ async function sendMessage(chatRoomId, message) {
 async function getChatHistory(chatRoomId) {
   const url = `/chat/${chatRoomId}/history`;
   const request = composeRequestWithAuthToken(url);
-  return new Promise( (resolve, reject) => {
+  return new Promise((resolve) => {
     socket.emit('get', request, (response) => {
       resolve(response.body.result);
     });
