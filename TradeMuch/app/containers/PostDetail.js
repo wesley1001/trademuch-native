@@ -6,15 +6,16 @@ import React, {
   TouchableOpacity,
   Text,
   TextInput,
-  NativeModules,
 } from 'react-native';
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Dimensions from 'Dimensions';
 import { ImagePickerManager } from 'NativeModules';
 import { requestTakePhoto } from '../actions/TakePhotoActions';
-import { requestCreate } from '../actions/PostActions';
-import base64 from 'base64-js';
+import {
+  requestCreate,
+  requestUploadImg,
+ } from '../actions/PostActions';
 const windowSize = Dimensions.get('window');
 
 const options = {
@@ -127,9 +128,10 @@ function PostDetail(props) {
       //   console.log('User tapped custom button: ', response.customButton);
       // } else {
         const source = { uri: response.uri.replace('file://', ''), isStatic: true };
-        props.requestTakePhoto(source);
-        const imgBase64 = base64.fromByteArray(response.uri);
-        console.log("!!!!!!!!!!!!!!!!!!!!", response.uri, imgBase64);
+        props.requestTakePhoto(source, response);
+        const picExtension = response.uri.split('.').pop();
+        const picBase64 = `data:image/${picExtension};base64,${response.data}`;
+        props.requestUploadImg({ picBase64 });
       }
     });
   }
@@ -185,6 +187,7 @@ function PostDetail(props) {
 function _injectPropsFromStore(state) {
   return {
     photo: state.takePhoto.photoSource,
+    photoInfo: state.takePhoto.photoInfo,
   };
 }
 
@@ -192,17 +195,20 @@ PostDetail.propTypes = {
   title: React.PropTypes.string,
   itemName: React.PropTypes.string,
   photo: React.PropTypes.object,
+  photoInfo: React.PropTypes.object,
 };
 
 PostDetail.defaultProps = {
   title: '',
   itemName: '',
   photo: { uri: 'https://images.unsplash.com/photo-1453053507108-9f5456eb481f?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=1080&fit=max&s=e0d75a1d1e2605e4c9f9302de0679508' },
+  photoInfo: {},
 };
 
 const _injectPropsFormActions = {
   requestTakePhoto,
   requestCreate,
+  requestUploadImg,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(PostDetail);
