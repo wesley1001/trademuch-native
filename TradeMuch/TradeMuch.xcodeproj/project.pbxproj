@@ -12,7 +12,6 @@
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		6DCEE20D1CA1631300A99C62 /* RNCookieManagerIOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DCEE20C1CA1631300A99C62 /* RNCookieManagerIOS.m */; };
 		8BB48A8B1C9ABA00006D5BA2 /* libRNSearchBar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BB48A8A1C9AB9B6006D5BA2 /* libRNSearchBar.a */; };
 		C87A08251B683A3800075643 /* plutoBack.png in Resources */ = {isa = PBXBuildFile; fileRef = C87A08241B683A3800075643 /* plutoBack.png */; };
 		C88173CE1B6FBBEB001330B7 /* RCTFBSDKShareTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C88173CD1B6FBBEB001330B7 /* RCTFBSDKShareTests.m */; };
@@ -46,8 +45,6 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = iOS/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = iOS/main.m; sourceTree = "<group>"; };
 		294D3745670740567B660B09 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		6DCEE20B1CA1631300A99C62 /* RNCookieManagerIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNCookieManagerIOS.h; sourceTree = "<group>"; };
-		6DCEE20C1CA1631300A99C62 /* RNCookieManagerIOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNCookieManagerIOS.m; sourceTree = "<group>"; };
 		7DD7F15DFCA46BA0E76CD8B2 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		89E94AEB84EF573737C2F165 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BB48A851C9AB9B6006D5BA2 /* RNSearchBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSearchBar.xcodeproj; path = "node_modules/react-native-search-bar/RNSearchBar.xcodeproj"; sourceTree = "<group>"; };
@@ -80,7 +77,6 @@
 		13B07FAE1A68108700A75B9A /* TradeMuch */ = {
 			isa = PBXGroup;
 			children = (
-				6DCEE20A1CA1631300A99C62 /* RNCookieManagerIOS */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -90,16 +86,6 @@
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = TradeMuch;
-			sourceTree = "<group>";
-		};
-		6DCEE20A1CA1631300A99C62 /* RNCookieManagerIOS */ = {
-			isa = PBXGroup;
-			children = (
-				6DCEE20B1CA1631300A99C62 /* RNCookieManagerIOS.h */,
-				6DCEE20C1CA1631300A99C62 /* RNCookieManagerIOS.m */,
-			);
-			name = RNCookieManagerIOS;
-			path = "node_modules/react-native-cookies/RNCookieManagerIOS";
 			sourceTree = "<group>";
 		};
 		813F1EAADE53827E10B1ADCF /* Pods */ = {
@@ -342,7 +328,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
-				6DCEE20D1CA1631300A99C62 /* RNCookieManagerIOS.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
