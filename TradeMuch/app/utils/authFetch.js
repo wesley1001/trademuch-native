@@ -1,4 +1,11 @@
-async function getAuthToken() {
+const domain = 'http://localhost:1337';
+const newUser = {
+  // username: 'testuser',
+  email: 'test@gmail.com',
+  password: 'testuser',
+};
+
+export async function getAuthToken() {
   // let url = `${host}/auth/login`;     // api url for login
   const url = `${domain}/auth/token`;
   const option = {                         // optional second argument
@@ -13,10 +20,10 @@ async function getAuthToken() {
   let token = await fetch(url, option);
   token = await token.json();
   return token;
-
 }
 
-async function fetchWithAuch(url, method, data) {
+export async function fetchWithAuch(url, method, data) {
+  const token = await getAuthToken();
   const option = {        // optional second argument
     method,               //  to customize the HTTP request
     headers: {
