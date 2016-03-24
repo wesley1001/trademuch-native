@@ -39,13 +39,16 @@
   },
   "scripts": {
     "start": "react-native start",
-    "test": "rm -rf ./node_modules/jest-cli/.haste_cache && jest "
+    "test": "rm -rf ./node_modules/jest-cli/.haste_cache && jest ",
+    "eslint": "./node_modules/eslint/bin/eslint.js ./app/*"
   },
   "dependencies": {
     "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
     "react-native-fbsdkcore": "0.0.8",
     "react-native-fbsdklogin": "0.0.8",
     "react-native-fbsdkshare": "0.0.8",
+    "react-native-gifted-messenger": "0.0.24",
+    "react-native-linear-gradient": "^1.5.2",
     "react-native-router-flux": "^2.3.9",
     "react-native-search-bar": "https://github.com/FuYaoDe/react-native-search-bar.git",
     "react-redux": "^4.4.0",
@@ -64,6 +67,10 @@
     "react": "^0.14.7",
     "react-addons-test-utils": "^0.14.7",
     "react-native": "^0.21.0",
+    "babel-eslint": "^6.0.0-beta.6",
+    "eslint": "^2.4.0",
+    "eslint-config-airbnb": "^6.1.0",
+    "eslint-plugin-react": "^4.2.3",
     "redux-logger": "^2.6.1"
   }
 }
