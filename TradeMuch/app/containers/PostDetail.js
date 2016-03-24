@@ -15,7 +15,9 @@ import { requestTakePhoto } from '../actions/TakePhotoActions';
 import {
   requestCreate,
   requestUploadImg,
+  requestInputTitle,
  } from '../actions/PostActions';
+import { Actions } from 'react-native-router-flux';
 const windowSize = Dimensions.get('window');
 
 const options = {
@@ -118,6 +120,10 @@ const styles = React.StyleSheet.create({
 
 
 function PostDetail(props) {
+  if (props.postFinishData.id !== null) {
+    console.log(Actions);
+    Actions.PostList;
+  }
   function selectPhotoButtonHandle() {
     ImagePickerManager.showImagePicker(options, (response) => {
       if (!response.didCancel) {
@@ -139,16 +145,19 @@ function PostDetail(props) {
   function postCreateButtonHandle() {
     props.requestCreate({
       detail: {
-        title: '123',
-        startDate: '2015-12-25',
-        endDate: '2015-12-31',
+        title: props.title,
+        startDate: new Date(),
       },
       location: {
         latitude: 24.148657699999998,
         longitude: 120.67413979999999,
       },
-      images: '',
+      images: props.imgSrc[0].src,
     });
+  }
+
+  function inputTitleHandle(text) {
+    props.requestInputTitle(text);
   }
 
   return (
@@ -166,12 +175,14 @@ function PostDetail(props) {
           style={styles.title}
           placeholder="點擊輸入描述"
           placeholderTextColor="#FFF"
+          value={props.title}
+          onChangeText= { inputTitleHandle }
         />
       </View>
       <View style={styles.footContainer}>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText} onPress={ postCreateButtonHandle }>發表</Text>
+          <TouchableOpacity style={styles.button} onPress={ postCreateButtonHandle }>
+            <Text style={styles.buttonText} >發表</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -181,29 +192,35 @@ function PostDetail(props) {
 
 function _injectPropsFromStore(state) {
   return {
+    title: state.post.title,
     photo: state.takePhoto.photoSource,
     photoInfo: state.takePhoto.photoInfo,
+    imgSrc: state.post.upLoadImg,
+    postFinishData: state.post.postFinishData,
   };
 }
 
 PostDetail.propTypes = {
   title: React.PropTypes.string,
-  itemName: React.PropTypes.string,
   photo: React.PropTypes.object,
   photoInfo: React.PropTypes.object,
+  imgSrc: React.PropTypes.array,
+  postFinishData: React.PropTypes.object,
 };
 
 PostDetail.defaultProps = {
   title: '',
-  itemName: '',
   photo: { uri: 'https://images.unsplash.com/photo-1453053507108-9f5456eb481f?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=1080&fit=max&s=e0d75a1d1e2605e4c9f9302de0679508' },
   photoInfo: {},
+  imgSrc: [{ name: '', src: '' }],
+  postFinishData: { id: null, uuid: '', title: '', startDate: '', user_id: null, UserId: null },
 };
 
 const _injectPropsFormActions = {
   requestTakePhoto,
   requestCreate,
   requestUploadImg,
+  requestInputTitle,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(PostDetail);

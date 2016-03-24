@@ -1,12 +1,22 @@
-
+import {
+  fetchWithAuth,
+} from '../utils/authFetch';
 export const REQUEST_CREATE_POST = 'REQUEST_CREATE_POST';
 export const RECEIVED_CREATE_POST = 'RECEIVED_CREATE_POST';
 export const RECEIVED_UPLOAD_IMG = 'RECEIVED_UPLOAD_IMG';
+export const RECEIVED_INPUT_TITLE = 'RECEIVED_INPUT_TITLE';
 
-function receivedCreate(photoSource) {
+function receivedCreate(data = {
+  id: null,
+  uuid: '',
+  title: '',
+  startDate: '',
+  user_id: null,
+  UserId: null,
+}) {
   return {
     type: RECEIVED_CREATE_POST,
-    data: photoSource,
+    data,
   };
 }
 
@@ -23,24 +33,17 @@ export async function requestCreate(data = {
   images: '',
 }) {
   const searchApi = 'http://localhost:1337/rest/post/create';
-  const response = await fetch(searchApi, {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
+  const response = await fetchWithAuth(searchApi, 'POST', data);
   const responseJson = await response.json();
   return (dispatch) => {
     dispatch(receivedCreate(responseJson));
   };
 }
 
-function receivedUploadImg(data = {
+function receivedUploadImg(data = [{
   name: '',
   src: '',
-}) {
+}]) {
   return {
     type: RECEIVED_UPLOAD_IMG,
     data,
@@ -62,5 +65,19 @@ export async function requestUploadImg(data = {
   const responseJson = await response.json();
   return (dispatch) => {
     dispatch(receivedUploadImg(responseJson));
+  };
+}
+
+
+function receivedInputTitle(data) {
+  return {
+    type: RECEIVED_INPUT_TITLE,
+    data,
+  };
+}
+
+export async function requestInputTitle(title) {
+  return (dispatch) => {
+    dispatch(receivedInputTitle(title));
   };
 }
