@@ -29,12 +29,6 @@ function composeRequestWithAuthToken(url, data) {
   // console.log('res',response);
 // });
 
-{
-  ...data,
-  user: token,
-}
-
-
 
 async function getAuthToken() {
   // let url = `${host}/auth/login`;     // api url for login
