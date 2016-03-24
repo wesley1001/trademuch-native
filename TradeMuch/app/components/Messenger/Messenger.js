@@ -1,12 +1,14 @@
 import React, { StyleSheet, Dimensions, View, Text } from 'react-native';
 import GiftedMessenger from 'react-native-gifted-messenger';
 import io from 'socket.io-client/socket.io';
+import {
+  getAuthToken,
+} from '../../utils/authFetch';
 
 window.navigator.userAgent = 'react-native';
 
+const domain = 'http://localhost:1337';
 const socket = io('ws://localhost:1337?__sails_io_sdk_version=0.13.5', { jsonp: false });
-
-const domain = `http://localhost:1337`;
 const newUser = {
   email: 'test@gmail.com',
   password: 'testuser',
@@ -21,92 +23,76 @@ function composeRequestWithAuthToken(url, data) {
     },
     data: {
       ...data,
+      user: {
+        age: 0,
+        createdAt: '2016-03-24T04:10:10.000Z',
+        email: 'test@gmail.com',
+        firstName: null,
+        fullName: null,
+        gender: 'none',
+        id: 1,
+        isFirstLogin: true,
+        lastName: null,
+        telephone: null,
+        updatedAt: '2016-03-24T04:10:10.000Z',
+        username: 'testuser',
+        uuid: null,
+      },
     },
   };
 }
 
-// fetch('http://localhost:1337/rest/auth/simple', {method: 'post', data: newUser}).then(function(response) {
-  // console.log('res',response);
-// });
+// async function getAuthToken() {
+//   // const url = `${domain}/auth/token`;
+//   // const request = composeRequestWithAuthToken(url, newUser);
+//   // return await fetch(url, opt);
+//   // socket.emit('post', request, (response) => {
+//   //   console.log('user',response.body);
+//   // });
+// }
 
-{
-  ...data,
-  user: token,
-}
-
-
-
-async function getAuthToken() {
-  // let url = `${host}/auth/login`;     // api url for login
-  const url = `${domain}/auth/token`;
-  const option = {                         // optional second argument
-    method: 'post',               //  to customize the HTTP request
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(newUser),
-  };
-
-  // fetch(url, option).then(response => response.json()).then( response => {
-  //   console.log(response);
-  // });
-
-  let token = await fetch(url, option);
-  token = await token.json();
-  return token;
-
-  // for socket
-  // const request = composeRequestWithAuthToken(url, newUser);
-  // return fetch(url, opt);
-  // socket.emit('post', request, (response) => {
-  //   console.log('user',response.body);
-  // });
-}
-
-function joinRoom(chatRoomId) {
-  // const user = response.body.user;
+async function joinRoom(chatRoomId) {
   const url = `/room/${chatRoomId}/users`;
   const request = composeRequestWithAuthToken(url);
-  socket.emit('post', request, (response) => {
-    console.log('join room');
+  return new Promise(function(resolve) {
+    socket.emit('post', request, function(response) {
+      resolve(response);
+    });
   });
 }
 
-function sendMessage(chatRoomId, message) {
+async function sendMessage(chatRoomId, message) {
   const url = `/chat/${chatRoomId}/public`;
   const request = composeRequestWithAuthToken(url, message);
-  socket.emit('post', request, () => {
-    console.log('sended');
+  return new Promise(function(resolve, reject) {
+    socket.emit('post', request, function(response) {
+      resolve(response);
+    });
   });
 }
 
-function getChatHistory(chatRoomId) {
+async function getChatHistory(chatRoomId) {
   const url = `/chat/${chatRoomId}/history`;
   const request = composeRequestWithAuthToken(url);
-  socket.emit('get', request, (messageHistory) => {
-      // Received message history
-      console.log('=== get data ===');
-      console.log(messageHistory.body.result);
+  return new Promise( (resolve, reject) => {
+    socket.emit('get', request, (response) => {
+      resolve(response.body.result);
+    });
   });
 }
 
 socket.on('connect', async function() {
-
   console.log('connected');
-  // socket.emit('post', {
-  //   url: 'http://localhost:1337/rest/auth/token',
-  //   data: newUser,
-  // },function(authToken) {
-  //   console.log(authToken);
-  // });
   const token = await getAuthToken();
+  await joinRoom(1);
   console.log(token);
-
-
+  const response = await sendMessage(1, {
+    content: 'text',
+  });
+  console.log('====', response);
+  const messageHistory = await getChatHistory(1);
+  console.log('message',messageHistory);
 });
-
-// socket.emit('message','hi');
 
 const styles = StyleSheet.create({
   nav: {
