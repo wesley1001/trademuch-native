@@ -22,7 +22,7 @@ export async function getAuthToken() {
   return token;
 }
 
-export async function fetchWithAuch(url, method, data) {
+export async function fetchWithAuth(url, method, data) {
   const token = await getAuthToken();
   const option = {        // optional second argument
     method,               //  to customize the HTTP request
