@@ -6,101 +6,103 @@ window.navigator.userAgent = 'react-native';
 
 const socket = io('ws://localhost:1337?__sails_io_sdk_version=0.13.5', { jsonp: false });
 
-// var CookieManager = require('react-native-cookies');
-//
-// // set a cookie (IOS ONLY)
-// CookieManager.set({
-//   name: 'myCookie',
-//   value: 'myValue',
-//   domain: 'some domain',
-//   origin: 'some origin',
-//   path: '/',
-//   version: '1',
-//   expiration: '2015-05-30T12:30:00.00-05:00'
-// }, (err, res) => {
-//   console.log('cookie set!');
-//   console.log(err);
-//   console.log(res);
-// });
-//
-//
-// // list cookies (IOS ONLY)
-// CookieManager.getAll((err, res) => {
-//   console.log('cookies!');
-//   console.log(err);
-//   console.log(res);
-// });
-
-function composeRequest(url) {
-  return {
-    url,
-    headers: {
-      accept: 'Application/json',
-    },
-  };
-}
-
-
+const domain = `http://localhost:1337`;
 const newUser = {
   // username: 'testuser',
   email: 'test@gmail.com',
   password: 'testuser',
 };
 
+function composeRequestWithAuthToken(url, data) {
+  return {
+    url,
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    data: {
+      ...data,
+    },
+  };
+}
+
 // fetch('http://localhost:1337/rest/auth/simple', {method: 'post', data: newUser}).then(function(response) {
   // console.log('res',response);
 // });
 
+{
+  ...data,
+  user: token,
+}
+
+
+
+async function getAuthToken() {
+  // let url = `${host}/auth/login`;     // api url for login
+  const url = `${domain}/auth/token`;
+  const option = {                         // optional second argument
+    method: 'post',               //  to customize the HTTP request
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newUser),
+  };
+
+  // fetch(url, option).then(response => response.json()).then( response => {
+  //   console.log(response);
+  // });
+
+  let token = await fetch(url, option);
+  token = await token.json();
+  return token;
+
+  // for socket
+  // const request = composeRequestWithAuthToken(url, newUser);
+  // return fetch(url, opt);
+  // socket.emit('post', request, (response) => {
+  //   console.log('user',response.body);
+  // });
+}
+
+function joinRoom(chatRoomId) {
+  // const user = response.body.user;
+  const url = `/room/${chatRoomId}/users`;
+  const request = composeRequestWithAuthToken(url);
+  socket.emit('post', request, (response) => {
+    console.log('join room');
+  });
+}
+
+function sendMessage(chatRoomId, message) {
+  const url = `/chat/${chatRoomId}/public`;
+  const request = composeRequestWithAuthToken(url, message);
+  socket.emit('post', request, () => {
+    console.log('sended');
+  });
+}
+
+function getChatHistory(chatRoomId) {
+  const url = `/chat/${chatRoomId}/history`;
+  const request = composeRequestWithAuthToken(url);
+  socket.emit('get', request, (messageHistory) => {
+      // Received message history
+      console.log('=== get data ===');
+      console.log(messageHistory.body.result);
+  });
+}
+
 socket.on('connect', async function() {
 
   console.log('connected');
-
-  socket.emit('post',{
-    url: 'http://localhost:1337/auth/token',
-    data: newUser
-  }, function(response) {
-    console.log('user',response.body.user);
-    const user = response.body.user;
-    socket.emit('post', {
-      url: '/room/1/users',
-      data: {
-          user: user,
-        },
-    }, function(response) {
-      console.log('join room');
-      socket.emit('post', {
-        url: '/chat/1/public',
-        data: {
-          user: user,
-          content: 'content11',
-        },
-      }, function() {
-        console.log('sended');
-        socket.emit('get', {
-          url: '/chat/1/history',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          data: {
-            user: user,
-          },
-        }, function(messageHistory) {
-          console.log('=== get data ===');
-          console.log(messageHistory.body.result);
-      });
-
-      });
-    });
-  }
-);
   // socket.emit('post', {
   //   url: 'http://localhost:1337/rest/auth/token',
   //   data: newUser,
   // },function(authToken) {
   //   console.log(authToken);
   // });
-
+  const token = await getAuthToken();
+  console.log(token);
 
 
 });
