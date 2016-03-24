@@ -138,21 +138,16 @@ function PostDetail(props) {
 
   function postCreateButtonHandle() {
     props.requestCreate({
-      mode: 'give',
-      hobby: 1,
       detail: {
         title: '123',
         startDate: '2015-12-25',
         endDate: '2015-12-31',
-        price: '0',
-        radioItem: 1,
-        item: '',
       },
       location: {
         latitude: 24.148657699999998,
         longitude: 120.67413979999999,
-        accuracy: 30,
       },
+      images: '',
     });
   }
 

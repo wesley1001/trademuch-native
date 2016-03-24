@@ -10,7 +10,18 @@ function receivedCreate(photoSource) {
   };
 }
 
-export async function requestCreate(data) {
+export async function requestCreate(data = {
+  detail: {
+    title: '',
+    startDate: '',
+    endDate: '',
+  },
+  location: {
+    latitude: 23.5989208,
+    longitude: 121.0173408,
+  },
+  images: '',
+}) {
   const searchApi = 'http://localhost:1337/rest/post/create';
   const response = await fetch(searchApi, {
     method: 'POST',
