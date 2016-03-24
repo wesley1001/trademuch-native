@@ -8,7 +8,6 @@ const socket = io('ws://localhost:1337?__sails_io_sdk_version=0.13.5', { jsonp: 
 
 const domain = `http://localhost:1337`;
 const newUser = {
-  // username: 'testuser',
   email: 'test@gmail.com',
   password: 'testuser',
 };
