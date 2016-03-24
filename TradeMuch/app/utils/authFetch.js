@@ -5,6 +5,11 @@ const newUser = {
 };
 
 export async function getAuthToken() {
+  const domain = 'http://localhost:1337';
+  const newUser = {
+    email: 'test@gmail.com',
+    password: 'testuser',
+  };
   const url = `${domain}/auth/token`;
   const requestOption = {
     method: 'post',
@@ -30,7 +35,7 @@ export async function fetchWithAuth(url, method, data) {
     },
     body: JSON.stringify({
       ...data,
-      user: token,
+      token,
     }),
   };
   return await fetch(url, requestOption);
