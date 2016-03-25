@@ -1,5 +1,6 @@
 import {
   RECEIVED_MESSAGES,
+  RECEIVED_NEW_MESSAGE,
 } from '../actions/MessageActions';
 
 export function messenger(state = {}, action) {
@@ -8,6 +9,14 @@ export function messenger(state = {}, action) {
       return {
         ...state,
         messages: action.data,
+      };
+    case RECEIVED_NEW_MESSAGE:
+      return {
+        ...state,
+        messages: [
+          ...state.messages,
+          action.data,
+        ],
       };
     default:
       return state;

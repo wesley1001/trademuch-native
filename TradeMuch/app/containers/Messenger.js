@@ -4,6 +4,7 @@ import io from 'socket.io-client/socket.io';
 import { connect } from 'react-redux';
 import {
   receivedMessages,
+  receivedNewMessage,
 } from '../actions/MessageActions';
 import config from '../config/config';
 
@@ -39,7 +40,7 @@ function composeRequestWithAuthToken(url, data) {
 }
 
 async function joinRoom(chatRoomId) {
-  const url = `/room/${chatRoomId}/users`;
+  const url = `/rest/room/${chatRoomId}/users`;
   const request = composeRequestWithAuthToken(url);
   return new Promise((resolve) => {
     socket.emit('post', request, (response) => {
@@ -49,7 +50,7 @@ async function joinRoom(chatRoomId) {
 }
 
 async function sendMessage(chatRoomId, message) {
-  const url = `/chat/${chatRoomId}/public`;
+  const url = `/rest/chat/${chatRoomId}/public`;
   const request = composeRequestWithAuthToken(url, message);
   return new Promise((resolve) => {
     socket.emit('post', request, (response) => {
@@ -59,7 +60,7 @@ async function sendMessage(chatRoomId, message) {
 }
 
 async function getChatHistory(chatRoomId) {
-  const url = `/chat/${chatRoomId}/history`;
+  const url = `/rest/chat/${chatRoomId}/history`;
   const request = composeRequestWithAuthToken(url);
   return new Promise((resolve) => {
     socket.emit('get', request, (response) => {
@@ -67,10 +68,6 @@ async function getChatHistory(chatRoomId) {
     });
   });
 }
-
-socket.on('public', (response) => {
-  console.log('=== === ===', response);
-});
 
 const styles = StyleSheet.create({
   nav: {
@@ -85,34 +82,38 @@ const styles = StyleSheet.create({
   },
 });
 
+
 export default class Messenger extends Component {
+
+  static propTypes = {
+    receivedMessages: React.PropTypes.func,
+    receivedNewMessage: React.PropTypes.func,
+  };
+
+  static defaultProps = {
+    receivedMessages: () => {},
+    receivedNewMessage: () => {},
+  };
+
   componentWillMount() {
     socket.on('connect', async () => {
       // const token = await getAuthToken();
       await joinRoom(1);
       const messageHistory = await getChatHistory(1);
       this.props.receivedMessages(messageHistory);
-      console.log(messageHistory);
+      socket.on('public', (response) => {
+        this.props.receivedNewMessage(response);
+      });
     });
   }
 
-  async handleSend(message = {}, rowID = null) {
+  async handleSend(message = {}, /* rowID = null*/) {
     // Send message.text to your server
     // {text: "123", name: "Sender", image: null, position: "right", date: Fri Mar 25 2016 01:15:14 GMT+0800 (CST)…}
     await sendMessage(1, {
       content: message.text,
     });
   }
-
-  // function handleReceive() {
-  //   this._GiftedMessenger.appendMessage({
-  //     text: 'Received message',
-  //     name: 'Friend',
-  //     image: {uri: 'https://facebook.github.io/react/img/logo_og.png'},
-  //     position: 'left',
-  //     date: new Date(),
-  //   });
-  // }
 
   messengerRef(c) {
     this._GiftedMessenger = c;
@@ -154,6 +155,7 @@ function _injectPropsFromStore({ messenger }) {
 
 const _injectPropsFormActions = {
   receivedMessages,
+  receivedNewMessage,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(Messenger);
