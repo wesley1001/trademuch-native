@@ -1,7 +1,8 @@
 import React, { Component, StyleSheet, Dimensions, View, Text } from 'react-native';
-import GiftedMessenger from 'react-native-gifted-messenger';
-import io from 'socket.io-client/socket.io';
 import { connect } from 'react-redux';
+window.navigator.userAgent = 'react-native';
+const io = require('socket.io-client/socket.io');
+import GiftedMessenger from 'react-native-gifted-messenger';
 import {
   receivedMessages,
   receivedNewMessage,
@@ -9,7 +10,6 @@ import {
 import config from '../config/config';
 
 const socket = io(`ws://${config.domain}?__sails_io_sdk_version=0.13.5`, { jsonp: false });
-window.navigator.userAgent = 'react-native';
 
 function composeRequestWithAuthToken(url, data) {
   return {
@@ -88,11 +88,7 @@ export default class Messenger extends Component {
   static propTypes = {
     receivedMessages: React.PropTypes.func,
     receivedNewMessage: React.PropTypes.func,
-  };
-
-  static defaultProps = {
-    receivedMessages: () => {},
-    receivedNewMessage: () => {},
+    messages: React.PropTypes.object,
   };
 
   componentWillMount() {
