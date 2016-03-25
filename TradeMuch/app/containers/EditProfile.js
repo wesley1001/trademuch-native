@@ -5,7 +5,8 @@ import React, {
   Component,
   Image,
   Text,
-  Alert,
+  TouchableOpacity,
+  TextInput,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { FBSDKLoginButton } from 'react-native-fbsdklogin';
@@ -26,10 +27,15 @@ const styles = StyleSheet.create({
     width: windowSize.width,
     height: windowSize.height,
   },
-  logo: {
+  avatar: {
+    borderRadius: 50,
     marginTop: 100,
-    width: 200,
-    height: 200,
+    width: 100,
+    height: 100,
+  },
+  username: {
+    marginTop: 10,
+    color: '#fff',
   },
   header: {
     justifyContent: 'center',
@@ -37,41 +43,45 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'transparent',
   },
-  loginButtonContainer: {
+  bodyContainer: {
     flex: 1,
-    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+  },
+  inputContainer: {
     alignItems: 'center',
   },
   text: {
-    fontSize: 20,
-    marginBottom: 20,
+    // fontSize: 20,
+    marginBottom: 10,
     color: '#fff',
+  },
+  input: {
+    color: 'rgba(255, 255, 255, 1)',
+    fontSize: 25,
+    marginBottom: 5,
+    textAlign: 'left',
+    height: 30,
+  },
+  button: {
+    height: 40,
+    width: 150,
+    marginTop: 30,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 1)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonText: {
+    color: 'rgba(255, 255, 255, 1)',
   },
 });
 
 export default class EditProfile extends Component {
   constructor(props) {
     super(props);
-    this.handleLoginFinished = this.handleLoginFinished.bind(this);
-  }
-
-  handleLoginFinished(error, result) {
-    if (error) {
-      Alert.alert('登入失敗', '請再試試看');
-    } else {
-      if (result.isCancelled) {
-        // alert('Login cancelled.');
-      } else {
-        FBSDKAccessToken.getCurrentAccessToken(async userIdentities => {
-          this.props.requestUserInfo(userIdentities);
-          if (result === null) {
-            // alert('Start logging in.');
-          } else {
-            // alert('Start logging out.');
-          }
-        });
-      }
-    }
   }
 
   render() {
@@ -79,10 +89,24 @@ export default class EditProfile extends Component {
       <View style={styles.container} >
         <Image source={{ uri: 'http://qa.trademuch.co.uk/img/splash.png' }} style={styles.backImg} />
         <View style={styles.header}>
-          <Image style={styles.logo} source={{ uri: 'http://qa.trademuch.co.uk/img/splashLogo.png' }} />
+          <Image style={styles.avatar} source={{ uri: 'http://graph.facebook.com/1247429101941071/picture?type=large' }} />
+          <Text style={styles.username}>傅耀德</Text>
         </View>
-        <View style={styles.loginButtonContainer} >
-          <Text style={styles.text}>使用 Facebook 登入</Text>
+        <View style={styles.bodyContainer} >
+          <View style={styles.inputContainer}>
+            <Text style={styles.text}>Email</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="點擊輸入描述"
+              placeholderTextColor="#FFF"
+              onChangeText= { this.inputTitleHandle }
+            />
+          </View>
+          <Text style={styles.text}>Line</Text>
+          <Text style={styles.text}>電話</Text>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>確認</Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
