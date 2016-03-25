@@ -22,15 +22,15 @@ export async function getAuthToken() {
 
 export async function fetchWithAuth(url, method, data) {
   const token = await getAuthToken();
-  const requestOption = {        // optional second argument
-    method,               //  to customize the HTTP request
+  const requestOption = {
+    method,
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       ...data,
-      ...token,
+      token,
     }),
   };
   return await fetch(url, requestOption);
