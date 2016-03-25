@@ -165,9 +165,7 @@ export default class PostDetail extends Component {
   }
 
   render() {
-
     if (this.props.postFinishData.id !== null) {
-      console.log(Actions);
       Actions.PostList();
     }
 
