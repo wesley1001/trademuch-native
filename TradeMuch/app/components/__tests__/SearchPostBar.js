@@ -24,16 +24,16 @@ const utils = require('react-addons-test-utils');
  * ## Under test
  * class under test
  */
-jest.dontMock('../searchPost');
-var SearchPost = require('../searchPost');
+jest.dontMock('../SearchPostBar');
+var SearchPost = require('../SearchPostBar');
 
 /**
  * ## Test
  */
-describe('searchPost', () => {
-  let searchPost;
+describe('SearchPostBar', () => {
+  let searchPostBar;
 
-  const searchPostProps = {};
+  const searchPostBarProps = {};
 
   function renderFormSearchPost(props) {
     const renderer = utils.createRenderer();
@@ -51,11 +51,11 @@ describe('searchPost', () => {
    * before each test, render the form button with the default props
    */
   beforeEach(() => {
-    searchPost = renderFormSearchPost(searchPostProps);
+    searchPostBar = renderFormSearchPost(searchPostBarProps);
   });
 
   it('should be fine', () => {
-    const {output} = searchPost;
+    const {output} = searchPostBar;
     expect(output.type.toString()).toEqual(View.toString());
   });
 
