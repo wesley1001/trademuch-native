@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./node_modules/react-native/local-cli/cli.js start && node node_modules/remote-redux-devtools-on-debugger/bin/cli.js --hostname localhost --port 5678 --injectserver ",
-    "eslint": "./node_modules/eslint/bin/eslint.js ./app/*"
+    "eslint": "./node_modules/eslint/bin/eslint.js ./app/*",
+    "ios": "node node_modules/react-native/local-cli/cli.js run-ios"
   },
   "dependencies": {
     "react": "0.14.7",
