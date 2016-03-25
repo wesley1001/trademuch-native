@@ -5,6 +5,7 @@ import React, {
   Component,
   Image,
   Text,
+  Alert,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { FBSDKLoginButton } from 'react-native-fbsdklogin';
@@ -49,10 +50,14 @@ const styles = StyleSheet.create({
 });
 
 export default class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.handleLoginFinished = this.handleLoginFinished.bind(this);
+  }
 
   handleLoginFinished(error, result) {
     if (error) {
-      // alert('Error logging in.');
+      Alert.alert('登入失敗', '請再試試看');
     } else {
       if (result.isCancelled) {
         // alert('Login cancelled.');
@@ -65,7 +70,6 @@ export default class Login extends Component {
             // alert('Start logging out.');
           }
         });
-        // alert('Logged in.');
       }
     }
   }
