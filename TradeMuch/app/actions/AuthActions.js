@@ -11,7 +11,8 @@ function receivedUserInfo(userInfo) {
 
 export async function requestUserInfo(userIdentities) {
   const fbGraphApi = `https://graph.facebook.com/v2.5/${userIdentities.userID}?fields=id,name,email&access_token=${userIdentities.tokenString}`;
-  const userInfo = await fetch(fbGraphApi).then(response => response.json());
+  let userInfo = await fetch(fbGraphApi);
+  userInfo = await userInfo.json();
   return (dispatch) => {
     dispatch(receivedUserInfo(userInfo));
   };
