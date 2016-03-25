@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node ./node_modules/react-native/local-cli/cli.js start && node node_modules/remote-redux-devtools-on-debugger/bin/cli.js --hostname localhost --port 5678 --injectserver ",
     "eslint": "./node_modules/eslint/bin/eslint.js ./app/*",
-    "ios": "node node_modules/react-native/local-cli/cli.js run-ios"
+    "ios": "node node_modules/react-native/local-cli/cli.js run-ios",
+    "test": "mocha test"
   },
   "dependencies": {
     "react": "0.14.7",
@@ -27,12 +28,27 @@
     "react-native-search-bar": "https://github.com/FuYaoDe/react-native-search-bar.git"
   },
   "devDependencies": {
+    "babel-cli": "^6.6.5",
+    "babel-core": "^6.7.4",
     "babel-eslint": "^6.0.0-beta.6",
+    "babel-plugin-add-module-exports": "^0.1.2",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-polyfill": "^6.7.4",
+    "babel-preset-react-native": "^1.5.3",
+    "chai": "^3.5.0",
+    "enzyme": "^2.2.0",
     "eslint": "^2.4.0",
     "eslint-config-airbnb": "^6.1.0",
     "eslint-plugin-react": "^4.2.3",
+    "isparta": "^4.0.0",
+    "jsdom": "^8.1.0",
+    "mocha": "^2.4.5",
+    "node-fetch": "^1.4.1",
+    "react-dom": "^0.14.7",
+    "react-native-web": "0.0.21",
     "redux-logger": "^2.6.1",
     "remote-redux-devtools": "^0.1.5",
-    "remote-redux-devtools-on-debugger": "^0.3.4"
+    "remote-redux-devtools-on-debugger": "^0.3.4",
+    "sinon": "^1.17.3"
   }
 }

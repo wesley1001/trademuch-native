@@ -21,8 +21,8 @@ export default function AppRoutes() {
       {/*
         <Route name="Messenger" component={Messenger} title="Messenger" />
         */}
-      <Route name="PostList" component={PostList} title="PostList" />
-      <Route name="PostDetail" component={PostDetail} title="發布" initial/>
+      <Route name="PostList" component={PostList} title="PostList" initial />
+      <Route name="PostDetail" component={PostDetail} title="發布" />
       <Route name="EditProfile" component={EditProfile} title="確認個人資料" />
     </Router>
   );

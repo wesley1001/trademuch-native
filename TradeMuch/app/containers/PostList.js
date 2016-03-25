@@ -9,7 +9,7 @@ import { Actions } from 'react-native-router-flux';
 const styles = React.StyleSheet.create({
   content: {
     flex: 1,
-    marginTop: 20,
+    marginTop: 65,
   },
 });
 
