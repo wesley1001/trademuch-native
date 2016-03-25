@@ -9,15 +9,16 @@ const Router = connect()(RNRF.Router);
 import PostList from './containers/PostList';
 import PostDetail from './containers/PostDetail';
 import MessengerSample from './components/Messenger/Messenger';
+import Login from './components/Login';
 // import NHSample from './containers/sampleApp';
 
 export default function AppRoutes() {
   return (
-    <Router hideNavBar name="root">
+    <Router name="root">
       <Schema name="default" sceneConfig={Navigator.SceneConfigs.FloatFromRight} />
-      <Route name="Login" component={MessengerSample} title="Login" initial />
-      <Route name="PostList" component={PostList} title="PostList"/>
-      <Route name="PostDetail" component={PostDetail} title="PostDetail"/>
+      <Route name="Login" component={MessengerSample} title="Login" />
+      <Route name="PostList" component={PostList} title="PostList" type="replace" />
+      <Route name="PostDetail" component={PostDetail} title="PostDetail" initial />
     </Router>
   );
 }

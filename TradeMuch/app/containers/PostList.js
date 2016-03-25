@@ -1,9 +1,10 @@
 'use strict';
 
-import React, { View } from 'react-native';
+import React, { View, TouchableOpacity, Text } from 'react-native';
 import PostListItem from '../components/PostListItem';
 import SearchPostBar from '../components/SearchPostBar';
 import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
 
 const styles = React.StyleSheet.create({
   content: {
@@ -30,6 +31,9 @@ function PostList(props) {
     <View style={styles.content}>
         <SearchPostBar />
         {postListContainer}
+        <TouchableOpacity onPress={Actions.PostDetail}>
+          <Text style={styles.disclaimerText}>List Test Page</Text>
+        </TouchableOpacity>
     </View>
   );
 }

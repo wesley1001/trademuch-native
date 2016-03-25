@@ -20,7 +20,7 @@ import {
 
 const styles = StyleSheet.create(require('./styles.js'));
 
-export default function Login() {
+export default function Login(props) {
   function handleLoginFinished(error, result) {
     if (error) {
       // alert('Error logging in.');
@@ -42,7 +42,7 @@ export default function Login() {
   }
 
   return (
-    <View style={this.props.style}>
+    <View style={styles.loginContainer}>
       <FBSDKLoginButton
         style={styles.loginButton}
         // onWillLogin={() => {
