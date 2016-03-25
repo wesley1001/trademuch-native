@@ -4,9 +4,10 @@ import io from 'socket.io-client/socket.io';
 import { connect } from 'react-redux';
 import {
   receivedMessages,
-} from '../../actions/MessageActions';
+} from '../actions/MessageActions';
+import config from '../config/config';
 
-const socket = io('ws://localhost:1337?__sails_io_sdk_version=0.13.5', { jsonp: false });
+const socket = io(`ws://${config.domain}?__sails_io_sdk_version=0.13.5`, { jsonp: false });
 window.navigator.userAgent = 'react-native';
 
 function composeRequestWithAuthToken(url, data) {
@@ -67,6 +68,10 @@ async function getChatHistory(chatRoomId) {
   });
 }
 
+socket.on('public', (response) => {
+  console.log('=== === ===', response);
+});
+
 const styles = StyleSheet.create({
   nav: {
     backgroundColor: '#007aff',
@@ -80,7 +85,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class GiftedMessengerExample extends Component {
+export default class Messenger extends Component {
   componentWillMount() {
     socket.on('connect', async () => {
       // const token = await getAuthToken();
@@ -151,4 +156,4 @@ const _injectPropsFormActions = {
   receivedMessages,
 };
 
-export default connect(_injectPropsFromStore, _injectPropsFormActions)(GiftedMessengerExample);
+export default connect(_injectPropsFromStore, _injectPropsFormActions)(Messenger);
