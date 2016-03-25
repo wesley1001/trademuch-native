@@ -50,6 +50,11 @@ const styles = StyleSheet.create({
 });
 
 export default class Login extends Component {
+
+  static propTypes = {
+    requestUserInfo: React.PropTypes.func,
+  };
+
   constructor(props) {
     super(props);
     this.handleLoginFinished = this.handleLoginFinished.bind(this);
@@ -74,6 +79,9 @@ export default class Login extends Component {
     }
   }
 
+  handleLoginFinished() {
+  }
+
   render() {
     return (
       <View style={styles.container} >
@@ -86,6 +94,7 @@ export default class Login extends Component {
           <FBSDKLoginButton
             style={styles.loginButton}
             onLoginFinished={this.handleLoginFinished}
+            onLogoutFinished={this.handleLoginFinished}
             readPermissions={[]}
             publishPermissions={[]}
           />
@@ -94,6 +103,7 @@ export default class Login extends Component {
     );
   }
 }
+
 function _injectPropsFromStore() {
   return {
   };
