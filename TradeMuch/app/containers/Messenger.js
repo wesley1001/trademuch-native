@@ -1,9 +1,7 @@
 import React, { Component, StyleSheet, Dimensions, View, Text } from 'react-native';
-// var React = require('react-native');
 import { connect } from 'react-redux';
-// import io from 'socket.io-client/socket.io';
 window.navigator.userAgent = 'react-native';
-var io = require('socket.io-client/socket.io');
+const io = require('socket.io-client/socket.io');
 import GiftedMessenger from 'react-native-gifted-messenger';
 import {
   receivedMessages,
@@ -90,11 +88,7 @@ export default class Messenger extends Component {
   static propTypes = {
     receivedMessages: React.PropTypes.func,
     receivedNewMessage: React.PropTypes.func,
-  };
-
-  static defaultProps = {
-    receivedMessages: () => {},
-    receivedNewMessage: () => {},
+    messages: React.PropTypes.object,
   };
 
   componentWillMount() {
