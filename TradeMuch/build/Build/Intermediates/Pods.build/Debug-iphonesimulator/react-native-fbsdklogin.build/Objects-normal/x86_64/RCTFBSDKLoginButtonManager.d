@@ -1,0 +1,34 @@
+dependencies: \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/node_modules/react-native-fbsdklogin/iOS/RCTFBSDKLoginButtonManager.m \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/Pods/Target\ Support\ Files/react-native-fbsdklogin/react-native-fbsdklogin-prefix.pch \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/node_modules/react-native-fbsdklogin/iOS/RCTFBSDKLoginButtonManager.h \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/Pods/FBSDKLoginKit/FBSDKLoginKit/FBSDKLoginKit/FBSDKLoginKit.h \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/Pods/FBSDKLoginKit/FBSDKLoginKit/FBSDKLoginKit/FBSDKLoginButton.h \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/Pods/FBSDKCoreKit/FBSDKCoreKit/FBSDKCoreKit/FBSDKButton.h \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/Pods/FBSDKLoginKit/FBSDKLoginKit/FBSDKLoginKit/FBSDKLoginManager.h \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/Pods/FBSDKLoginKit/FBSDKLoginKit/FBSDKLoginKit/FBSDKTooltipView.h \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/Pods/FBSDKLoginKit/FBSDKLoginKit/FBSDKLoginKit/FBSDKLoginConstants.h \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/Pods/FBSDKCoreKit/FBSDKCoreKit/FBSDKCoreKit/FBSDKMacros.h \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/Pods/FBSDKLoginKit/FBSDKLoginKit/FBSDKLoginKit/FBSDKLoginManagerLoginResult.h \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/Pods/FBSDKLoginKit/FBSDKLoginKit/FBSDKLoginKit/FBSDKLoginTooltipView.h \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/node_modules/react-native/React/Views/RCTViewManager.h \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/node_modules/react-native/React/Base/RCTBridgeModule.h \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/node_modules/react-native/React/Base/RCTDefines.h \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/node_modules/react-native/React/Base/RCTConvert.h \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/node_modules/react-native/React/Layout/Layout.h \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/node_modules/react-native/React/Views/RCTAnimationType.h \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/node_modules/react-native/React/Views/RCTBorderStyle.h \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/node_modules/react-native/React/Views/RCTTextDecorationLineType.h \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/node_modules/react-native/React/Base/RCTLog.h \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/node_modules/react-native/React/Base/RCTAssert.h \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/node_modules/react-native/React/Views/RCTPointerEvents.h \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/node_modules/react-native/React/Views/RCTComponent.h \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/node_modules/react-native/React/Base/RCTEventDispatcher.h \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/node_modules/react-native/React/Base/RCTBridge.h \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/node_modules/react-native/React/Base/RCTBridgeDelegate.h \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/node_modules/react-native/React/Base/RCTFrameUpdate.h \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/node_modules/react-native/React/Base/RCTInvalidating.h \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/node_modules/react-native/React/Base/RCTJavaScriptExecutor.h \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/Pods/Headers/Public/React/RCTUtils.h \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/Pods/Headers/Public/React/UIView+React.h \
+  /Users/FuD/Projects/trademuch-native/TradeMuch/node_modules/react-native-fbsdklogin/iOS/RCTConvert+FBSDKLogin.h
