@@ -1,13 +1,13 @@
-import React, { StyleSheet, Dimensions, View, Text } from 'react-native';
+import React, { Component, StyleSheet, Dimensions, View, Text } from 'react-native';
 import GiftedMessenger from 'react-native-gifted-messenger';
 import io from 'socket.io-client/socket.io';
+import { connect } from 'react-redux';
 import {
-  getAuthToken,
-} from '../../utils/authFetch';
-
-window.navigator.userAgent = 'react-native';
+  receivedMessages,
+} from '../../actions/MessageActions';
 
 const socket = io('ws://localhost:1337?__sails_io_sdk_version=0.13.5', { jsonp: false });
+window.navigator.userAgent = 'react-native';
 
 function composeRequestWithAuthToken(url, data) {
   return {
@@ -67,19 +67,6 @@ async function getChatHistory(chatRoomId) {
   });
 }
 
-socket.on('connect', async function() {
-  console.log('connected');
-  const token = await getAuthToken();
-  await joinRoom(1);
-  console.log(token);
-  const response = await sendMessage(1, {
-    content: 'text',
-  });
-  console.log('====', response);
-  const messageHistory = await getChatHistory(1);
-  console.log('message',messageHistory);
-});
-
 const styles = StyleSheet.create({
   nav: {
     backgroundColor: '#007aff',
@@ -93,30 +80,23 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function GiftedMessengerExample() {
-  function getMessages() {
-    return [
-      {
-        text: 'Are you building a chat app?',
-        name: 'React-Native',
-        image: {
-          uri: 'https://facebook.github.io/react/img/logo_og.png',
-        },
-        position: 'left',
-        date: new Date(2015, 0, 16, 19, 0),
-      },
-      {
-        text: 'Yes, and I use Gifted Messenger!',
-        name: 'Developer',
-        image: null,
-        position: 'right',
-        date: new Date(2015, 0, 17, 19, 0),
-      },
-    ];
+export default class GiftedMessengerExample extends Component {
+  componentWillMount() {
+    socket.on('connect', async () => {
+      // const token = await getAuthToken();
+      await joinRoom(1);
+      const messageHistory = await getChatHistory(1);
+      this.props.receivedMessages(messageHistory);
+      console.log(messageHistory);
+    });
   }
 
-  function handleSend(message = {}, rowID = null) {
+  async handleSend(message = {}, rowID = null) {
     // Send message.text to your server
+    // {text: "123", name: "Sender", image: null, position: "right", date: Fri Mar 25 2016 01:15:14 GMT+0800 (CST)…}
+    await sendMessage(1, {
+      content: message.text,
+    });
   }
 
   // function handleReceive() {
@@ -129,32 +109,46 @@ export default function GiftedMessengerExample() {
   //   });
   // }
 
-  function messengerRef(c) {
+  messengerRef(c) {
     this._GiftedMessenger = c;
   }
 
-  return (
-    <View>
-      <View style={styles.nav}>
-        <Text style={styles.navText}>Kent</Text>
+  render() {
+    return (
+      <View>
+        <View style={styles.nav}>
+          <Text style={styles.navText}>Kent</Text>
+        </View>
+        <GiftedMessenger
+          ref={this.messengerRef}
+          style={{ marginTop: 20 }}
+          messages={this.props.messages}
+          handleSend={this.handleSend}
+          maxHeight={Dimensions.get('window').height - 64} // 64 for the navBar
+          styles={{
+            bubbleLeft: {
+              backgroundColor: '#e6e6eb',
+              marginRight: 70,
+            },
+            bubbleRight: {
+              backgroundColor: '#007aff',
+              marginLeft: 70,
+            },
+          }}
+        />
       </View>
-      <GiftedMessenger
-        ref={messengerRef}
-        style={{ marginTop: 20 }}
-        messages={getMessages()}
-        handleSend={handleSend}
-        maxHeight={Dimensions.get('window').height - 64} // 64 for the navBar
-        styles={{
-          bubbleLeft: {
-            backgroundColor: '#e6e6eb',
-            marginRight: 70,
-          },
-          bubbleRight: {
-            backgroundColor: '#007aff',
-            marginLeft: 70,
-          },
-        }}
-      />
-    </View>
-  );
+    );
+  }
 }
+
+function _injectPropsFromStore({ messenger }) {
+  return {
+    messages: messenger.messages,
+  };
+}
+
+const _injectPropsFormActions = {
+  receivedMessages,
+};
+
+export default connect(_injectPropsFromStore, _injectPropsFormActions)(GiftedMessengerExample);
