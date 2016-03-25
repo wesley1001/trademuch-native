@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "start": "react-native start",
-    "eslint": "eslint ./app/*"
+    "eslint": "./node_modules/eslint/bin/eslint.js ./app/*"
   },
   "dependencies": {
+    "base64-js": "^1.1.1",
     "react-native": ">=v0.13.0",
     "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
     "react-native-cookies": "0.0.5",
@@ -14,6 +15,8 @@
     "react-native-fbsdklogin": "0.0.8",
     "react-native-fbsdkshare": "0.0.8",
     "react-native-gifted-messenger": "0.0.24",
+    "react-native-image-picker": "^0.18.3",
+    "react-native-linear-gradient": "^1.5.2",
     "react-native-router-flux": "^2.3.9",
     "react-native-search-bar": "https://github.com/FuYaoDe/react-native-search-bar.git",
     "react-redux": "^4.4.0",
