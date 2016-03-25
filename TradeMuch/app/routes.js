@@ -14,10 +14,10 @@ import Login from './components/Login';
 
 export default function AppRoutes() {
   return (
-    <Router hideNavBar name="root">
+    <Router name="root">
       <Schema name="default" sceneConfig={Navigator.SceneConfigs.FloatFromRight} />
       <Route name="Login" component={MessengerSample} title="Login" />
-      <Route name="PostList" component={PostList} title="PostList" />
+      <Route name="PostList" component={PostList} title="PostList" type="replace" />
       <Route name="PostDetail" component={PostDetail} title="PostDetail" initial />
     </Router>
   );

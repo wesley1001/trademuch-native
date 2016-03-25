@@ -6,6 +6,7 @@ import React, {
   TouchableOpacity,
   Text,
   TextInput,
+  Component,
 } from 'react-native';
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
@@ -54,7 +55,7 @@ const styles = React.StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 1)',
     height: 50,
     width: 50,
-    marginTop: 50,
+    marginTop: 100,
     marginLeft: 20,
   },
   imageContainer: {
@@ -119,12 +120,15 @@ const styles = React.StyleSheet.create({
 });
 
 
-function PostDetail(props) {
-  if (props.postFinishData.id !== null) {
-    console.log(Actions);
-    Actions.PostList;
+export default class PostDetail extends Component {
+  constructor(props) {
+    super(props);
+    this.selectPhotoButtonHandle = this.selectPhotoButtonHandle.bind(this);
+    this.inputTitleHandle = this.inputTitleHandle.bind(this);
+    this.postCreateButtonHandle = this.postCreateButtonHandle.bind(this);
   }
-  function selectPhotoButtonHandle() {
+
+  selectPhotoButtonHandle() {
     ImagePickerManager.showImagePicker(options, (response) => {
       if (!response.didCancel) {
       //   console.log('User cancelled image picker');
@@ -134,60 +138,75 @@ function PostDetail(props) {
       //   console.log('User tapped custom button: ', response.customButton);
       // } else {
         const source = { uri: response.uri.replace('file://', ''), isStatic: true };
-        props.requestTakePhoto(source, response);
+        this.props.requestTakePhoto(source, response);
         const picExtension = response.uri.split('.').pop();
         const picBase64 = `data:image/${picExtension};base64,${response.data}`;
-        props.requestUploadImg({ picBase64 });
+        this.props.requestUploadImg({ picBase64 });
       }
     });
   }
 
-  function postCreateButtonHandle() {
-    props.requestCreate({
+  postCreateButtonHandle() {
+    this.props.requestCreate({
       detail: {
-        title: props.title,
+        title: this.props.title,
         startDate: new Date(),
       },
       location: {
         latitude: 24.148657699999998,
         longitude: 120.67413979999999,
       },
-      images: props.imgSrc[0].src,
+      images: this.props.imgSrc[0].src,
     });
   }
 
-  function inputTitleHandle(text) {
-    props.requestInputTitle(text);
+  inputTitleHandle(text) {
+    this.props.requestInputTitle(text);
   }
 
-  return (
-    <View style={styles.imageContainer}>
-      <Image source={props.photo} style={styles.itemImg} />
-      <LinearGradient
-        colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.5)', 'rgba(0, 0, 0, 1)']}
-        style={styles.footBackColor}
-      />
-      <View style={styles.cameraButtonContainer}>
-        <TouchableOpacity style={styles.cameraButton} onPress={ selectPhotoButtonHandle } />
-      </View>
-      <View style={styles.itemDescriptionContainer}>
-        <TextInput
-          style={styles.title}
-          placeholder="點擊輸入描述"
-          placeholderTextColor="#FFF"
-          value={props.title}
-          onChangeText= { inputTitleHandle }
+  render() {
+
+    if (this.props.postFinishData.id !== null) {
+      console.log(Actions);
+      Actions.PostList();
+    }
+
+    return (
+      <View style={styles.imageContainer}>
+        <Image source={this.props.photo} style={styles.itemImg} />
+        <LinearGradient
+          colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0)',
+            'rgba(0, 0, 0, 0.5)', 'rgba(0, 0, 0, 1)']}
+          style={styles.footBackColor}
         />
-      </View>
-      <View style={styles.footContainer}>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={ postCreateButtonHandle }>
-            <Text style={styles.buttonText} >發表</Text>
-          </TouchableOpacity>
+        <View style={styles.cameraButtonContainer}>
+          <TouchableOpacity
+            style={styles.cameraButton}
+            onPress={ this.selectPhotoButtonHandle }
+          />
+        </View>
+        <View style={styles.itemDescriptionContainer}>
+          <TextInput
+            style={styles.title}
+            placeholder="點擊輸入描述"
+            placeholderTextColor="#FFF"
+            value={this.props.title}
+            onChangeText= { this.inputTitleHandle }
+          />
+        </View>
+        <View style={styles.footContainer}>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={ this.postCreateButtonHandle }
+            >
+              <Text style={styles.buttonText} >發表</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-    </View>
-  );
+    );
+  }
 }
 
 function _injectPropsFromStore(state) {
