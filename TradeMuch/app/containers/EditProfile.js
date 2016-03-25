@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     alignItems: 'center',
+    flexDirection: 'row',
   },
   text: {
     // fontSize: 20,
@@ -58,10 +59,11 @@ const styles = StyleSheet.create({
   },
   input: {
     color: 'rgba(255, 255, 255, 1)',
-    fontSize: 25,
     marginBottom: 5,
-    textAlign: 'left',
-    height: 30,
+    textAlign: 'center',
+    fontSize: 15,
+    height: 25,
+    marginLeft:10
   },
   button: {
     height: 40,
@@ -93,17 +95,11 @@ export default class EditProfile extends Component {
           <Text style={styles.username}>傅耀德</Text>
         </View>
         <View style={styles.bodyContainer} >
-          <View style={styles.inputContainer}>
-            <Text style={styles.text}>Email</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="點擊輸入描述"
-              placeholderTextColor="#FFF"
-              onChangeText= { this.inputTitleHandle }
+          <TextInput
+            style={styles.input}
+            placeholder="點擊輸入Email"
+            placeholderTextColor="#FFF"
             />
-          </View>
-          <Text style={styles.text}>Line</Text>
-          <Text style={styles.text}>電話</Text>
           <TouchableOpacity style={styles.button}>
             <Text style={styles.buttonText}>確認</Text>
           </TouchableOpacity>

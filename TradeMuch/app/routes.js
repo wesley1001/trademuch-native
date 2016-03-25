@@ -18,7 +18,7 @@ export default function AppRoutes() {
       <Schema name="default" sceneConfig={Navigator.SceneConfigs.FloatFromRight} />
       <Route name="Login" component={Login} title="Login" />
       <Route name="PostList" component={PostList} title="PostList" />
-      <Route name="PostDetail" component={PostDetail} title="PostDetail" />
+      <Route name="PostDetail" component={PostDetail} title="發布" />
       <Route name="EditProfile" component={EditProfile} title="確認個人資料" initial />
     </Router>
   );

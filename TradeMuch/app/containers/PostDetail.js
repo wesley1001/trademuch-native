@@ -52,7 +52,7 @@ const styles = React.StyleSheet.create({
     flex: 0.69,
   },
   cameraButton: {
-    backgroundColor: 'rgba(255, 255, 255, 1)',
+    // backgroundColor: 'rgba(255, 255, 255, 1)',
     height: 50,
     width: 50,
     marginTop: 100,
@@ -178,10 +178,9 @@ export default class PostDetail extends Component {
           style={styles.footBackColor}
         />
         <View style={styles.cameraButtonContainer}>
-          <TouchableOpacity
-            style={styles.cameraButton}
-            onPress={ this.selectPhotoButtonHandle }
-          />
+          <TouchableOpacity onPress={ this.selectPhotoButtonHandle } >
+            <Image source={{uri: 'https://googledrive.com/host/0B-XkApzKpJ7QWHZNeFRXRzNZcHM'}} style={styles.cameraButton}/>
+          </TouchableOpacity>
         </View>
         <View style={styles.itemDescriptionContainer}>
           <TextInput
