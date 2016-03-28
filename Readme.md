@@ -6,8 +6,9 @@ npm install -g npm # if your npm version < 3
 npm install -g rnpm
 npm install
 sudo gem install cocoapods
-rnpm link
 pod install
+rnpm link react-native-search-bar
+rnpm link react-native-linear-gradient
 ```
 ### edit config.js in config folder
 
