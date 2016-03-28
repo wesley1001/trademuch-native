@@ -30,7 +30,7 @@ export async function fetchWithAuth(url, method, data) {
     },
     body: JSON.stringify({
       ...data,
-      token,
+      ...token,
     }),
   };
   return await fetch(url, requestOption);
