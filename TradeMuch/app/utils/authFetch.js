@@ -1,3 +1,4 @@
+import { getItem } from './asyncStorage';
 const domain = 'http://localhost:1337';
 const newUser = {
   email: 'test@gmail.com',
@@ -20,18 +21,21 @@ export async function getAuthToken() {
   return token;
 }
 
-export async function fetchWithAuth(url, method, data) {
-  const token = await getAuthToken();
+export async function fetchWithAuth(method = 'get', url, data = null) {
+  const token = await getItem('jwt');
   const requestOption = {
     method,
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
+      jwt: token,
     },
-    body: JSON.stringify({
-      ...data,
-      token,
-    }),
   };
-  return await fetch(url, requestOption);
+
+  if (data) {
+    requestOption.body = JSON.stringify(data);
+  }
+
+  const response = await fetch(url, requestOption);
+  return await response.json();
 }
