@@ -9,8 +9,9 @@ import React, {
   TextInput,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { updateUserInfo } from '../actions/AuthActions';
+import { requestUpdateUserInfo } from '../actions/AuthActions';
 import Dimensions from 'Dimensions';
+import { Actions } from 'react-native-router-flux';
 const windowSize = Dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -85,8 +86,15 @@ export default class EditProfile extends Component {
     this.updateEmail = this.updateEmail.bind(this);
   }
 
+  componentWillUpdate(nextProps) {
+    const { isFirstLogin } = nextProps;
+    if (!isFirstLogin) {
+      Actions.editProfile();
+    }
+  }
+
   updateEmail() {
-    this.props.updateUserInfo();
+    this.props.requestUpdateUserInfo();
   }
 
   render() {
@@ -113,16 +121,17 @@ export default class EditProfile extends Component {
 }
 
 EditProfile.propTypes = {
-  updateUserInfo: React.PropTypes.func,
+  requestUpdateUserInfo: React.PropTypes.func,
 };
 
-function _injectPropsFromStore() {
+function _injectPropsFromStore(state) {
   return {
+    isFirstLogin: state.auth.userInfo.isFirstLogin,
   };
 }
 
 const _injectPropsFormActions = {
-  updateUserInfo,
+  requestUpdateUserInfo,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(EditProfile);
