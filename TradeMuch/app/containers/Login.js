@@ -65,7 +65,11 @@ export default class Login extends Component {
     this.handleLogoutFinished = this.handleLogoutFinished.bind(this);
   }
 
-  componentWillMount() {
+  componentWillUpdate(nextProps) {
+    const { isLogin } = nextProps;
+    if (isLogin) {
+      Actions.editProfile();
+    }
   }
 
   handleLoginFinished(error, result) {
@@ -93,10 +97,6 @@ export default class Login extends Component {
   }
 
   render() {
-    const { isLogin } = this.props;
-    if (isLogin) {
-       Actions.EditProfile();
-    }
     return (
       <View style={styles.container} >
         <Image source={{ uri: 'http://qa.trademuch.co.uk/img/splash.png' }} style={styles.backImg} />
