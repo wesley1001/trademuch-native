@@ -9,7 +9,10 @@ import React, {
   TextInput,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { updateUserInfo } from '../actions/AuthActions';
+import {
+  updateUserInfo,
+  requestInputEmail,
+} from '../actions/AuthActions';
 import Dimensions from 'Dimensions';
 const windowSize = Dimensions.get('window');
 
@@ -83,25 +86,38 @@ export default class EditProfile extends Component {
   constructor(props) {
     super(props);
     this.updateEmail = this.updateEmail.bind(this);
+    this.inputEmailHandle = this.inputEmailHandle.bind(this);
   }
 
   updateEmail() {
     this.props.updateUserInfo();
   }
 
+  inputEmailHandle(email) {
+    let userInfo = {};
+    userInfo = {
+      ...this.props.userInfo,
+    };
+    userInfo.email = email;
+    this.props.requestInputEmail(userInfo);
+  }
+
   render() {
+    const { userInfo } = this.props;
     return (
       <View style={styles.container} >
         <Image source={{ uri: 'http://qa.trademuch.co.uk/img/splash.png' }} style={styles.backImg} />
         <View style={styles.header}>
-          <Image style={styles.avatar} source={{ uri: 'http://graph.facebook.com/1247429101941071/picture?type=large' }} />
-          <Text style={styles.username}>傅耀德</Text>
+          <Image style={styles.avatar} source={{ uri: userInfo.avatar }} />
+          <Text style={styles.username}>{userInfo.userName}</Text>
         </View>
         <View style={styles.bodyContainer} >
           <TextInput
             style={styles.input}
             placeholder="點擊輸入Email"
             placeholderTextColor="#FFF"
+            value={userInfo.email}
+            onChangeText= { this.inputEmailHandle }
           />
         <TouchableOpacity onPress={ this.updateEmail } style={styles.button}>
             <Text style={styles.buttonText}>確認</Text>
@@ -113,16 +129,24 @@ export default class EditProfile extends Component {
 }
 
 EditProfile.propTypes = {
+  userInfo: React.PropTypes.object,
   updateUserInfo: React.PropTypes.func,
+  requestInputEmail: React.PropTypes.func,
 };
 
-function _injectPropsFromStore() {
+EditProfile.defaultProps = {
+  userInfo: {},
+};
+
+function _injectPropsFromStore(state) {
   return {
+    userInfo: state.auth.userInfo,
   };
 }
 
 const _injectPropsFormActions = {
   updateUserInfo,
+  requestInputEmail,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(EditProfile);

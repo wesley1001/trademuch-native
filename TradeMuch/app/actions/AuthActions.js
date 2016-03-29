@@ -100,3 +100,9 @@ export async function loginValidation() {
   logout();
   return () => {};
 }
+
+export async function requestInputEmail(userInfo) {
+  return (dispatch) => {
+    dispatch(receivedUserInfo(userInfo));
+  };
+}
