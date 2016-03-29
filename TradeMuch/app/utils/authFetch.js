@@ -36,6 +36,6 @@ export async function fetchWithAuth(url, method = 'get', data = null) {
     requestOption.body = JSON.stringify(data);
   }
 
-  const response = await fetch(url, requestOption);
+  const response = await fetch(domain + url, requestOption);
   return await response.json();
 }
