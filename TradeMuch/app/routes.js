@@ -9,7 +9,7 @@ const Router = connect()(RNRF.Router);
 import PostList from './containers/PostList';
 import PostDetail from './containers/PostDetail';
 import EditProfile from './containers/EditProfile';
-// import Messenger from './containers/Messenger';
+import Messenger from './containers/Messenger';
 import Login from './containers/Login';
 import Policies from './containers/Policies';
 
@@ -20,7 +20,7 @@ export default function AppRoutes() {
       <Schema name="left" sceneConfig={Navigator.SceneConfigs.FloatFromLeft} />
       <Schema name="modal" sceneConfig={Navigator.SceneConfigs.FloatFromBottom} />
       <Route name="login" component={Login} schema="left" title="登入" />
-      {/*<Route name="Messenger" component={Messenger} title="Messenger" />*/}
+      <Route name="Messenger" component={Messenger} title="Messenger" />
       <Route name="postList" >
         <Router name="listRouter">
           <Route name="list" component={PostList} title="TradeMuch" />
