@@ -11,7 +11,7 @@ import React, {
 import { connect } from 'react-redux';
 import { FBSDKLoginButton } from 'react-native-fbsdklogin';
 import { FBSDKAccessToken } from 'react-native-fbsdkcore';
-import { requestUserInfo } from '../actions/AuthActions';
+import { updateUserInfo } from '../actions/AuthActions';
 import Dimensions from 'Dimensions';
 const windowSize = Dimensions.get('window');
 
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 15,
     height: 25,
-    marginLeft:10
+    marginLeft: 10,
   },
   button: {
     height: 40,
@@ -84,6 +84,11 @@ const styles = StyleSheet.create({
 export default class EditProfile extends Component {
   constructor(props) {
     super(props);
+    this.updateEmail = this.updateEmail.bind(this);
+  }
+
+  updateEmail() {
+    this.props.updateUserInfo();
   }
 
   render() {
@@ -99,8 +104,8 @@ export default class EditProfile extends Component {
             style={styles.input}
             placeholder="點擊輸入Email"
             placeholderTextColor="#FFF"
-            />
-          <TouchableOpacity style={styles.button}>
+          />
+        <TouchableOpacity onPress={ this.updateEmail } style={styles.button}>
             <Text style={styles.buttonText}>確認</Text>
           </TouchableOpacity>
         </View>
@@ -108,13 +113,18 @@ export default class EditProfile extends Component {
     );
   }
 }
+
+EditProfile.propTypes = {
+  updateUserInfo: React.PropTypes.func,
+};
+
 function _injectPropsFromStore() {
   return {
   };
 }
 
 const _injectPropsFormActions = {
-  requestUserInfo,
+  updateUserInfo,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(EditProfile);
