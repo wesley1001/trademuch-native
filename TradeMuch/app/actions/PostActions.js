@@ -34,9 +34,8 @@ export async function requestCreate(data = {
 }) {
   const searchApi = 'http://localhost:1337/rest/post/create';
   const response = await fetchWithAuth(searchApi, 'POST', data);
-  const responseJson = await response.json();
   return (dispatch) => {
-    dispatch(receivedCreate(responseJson));
+    dispatch(receivedCreate(response));
   };
 }
 

@@ -1,6 +1,5 @@
 import { fetchWithAuth } from '../utils/authFetch';
 import * as asyncStorage from '../utils/asyncStorage';
-
 export const REQUEST_USER_INFO = 'REQUEST_USER_INFO';
 export const RECEIVED_USER_INFO = 'RECEIVED_USER_INFO';
 export const UPDATE_LOGIN_STATUS = 'UPDATE_LOGIN_STATUS';
@@ -28,13 +27,30 @@ export async function requestUserInfo(userIdentities) {
   };
 }
 
+
+export async function updateUserInfo(data = {
+  email: '123123@gmail.com',
+  location: {
+    latitude: 10,
+    longitude: -10,
+  },
+}) {
+  const updateEmail = 'http://localhost:1337/rest/user';
+  const response = await fetchWithAuth(updateEmail, 'PUT', data);
+  const responseJson = await response.json();
+  return (dispatch) => {
+    dispatch(receivedUserInfo(responseJson));
+  };
+}
+
+
 export async function registFbToken(userIdentities) {
   const registData = {
     FBUserID: userIdentities.userID,
     FBToken: userIdentities.tokenString,
   };
   const registUrl = 'http://localhost:1337/rest/auth/app/register';
-  const loginInfo = await fetchWithAuth('post', registUrl, registData);
+  const loginInfo = await fetchWithAuth(registUrl, 'post', registData);
   await Promise.all([
     asyncStorage.setItem('userId', loginInfo.userId),
     asyncStorage.setItem('userName', loginInfo.userName),

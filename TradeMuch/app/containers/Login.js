@@ -8,6 +8,7 @@ import React, {
   Alert,
 } from 'react-native';
 import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
 import { FBSDKLoginButton } from 'react-native-fbsdklogin';
 import { FBSDKAccessToken } from 'react-native-fbsdkcore';
 import { registFbToken, requestUserInfo, logout } from '../actions/AuthActions';
@@ -55,6 +56,7 @@ export default class Login extends Component {
     requestUserInfo: React.PropTypes.func,
     registFbToken: React.PropTypes.func,
     logout: React.PropTypes.func,
+    isLogin: React.PropTypes.bool,
   };
 
   constructor(props) {
@@ -63,7 +65,11 @@ export default class Login extends Component {
     this.handleLogoutFinished = this.handleLogoutFinished.bind(this);
   }
 
-  componentWillMount() {
+  componentWillUpdate(nextProps) {
+    const { isLogin } = nextProps;
+    if (isLogin) {
+      Actions.editProfile();
+    }
   }
 
   handleLoginFinished(error, result) {
@@ -112,8 +118,9 @@ export default class Login extends Component {
   }
 }
 
-function _injectPropsFromStore() {
+function _injectPropsFromStore(state) {
   return {
+    isLogin: state.auth.isLogin,
   };
 }
 
