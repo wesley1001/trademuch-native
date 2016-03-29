@@ -10,7 +10,7 @@ import React, {
 import { connect } from 'react-redux';
 import { FBSDKLoginButton } from 'react-native-fbsdklogin';
 import { FBSDKAccessToken } from 'react-native-fbsdkcore';
-import { requestUserInfo } from '../actions/AuthActions';
+import { registFbToken, requestUserInfo, logout } from '../actions/AuthActions';
 import Dimensions from 'Dimensions';
 const windowSize = Dimensions.get('window');
 
@@ -50,9 +50,20 @@ const styles = StyleSheet.create({
 });
 
 export default class Login extends Component {
+
+  static propTypes = {
+    requestUserInfo: React.PropTypes.func,
+    registFbToken: React.PropTypes.func,
+    logout: React.PropTypes.func,
+  };
+
   constructor(props) {
     super(props);
     this.handleLoginFinished = this.handleLoginFinished.bind(this);
+    this.handleLogoutFinished = this.handleLogoutFinished.bind(this);
+  }
+
+  componentWillMount() {
   }
 
   handleLoginFinished(error, result) {
@@ -63,7 +74,7 @@ export default class Login extends Component {
         // alert('Login cancelled.');
       } else {
         FBSDKAccessToken.getCurrentAccessToken(async userIdentities => {
-          this.props.requestUserInfo(userIdentities);
+          this.props.registFbToken(userIdentities);
           if (result === null) {
             // alert('Start logging in.');
           } else {
@@ -72,6 +83,11 @@ export default class Login extends Component {
         });
       }
     }
+  }
+
+  handleLogoutFinished() {
+    // alert('aa');
+    this.props.logout();
   }
 
   render() {
@@ -86,6 +102,7 @@ export default class Login extends Component {
           <FBSDKLoginButton
             style={styles.loginButton}
             onLoginFinished={this.handleLoginFinished}
+            onLogoutFinished={this.handleLogoutFinished}
             readPermissions={[]}
             publishPermissions={[]}
           />
@@ -94,6 +111,7 @@ export default class Login extends Component {
     );
   }
 }
+
 function _injectPropsFromStore() {
   return {
   };
@@ -101,6 +119,8 @@ function _injectPropsFromStore() {
 
 const _injectPropsFormActions = {
   requestUserInfo,
+  registFbToken,
+  logout,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(Login);
