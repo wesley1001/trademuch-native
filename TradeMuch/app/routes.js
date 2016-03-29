@@ -15,11 +15,17 @@ import Policies from './containers/Policies';
 
 export default function AppRoutes() {
   return (
-    <Router name="root">
+    <Router name="root" hideNavBar>
       <Schema name="default" sceneConfig={Navigator.SceneConfigs.FloatFromRight} />
-      <Route name="login" component={Login} title="登入" />
+      <Schema name="left" sceneConfig={Navigator.SceneConfigs.FloatFromLeft} />
+      <Schema name="modal" sceneConfig={Navigator.SceneConfigs.FloatFromBottom} />
+      <Route name="login" component={Login} schema="left" title="登入" />
       {/*<Route name="Messenger" component={Messenger} title="Messenger" />*/}
-      <Route name="postList" component={PostList} title="PostList" />
+      <Route name="postList" >
+        <Router name="listRouter">
+          <Route name="list" component={PostList} title="TradeMuch" />
+        </Router>
+      </Route>
       <Route name="postDetail" component={PostDetail} title="發布" />
       <Route name="editProfile" component={EditProfile} title="確認個人資料" />
       <Route name="policies" component={Policies} title="服務條款" initial />
