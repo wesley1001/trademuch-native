@@ -32,7 +32,7 @@ export async function requestCreate(data = {
   },
   images: '',
 }) {
-  const searchApi = 'http://localhost:1337/rest/post/create';
+  const searchApi = '/rest/post/create';
   const response = await fetchWithAuth(searchApi, 'POST', data);
   return (dispatch) => {
     dispatch(receivedCreate(response));
@@ -52,7 +52,7 @@ function receivedUploadImg(data = [{
 export async function requestUploadImg(data = {
   picBase64: '',
 }) {
-  const searchApi = 'http://localhost:1337/rest/image/upload';
+  const searchApi = '/rest/image/upload';
   const response = await fetch(searchApi, {
     method: 'POST',
     headers: {

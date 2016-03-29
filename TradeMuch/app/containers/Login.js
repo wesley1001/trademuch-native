@@ -67,9 +67,9 @@ export default class Login extends Component {
 
   componentWillUpdate(nextProps) {
     const { isLogin } = nextProps;
-    if (isLogin) {
-      Actions.editProfile();
-    }
+    // if (isLogin) {
+    //   Actions.editProfile();
+    // }
   }
 
   handleLoginFinished(error, result) {
