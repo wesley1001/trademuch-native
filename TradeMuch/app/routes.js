@@ -17,11 +17,11 @@ export default function AppRoutes() {
   return (
     <Router name="root">
       <Schema name="default" sceneConfig={Navigator.SceneConfigs.FloatFromRight} />
-      <Route name="Login" component={Login} title="Login" />
+      <Route name="Login" component={Login} title="Login" initial/>
       {/*<Route name="Messenger" component={Messenger} title="Messenger" />*/}
       <Route name="PostList" component={PostList} title="PostList" />
       <Route name="PostDetail" component={PostDetail} title="發布" />
-      <Route name="EditProfile" component={EditProfile} title="確認個人資料" initial />
+      <Route name="EditProfile" component={EditProfile} title="確認個人資料" />
     </Router>
   );
 }

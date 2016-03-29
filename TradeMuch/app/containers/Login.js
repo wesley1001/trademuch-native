@@ -8,9 +8,10 @@ import React, {
   Alert,
 } from 'react-native';
 import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
 import { FBSDKLoginButton } from 'react-native-fbsdklogin';
 import { FBSDKAccessToken } from 'react-native-fbsdkcore';
-import { requestUserInfo } from '../actions/AuthActions';
+import { registFbToken, requestUserInfo, logout } from '../actions/AuthActions';
 import Dimensions from 'Dimensions';
 const windowSize = Dimensions.get('window');
 
@@ -50,9 +51,21 @@ const styles = StyleSheet.create({
 });
 
 export default class Login extends Component {
+
+  static propTypes = {
+    requestUserInfo: React.PropTypes.func,
+    registFbToken: React.PropTypes.func,
+    logout: React.PropTypes.func,
+    isLogin: React.PropTypes.bool,
+  };
+
   constructor(props) {
     super(props);
     this.handleLoginFinished = this.handleLoginFinished.bind(this);
+    this.handleLogoutFinished = this.handleLogoutFinished.bind(this);
+  }
+
+  componentWillMount() {
   }
 
   handleLoginFinished(error, result) {
@@ -63,7 +76,7 @@ export default class Login extends Component {
         // alert('Login cancelled.');
       } else {
         FBSDKAccessToken.getCurrentAccessToken(async userIdentities => {
-          this.props.requestUserInfo(userIdentities);
+          this.props.registFbToken(userIdentities);
           if (result === null) {
             // alert('Start logging in.');
           } else {
@@ -74,7 +87,16 @@ export default class Login extends Component {
     }
   }
 
+  handleLogoutFinished() {
+    // alert('aa');
+    this.props.logout();
+  }
+
   render() {
+    const { isLogin } = this.props;
+    if (isLogin) {
+       Actions.EditProfile();
+    }
     return (
       <View style={styles.container} >
         <Image source={{ uri: 'http://qa.trademuch.co.uk/img/splash.png' }} style={styles.backImg} />
@@ -86,6 +108,7 @@ export default class Login extends Component {
           <FBSDKLoginButton
             style={styles.loginButton}
             onLoginFinished={this.handleLoginFinished}
+            onLogoutFinished={this.handleLogoutFinished}
             readPermissions={[]}
             publishPermissions={[]}
           />
@@ -94,13 +117,17 @@ export default class Login extends Component {
     );
   }
 }
-function _injectPropsFromStore() {
+
+function _injectPropsFromStore(state) {
   return {
+    isLogin: state.auth.isLogin,
   };
 }
 
 const _injectPropsFormActions = {
   requestUserInfo,
+  registFbToken,
+  logout,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(Login);

@@ -9,8 +9,6 @@ import React, {
   TextInput,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { FBSDKLoginButton } from 'react-native-fbsdklogin';
-import { FBSDKAccessToken } from 'react-native-fbsdkcore';
 import { updateUserInfo } from '../actions/AuthActions';
 import Dimensions from 'Dimensions';
 const windowSize = Dimensions.get('window');

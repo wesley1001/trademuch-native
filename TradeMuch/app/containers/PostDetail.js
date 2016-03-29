@@ -222,6 +222,10 @@ PostDetail.propTypes = {
   photoInfo: React.PropTypes.object,
   imgSrc: React.PropTypes.array,
   postFinishData: React.PropTypes.object,
+  requestTakePhoto: React.PropTypes.func,
+  requestCreate: React.PropTypes.func,
+  requestUploadImg: React.PropTypes.func,
+  requestInputTitle: React.PropTypes.func,
 };
 
 PostDetail.defaultProps = {
