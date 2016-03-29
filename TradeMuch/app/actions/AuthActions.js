@@ -1,5 +1,6 @@
 import { fetchWithAuth } from '../utils/authFetch';
 import * as asyncStorage from '../utils/asyncStorage';
+
 export const REQUEST_USER_INFO = 'REQUEST_USER_INFO';
 export const RECEIVED_USER_INFO = 'RECEIVED_USER_INFO';
 export const UPDATE_LOGIN_STATUS = 'UPDATE_LOGIN_STATUS';
@@ -18,14 +19,14 @@ function updateLoginStatus(isLogin) {
   };
 }
 
-export async function requestUserInfo(userIdentities) {
-  const fbGraphApi = `https://graph.facebook.com/v2.5/${userIdentities.userID}?fields=id,name,email&access_token=${userIdentities.tokenString}`;
-  let userInfo = await fetch(fbGraphApi);
-  userInfo = await userInfo.json();
-  return (dispatch) => {
-    dispatch(receivedUserInfo(userInfo));
-  };
-}
+// export async function requestUserInfo(userIdentities) {
+//   const fbGraphApi = `https://graph.facebook.com/v2.5/${userIdentities.userID}?fields=id,name,email&access_token=${userIdentities.tokenString}`;
+//   let userInfo = await fetch(fbGraphApi);
+//   userInfo = await userInfo.json();
+//   return (dispatch) => {
+//     dispatch(receivedUserInfo(userInfo));
+//   };
+// }
 
 
 export async function updateUserInfo(data = {
@@ -35,7 +36,7 @@ export async function updateUserInfo(data = {
     longitude: -10,
   },
 }) {
-  const updateEmail = 'http://localhost:1337/rest/user';
+  const updateEmail = '/rest/user';
   const response = await fetchWithAuth(updateEmail, 'PUT', data);
   const responseJson = await response.json();
   return (dispatch) => {
@@ -49,7 +50,7 @@ export async function registFbToken(userIdentities) {
     FBUserID: userIdentities.userID,
     FBToken: userIdentities.tokenString,
   };
-  const registUrl = 'http://localhost:1337/rest/auth/app/register';
+  const registUrl = '/rest/auth/app/register';
   const loginInfo = await fetchWithAuth(registUrl, 'post', registData);
   await Promise.all([
     asyncStorage.setItem('userId', loginInfo.userId),
@@ -60,6 +61,7 @@ export async function registFbToken(userIdentities) {
   ]);
   return dispatch => {
     dispatch(updateLoginStatus(true));
+    dispatch(receivedUserInfo(loginInfo));
   };
 }
 
@@ -75,4 +77,26 @@ export async function logout() {
   return dispatch => {
     dispatch(updateLoginStatus(false));
   };
+}
+
+export async function loginValidation() {
+  const jwt = await asyncStorage.getItem('jwt');
+  if (jwt) {
+    const userId = await asyncStorage.getItem('userId');
+    const userName = await asyncStorage.getItem('userName');
+    const email = await asyncStorage.getItem('email');
+    const avatar = await asyncStorage.getItem('avatar');
+    return dispatch => {
+      dispatch(receivedUserInfo({
+        userId,
+        userName,
+        email,
+        avatar,
+        jwt,
+      }));
+      dispatch(updateLoginStatus(true));
+    };
+  }
+  logout();
+  return () => {};
 }

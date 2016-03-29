@@ -12,6 +12,7 @@ export function auth(state = { isLogin: false }, action) {
       };
     case UPDATE_LOGIN_STATUS:
       return {
+        ...state,
         isLogin: action.data,
       };
     default:
