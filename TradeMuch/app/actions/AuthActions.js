@@ -38,7 +38,8 @@ export async function registFbToken(userIdentities) {
   await Promise.all([
     asyncStorage.setItem('userId', loginInfo.userId),
     asyncStorage.setItem('userName', loginInfo.userName),
-    asyncStorage.setItem('userName', loginInfo.email),
+    asyncStorage.setItem('email', loginInfo.email),
+    asyncStorage.setItem('avatar', loginInfo.avatar),
     asyncStorage.setItem('jwt', loginInfo.jwt),
   ]);
   return dispatch => {
@@ -51,7 +52,8 @@ export async function logout() {
   await Promise.all([
     asyncStorage.removeItem('userId'),
     asyncStorage.removeItem('userName'),
-    asyncStorage.removeItem('userName'),
+    asyncStorage.removeItem('email'),
+    asyncStorage.removeItem('avatar'),
     asyncStorage.removeItem('jwt'),
   ]);
   return dispatch => {
