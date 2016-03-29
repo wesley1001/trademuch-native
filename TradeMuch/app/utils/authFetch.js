@@ -21,7 +21,7 @@ export async function getAuthToken() {
   return token;
 }
 
-export async function fetchWithAuth(method = 'get', url, data = null) {
+export async function fetchWithAuth(url, method = 'get', data = null) {
   const token = await getItem('jwt');
   const requestOption = {
     method,
