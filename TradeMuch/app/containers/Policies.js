@@ -9,6 +9,7 @@ import React, {
   ScrollView,
 } from 'react-native';
 import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
 import Dimensions from 'Dimensions';
 const windowSize = Dimensions.get('window');
 
@@ -54,7 +55,6 @@ const styles = StyleSheet.create({
 });
 
 export default class Policies extends Component {
-
   render() {
     return (
       <View style={styles.container} >
@@ -66,7 +66,7 @@ export default class Policies extends Component {
           <TouchableOpacity style={styles.button} >
             <Text style={styles.buttonText}>取消</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} >
+          <TouchableOpacity style={styles.button} onPress={ Actions.postList }>
             <Text style={styles.buttonText}>同意</Text>
           </TouchableOpacity>
         </View>
