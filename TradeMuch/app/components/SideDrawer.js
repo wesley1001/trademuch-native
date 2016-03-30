@@ -6,6 +6,9 @@ const styles = {
   drawerStyles: {
     drawer: {
       backgroundColor: '#ffffff',
+      alignItems: 'center',
+      flex: 1,
+      flexDirection: 'column',
     },
     main: {
       paddingLeft: 3,
@@ -13,27 +16,21 @@ const styles = {
       shadowOpacity: 0.4,
       shadowRadius: 3,
     },
+    sideDrawerContent: {
+      backgroundColor: '#500505',
+    },
   },
 };
 
 export default class SideDrawer extends Component {
-
-  constructor() {
-    super();
-    console.log("constructor this=>",this);
-  }
-
-  ref(c) {
-    this.drawer = c;
-    console.log("this=>",this);
-  }
   render() {
     return (
       <Drawer
-        ref={this.ref()}
+        ref={c => this.drawer = c}
         type="static"
         content={<SideDrawerContent />}
-        openDrawerOffset={100}
+        openDrawerOffset={80}
+        tapToClose
         styles={styles.drawerStyles}
         tweenHandler={Drawer.tweenPresets.parallax}
       >

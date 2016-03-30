@@ -14,12 +14,12 @@ import { Actions } from 'react-native-router-flux';
 
 const windowSize = Dimensions.get('window');
 const styles = StyleSheet.create({
-  avatarImage: {
+  profilePhoto: {
     borderRadius: 50,
     width: 100,
     height: 100,
   },
-  avatarBlock: {
+  avatar: {
     backgroundColor: '#c94196',
     borderRadius: 50,
     width: 100,
@@ -28,34 +28,29 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     alignItems: 'center',
   },
+  icon: {
+    width: 32,
+    height: 32,
+    marginTop: -7,
+  },
   textUserName: {
     marginBottom: 40,
-    color: '#fff',
-    fontWeight: '700',
   },
   textNotification: {
     color: '#fff',
     fontWeight: '700',
   },
-  textMenuTitle: {
-    color: '#fff',
-    fontWeight: '700',
-  },
   cellBorder: {
-    backgroundColor: 'rgba(164, 164, 164, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     // Trick to get the thinest line the device can display
     height: 1 / PixelRatio.get(),
     marginLeft: 4,
     width: windowSize.width,
   },
-  icon: {
-    width: 32,
-    height: 32,
-  },
   blockIcon: {
-    // backgroundColor: '#362e2e',
+  // backgroundColor: '#362e2e',
     flex: 1,
-    padding: 5,
+    padding: 10,
     marginLeft: -10,
   },
   blockTitle: {
@@ -63,8 +58,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 15,
     marginRight: 15,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   blockNotification: {
     backgroundColor: 'rgba(255, 0, 0, 0.7)',
@@ -76,7 +69,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   contentWrapper: {
-    backgroundColor: '#333333',
+    backgroundColor: '#dbdbdb',
     flex: 1,
     flexDirection: 'column',
   },
@@ -85,21 +78,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: windowSize.width,
   },
-  contentAvatar: {
-    backgroundColor: '#999999',
-    alignItems: 'center',
-    width: windowSize.width,
-  },
   contentBlock: {
-    // backgroundColor: '#333333',
+    // backgroundColor: '#362e2e',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     height: 60,
   },
   button: {
-    width: 130,
-    color: '#fff',
+    width: 100,
   },
 });
 
@@ -114,7 +101,7 @@ export default class SideDrawerContent extends Component {
 
   profile() {
     this.context.drawer.close();
-    Actions.EditProfile.call();
+    Actions.PostList.call();
   }
   postLit() {
     this.context.drawer.close();
@@ -122,7 +109,7 @@ export default class SideDrawerContent extends Component {
   }
   postDetail() {
     this.context.drawer.close();
-    Actions.PostDetail.call();
+    Actions.PostList.call();
   }
   messenger() {
     this.context.drawer.close();
@@ -133,9 +120,9 @@ export default class SideDrawerContent extends Component {
     // const { drawer } = this.context
     return (
 			<View style={styles.contentWrapper}>
-        <View style={styles.contentAvatar}>
-          <TouchableOpacity style={styles.avatarBlock} onPress={ this.profile.bind(this) }>
-            <Image source={{ uri: 'http://qa.trademuch.co.uk/img/human.png' }} style={styles.avatarImage} />
+        <View style={styles.contentBody}>
+          <TouchableOpacity style={styles.avatar} onPress={ this.profile.bind(this) }>
+            <Image source={{ uri: 'http://qa.trademuch.co.uk/img/human.png' }} style={styles.profilePhoto} />
           </TouchableOpacity>
           <Text style={styles.textUserName}>{'Monica'}</Text>
         </View>
@@ -146,7 +133,7 @@ export default class SideDrawerContent extends Component {
               <Image source={{ uri: 'http://qa.trademuch.co.uk/img/map.png' }} style={styles.icon} />
             </View>
             <View style={styles.blockTitle}>
-              <Button style={styles.button}>{'附近的好康物品'}</Button>
+              <Button style={styles.button}>{'PostList'}</Button>
             </View>
             <View style={styles.blockNotification}>
               <Text style={styles.textNotification}>{'0'}</Text>
@@ -193,7 +180,7 @@ export default class SideDrawerContent extends Component {
                 <Image source={{ uri: 'http://qa.trademuch.co.uk/img/chat%EF%BC%BF60x60.png' }} style={styles.icon} />
     					</View>
               <View style={styles.blockTitle}>
-                <Button style={styles.button}>{'我的留言版'}</Button>
+                <Button style={styles.button}>{'Messenger'}</Button>
               </View>
               <View style={styles.blockNotification}>
                 <Text style={styles.textNotification}>{'1'}</Text>

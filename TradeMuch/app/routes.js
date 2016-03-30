@@ -47,16 +47,6 @@ const styles = StyleSheet.create({
 
 
 export default class AppRoutes extends Component {
-  refSideDrawer = (c) => {
-    console.log("AppRoutes this=>",this);
-    console.log("refSideDrawer c=>",c);
-    if (c) {
-      this.drawer = c.drawer;
-    }
-    console.log("AppRoutes this after Assigning=>",this);
-    return this.drawer;
-  }
-
   renderMenuButton = () => {
     return (
       <TouchableOpacity
@@ -71,7 +61,7 @@ export default class AppRoutes extends Component {
     );
   }
 
-  renderBackButton() {
+  renderBackButton = () =>  {
     return (
       <TouchableOpacity
         style={styles.leftButtonContainer}
@@ -79,7 +69,7 @@ export default class AppRoutes extends Component {
       >
         <Image
           source={{ url: 'https://github.com/efkan/rndrawer-implemented-rnrouter/blob/master/src/ic_arrow_back_white_24dp.png' }}
-          style={{ height: 24, width: 24, backgroundColor: '#790c0c' }}
+          style={{ height: 24, width: 24, backgroundColor: '#c23a3a' }}
         />
       </TouchableOpacity>
     );
@@ -95,12 +85,13 @@ export default class AppRoutes extends Component {
           hideNavBar
           type="replace"
         />
+
+        {/*
         <Schema name="default" sceneConfig={ Navigator.SceneConfigs.FloatFromRight } />
+         <Route name="Login" schema="boot" component={Login} title="Login" />*/}
 
-        {/* <Route name="Login" schema="boot" component={Login} title="Login" />*/}
-
-        <Route name="Drawer" hideNavBar type="reset">
-					<SideDrawer ref={this.refSideDrawer}>
+        <Route name="Drawer" hideNavBar type="reset" initial>
+          <SideDrawer ref={c => { c ? this.drawer = c.drawer : this.drawer }}>
             <Router
               name="drawerRoot"
               sceneStyle={styles.routerScene}
@@ -121,8 +112,8 @@ export default class AppRoutes extends Component {
               />
               <Route name="PostList" component={PostList} schema="home" title="PostList" />
               {/*<Route name="Messenger" component={Messenger} schema="interior" title="Messenger" />*/}
-              <Route name="PostDetail" component={PostDetail} schema="interior" title="發布" />
               <Route name="EditProfile" component={EditProfile} schema="interior" title="確認個人資料" />
+              <Route name="PostDetail" component={PostDetail} schema="interior" title="發布" />
             </Router>
           </SideDrawer>
         </Route>
