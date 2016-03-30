@@ -75,6 +75,7 @@ export default class Policies extends Component {
   cancel() {
     Actions.login();
   }
+
   agree() {
     this.props.requestAgreePolicies();
   }

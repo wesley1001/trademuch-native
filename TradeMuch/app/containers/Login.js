@@ -65,17 +65,8 @@ export default class Login extends Component {
     this.handleLogoutFinished = this.handleLogoutFinished.bind(this);
   }
 
-  componentDidMount() {
-    // const { isLogin, isFirstLogin } = this.props;
-    // if (isLogin && isFirstLogin) {
-    //   Actions.policies();
-    // } else if (isLogin && isFirstLogin !== undefined) {
-    //   Actions.postList();
-    // }
-  }
   componentWillUpdate(nextProps) {
     const { isLogin, isFirstLogin, isAgreePolicies } = nextProps;
-    console.log('===isFirstLogin ===',isFirstLogin);
     if (isLogin && isFirstLogin) {
       if (isAgreePolicies === false) {
         Actions.policies();
