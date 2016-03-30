@@ -4,6 +4,7 @@ import * as asyncStorage from '../utils/asyncStorage';
 export const REQUEST_USER_INFO = 'REQUEST_USER_INFO';
 export const RECEIVED_USER_INFO = 'RECEIVED_USER_INFO';
 export const UPDATE_LOGIN_STATUS = 'UPDATE_LOGIN_STATUS';
+export const UPDATE_USER_INFO = 'UPDATE_USER_INFO';
 
 function receivedUserInfo(userInfo) {
   return {
@@ -11,7 +12,12 @@ function receivedUserInfo(userInfo) {
     data: userInfo,
   };
 }
-
+function updateUserInfo(subInfo) {
+  return {
+    type: UPDATE_USER_INFO,
+    data: subInfo,
+  };
+}
 function updateLoginStatus(isLogin) {
   return {
     type: UPDATE_LOGIN_STATUS,
@@ -19,17 +25,7 @@ function updateLoginStatus(isLogin) {
   };
 }
 
-// export async function requestUserInfo(userIdentities) {
-//   const fbGraphApi = `https://graph.facebook.com/v2.5/${userIdentities.userID}?fields=id,name,email&access_token=${userIdentities.tokenString}`;
-//   let userInfo = await fetch(fbGraphApi);
-//   userInfo = await userInfo.json();
-//   return (dispatch) => {
-//     dispatch(receivedUserInfo(userInfo));
-//   };
-// }
-
-
-export async function updateUserInfo(data = {
+export async function requestUpdateUserInfo(data = {
   email: '123123@gmail.com',
   location: {
     latitude: 10,
@@ -37,13 +33,13 @@ export async function updateUserInfo(data = {
   },
 }) {
   const updateEmail = '/rest/user';
-  const response = await fetchWithAuth(updateEmail, 'PUT', data);
-  const responseJson = await response.json();
+  const responseJson = await fetchWithAuth(updateEmail, 'PUT', data);
   return (dispatch) => {
-    dispatch(receivedUserInfo(responseJson));
+    if (responseJson.success) {
+      dispatch(updateUserInfo({ isFirstLogin: false }));
+    }
   };
 }
-
 
 export async function registFbToken(userIdentities) {
   const registData = {
@@ -64,7 +60,6 @@ export async function registFbToken(userIdentities) {
     dispatch(receivedUserInfo(loginInfo));
   };
 }
-
 
 export async function logout() {
   await Promise.all([
