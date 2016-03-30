@@ -48,11 +48,14 @@ export async function registFbToken(userIdentities) {
   };
   const registUrl = '/rest/auth/app/register';
   const loginInfo = await fetchWithAuth(registUrl, 'post', registData);
+  console.log('log',loginInfo.isAgreePolicies);
   await Promise.all([
     asyncStorage.setItem('userId', loginInfo.userId),
     asyncStorage.setItem('userName', loginInfo.userName),
     asyncStorage.setItem('email', loginInfo.email),
     asyncStorage.setItem('avatar', loginInfo.avatar),
+    asyncStorage.setItem('isFirstLogin', loginInfo.isFirstLogin),
+    asyncStorage.setItem('isAgreePolicies', loginInfo.isAgreePolicies),
     asyncStorage.setItem('jwt', loginInfo.jwt),
   ]);
   return dispatch => {
@@ -67,6 +70,8 @@ export async function logout() {
     asyncStorage.removeItem('userName'),
     asyncStorage.removeItem('email'),
     asyncStorage.removeItem('avatar'),
+    asyncStorage.removeItem('isFirstLogin'),
+    asyncStorage.removeItem('isAgreePolicies'),
     asyncStorage.removeItem('jwt'),
   ]);
   return dispatch => {
@@ -80,18 +85,33 @@ export async function loginValidation() {
     const userId = await asyncStorage.getItem('userId');
     const userName = await asyncStorage.getItem('userName');
     const email = await asyncStorage.getItem('email');
+    const isFirstLogin = await asyncStorage.getItem('isFirstLogin');
+    const isAgreePolicies = await asyncStorage.getItem('isAgreePolicies');
     const avatar = await asyncStorage.getItem('avatar');
+    console.log('isAgree',isAgreePolicies);
     return dispatch => {
       dispatch(receivedUserInfo({
         userId,
         userName,
         email,
         avatar,
+        isFirstLogin,
+        isAgreePolicies,
         jwt,
       }));
       dispatch(updateLoginStatus(true));
     };
   }
   logout();
+  return () => {};
+}
+
+export async function requestAgreePolicies() {
+  const response = await fetchWithAuth('/rest/user/agree-policies', 'post');
+  if (response) {
+    return dispatch => {
+      dispatch(updateUserInfo(response));
+    };
+  }
   return () => {};
 }
