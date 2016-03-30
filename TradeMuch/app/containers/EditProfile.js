@@ -10,10 +10,11 @@ import React, {
 } from 'react-native';
 import { connect } from 'react-redux';
 import {
-  updateUserInfo,
+  requestUpdateUserInfo,
   requestInputEmail,
 } from '../actions/AuthActions';
 import Dimensions from 'Dimensions';
+import { Actions } from 'react-native-router-flux';
 const windowSize = Dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -89,8 +90,15 @@ export default class EditProfile extends Component {
     this.inputEmailHandle = this.inputEmailHandle.bind(this);
   }
 
+  componentWillUpdate(nextProps) {
+    const { isFirstLogin } = nextProps;
+    if (!isFirstLogin) {
+      Actions.editProfile();
+    }
+  }
+
   updateEmail() {
-    this.props.updateUserInfo();
+    this.props.requestUpdateUserInfo();
   }
 
   inputEmailHandle(email) {
@@ -130,7 +138,7 @@ export default class EditProfile extends Component {
 
 EditProfile.propTypes = {
   userInfo: React.PropTypes.object,
-  updateUserInfo: React.PropTypes.func,
+  requestUpdateUserInfo: React.PropTypes.func,
   requestInputEmail: React.PropTypes.func,
 };
 
@@ -141,11 +149,12 @@ EditProfile.defaultProps = {
 function _injectPropsFromStore(state) {
   return {
     userInfo: state.auth.userInfo,
+    isFirstLogin: state.auth.userInfo.isFirstLogin,
   };
 }
 
 const _injectPropsFormActions = {
-  updateUserInfo,
+  requestUpdateUserInfo,
   requestInputEmail,
 };
 

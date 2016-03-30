@@ -66,9 +66,9 @@ export default class Login extends Component {
   }
 
   componentWillUpdate(nextProps) {
-    const { isLogin } = nextProps;
-    if (isLogin) {
-      Actions.editProfile();
+    const { isLogin, isFirstLogin } = nextProps;
+    if (isLogin && isFirstLogin) {
+      Actions.policies();
     }
   }
 
@@ -92,7 +92,6 @@ export default class Login extends Component {
   }
 
   handleLogoutFinished() {
-    // alert('aa');
     this.props.logout();
   }
 
@@ -118,9 +117,10 @@ export default class Login extends Component {
   }
 }
 
-function _injectPropsFromStore(state) {
+function _injectPropsFromStore({ auth }) {
   return {
-    isLogin: state.auth.isLogin,
+    isLogin: auth.isLogin,
+    isFirstLogin: auth.userInfo.isFirstLogin,
   };
 }
 
