@@ -65,10 +65,25 @@ export default class Login extends Component {
     this.handleLogoutFinished = this.handleLogoutFinished.bind(this);
   }
 
+  componentDidMount() {
+    // const { isLogin, isFirstLogin } = this.props;
+    // if (isLogin && isFirstLogin) {
+    //   Actions.policies();
+    // } else if (isLogin && isFirstLogin !== undefined) {
+    //   Actions.postList();
+    // }
+  }
   componentWillUpdate(nextProps) {
-    const { isLogin, isFirstLogin } = nextProps;
+    const { isLogin, isFirstLogin, isAgreePolicies } = nextProps;
+    console.log('===isFirstLogin ===',isFirstLogin);
     if (isLogin && isFirstLogin) {
-      Actions.policies();
+      if (isAgreePolicies === false) {
+        Actions.policies();
+      } else if (isAgreePolicies === true) {
+        Actions.editProfile();
+      }
+    } else if (isLogin && isFirstLogin === false && isAgreePolicies === true) {
+      Actions.postList();
     }
   }
 
@@ -121,6 +136,7 @@ function _injectPropsFromStore({ auth }) {
   return {
     isLogin: auth.isLogin,
     isFirstLogin: auth.userInfo.isFirstLogin,
+    isAgreePolicies: auth.userInfo.isAgreePolicies,
   };
 }
 

@@ -89,7 +89,7 @@ export default class EditProfile extends Component {
   componentWillUpdate(nextProps) {
     const { isFirstLogin } = nextProps;
     if (!isFirstLogin) {
-      Actions.editProfile();
+      // Actions.postList();
     }
   }
 
