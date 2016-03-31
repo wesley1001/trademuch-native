@@ -39,7 +39,7 @@ class AppRoutes extends Component {
             <Route name="editProfileView" component={EditProfile} title="確認個人資料" />
           </Router>
         </Route>
-        <Route name="createPost" component={CreatePost} title="發布" hideNavBar={false} initial />
+        <Route name="createPost" component={CreatePost} title="發布" hideNavBar={false} />
         <Route name="policies" component={Policies} title="服務條款" />
       </Router>
     );
