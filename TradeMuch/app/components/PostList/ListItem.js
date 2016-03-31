@@ -49,7 +49,7 @@ export default function PostListItem(props) {
       <TouchableOpacity underlayColor={"#f3f3f3"} onPress={onItemPress}>
         <View>
           <View style={styles.commentContent}>
-              <Image source={{ img: props.img }} style={styles.avatar} />
+              <Image source={{ uri: props.img }} style={styles.avatar} />
             <View style={styles.commentBody}>
               <Text style={styles.userName}>
                 {props.title}
