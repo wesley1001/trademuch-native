@@ -36,6 +36,11 @@ function updateLoginStatus(isLogin) {
     data: isLogin,
   };
 }
+export async function requestInputEmail(userInfo) {
+  return (dispatch) => {
+     dispatch(receivedUserInfo(userInfo));
+  };
+}
 
 export async function requestUpdateUserInfo(data = {
   email: '123123@gmail.com',
