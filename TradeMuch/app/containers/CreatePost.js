@@ -7,10 +7,12 @@ import React, {
   Text,
   TextInput,
   Component,
+  Alert,
 } from 'react-native';
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Dimensions from 'Dimensions';
+import LoadSpinner from 'react-native-loading-spinner-overlay';
 import { ImagePickerManager } from 'NativeModules';
 import { requestTakePhoto } from '../actions/TakePhotoActions';
 import {
@@ -158,18 +160,22 @@ export default class PostDetail extends Component {
   }
 
   postCreateButtonHandle() {
-    this.props.requestCreate({
-      detail: {
-        title: this.props.title,
-        description: this.props.description,
-        startDate: new Date(),
-      },
-      location: {
-        latitude: 24.148657699999998,
-        longitude: 120.67413979999999,
-      },
-      images: this.props.imgSrc[0].src,
-    });
+    if (this.props.title && this.props.imgSrc[0].src) {
+      this.props.requestCreate({
+        detail: {
+          title: this.props.title,
+          description: this.props.description,
+          startDate: new Date(),
+        },
+        location: {
+          latitude: 24.148657699999998,
+          longitude: 120.67413979999999,
+        },
+        images: this.props.imgSrc[0].src,
+      });
+    } else {
+      Alert.alert('注意', '照片跟標題是必填喔');
+    }
   }
 
   inputTitleHandle(text) {
@@ -188,6 +194,7 @@ export default class PostDetail extends Component {
     let backImg;
     if (photo.uri) {
       backImg = [
+        <LoadSpinner key="loadSpinner" visible={this.props.imgSrc[0].src === ''} />,
         <Image key="img" source={this.props.photo} style={styles.itemImg} />,
         <LinearGradient
           key="backGround"
@@ -209,6 +216,7 @@ export default class PostDetail extends Component {
         />,
       ];
     }
+
     return (
       <View style={styles.imageContainer}>
         {backImg}

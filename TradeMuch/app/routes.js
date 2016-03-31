@@ -27,7 +27,7 @@ class AppRoutes extends Component {
         <Schema name="default" sceneConfig={Navigator.SceneConfigs.FloatFromRight} />
         <Schema name="left" sceneConfig={Navigator.SceneConfigs.FloatFromLeft} />
         <Schema name="modal" sceneConfig={Navigator.SceneConfigs.FloatFromBottom} />
-        <Route name="login" component={Login} title="登入"/>
+        <Route name="login" component={Login} title="登入" />
         {/*<Route name="Messenger" component={Messenger} title="Messenger" />*/}
         <Route name="postList" >
           <Router name="listRouter">
