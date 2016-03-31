@@ -8,7 +8,7 @@ import { requestSearchPost } from '../actions/SearchPostActions';
 const styles = React.StyleSheet.create({
   content: {
     flex: 1,
-    marginTop: 65,
+    marginTop: 20,
     backgroundColor: '#fff',
   },
 });
