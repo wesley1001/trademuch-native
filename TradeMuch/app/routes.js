@@ -65,7 +65,7 @@ export default class AppRoutes extends Component {
     return (
       <TouchableOpacity
         style={styles.leftButtonContainer}
-        onPress={Actions.pop}
+        onPress={() => this.drawer.close()}
       >
         <Image
           source={{ url: 'https://github.com/efkan/rndrawer-implemented-rnrouter/blob/master/src/ic_arrow_back_white_24dp.png' }}

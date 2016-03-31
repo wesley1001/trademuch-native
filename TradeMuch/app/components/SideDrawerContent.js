@@ -137,7 +137,7 @@ export default class SideDrawerContent extends Component {
           <TouchableOpacity style={styles.avatarBlock} onPress={ this.profile.bind(this) }>
             <Image source={{ uri: 'http://qa.trademuch.co.uk/img/human.png' }} style={styles.avatarImage} />
           </TouchableOpacity>
-          <Text style={styles.textUserName}>{'Monica'}</Text>
+          <Text style={styles.textUserName}>{'Gloria'}</Text>
         </View>
 
 				<View style={styles.contentBody}>
@@ -146,7 +146,7 @@ export default class SideDrawerContent extends Component {
               <Image source={{ uri: 'http://qa.trademuch.co.uk/img/map.png' }} style={styles.icon} />
             </View>
             <View style={styles.blockTitle}>
-              <Button style={styles.button}>{'附近的好康物品'}</Button>
+              <Button style={styles.button} onPress={ this.postLit.bind(this)>{'附近的好康物品'}</Button>
             </View>
             <View style={styles.blockNotification}>
               <Text style={styles.textNotification}>{'0'}</Text>
@@ -161,7 +161,7 @@ export default class SideDrawerContent extends Component {
                 <Image source={{ uri: 'http://qa.trademuch.co.uk/img/login.png' }} style={styles.icon} />
               </View>
               <View style={styles.blockTitle}>
-                <Button style={styles.button}>{'EditProfile'}</Button>
+                <Button onPress={ this.profile.bind(this) } style={styles.button}>{'EditProfile'}</Button>
               </View>
               <View style={styles.blockNotification}>
                 <Text style={styles.textNotification}>{'0'}</Text>
@@ -177,7 +177,7 @@ export default class SideDrawerContent extends Component {
                 <Image source={{ uri: 'http://qa.trademuch.co.uk/img/add.png' }} style={styles.icon} />
               </View>
               <View style={styles.blockTitle}>
-                <Button	style={styles.button}>{'PostDetail'}</Button>
+                <Button onPress={ this.postDetail.bind(this) }	style={styles.button}>{'PostDetail'}</Button>
               </View>
               <View style={styles.blockNotification}>
                 <Text style={styles.textNotification}>{'1'}</Text>
@@ -193,7 +193,7 @@ export default class SideDrawerContent extends Component {
                 <Image source={{ uri: 'http://qa.trademuch.co.uk/img/chat%EF%BC%BF60x60.png' }} style={styles.icon} />
     					</View>
               <View style={styles.blockTitle}>
-                <Button style={styles.button}>{'我的留言版'}</Button>
+                <Button onPress={ this.postDetail.bind(this) } style={styles.button}>{'我的留言版'}</Button>
               </View>
               <View style={styles.blockNotification}>
                 <Text style={styles.textNotification}>{'1'}</Text>
