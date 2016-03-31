@@ -2,7 +2,7 @@ import React, { View, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import List from '../components/PostList/List';
-import SearchPostBar from '../components/SearchPostBar';
+import SearchBar from '../components/SearchBar';
 import { requestSearchPost } from '../actions/SearchPostActions';
 
 const styles = React.StyleSheet.create({
@@ -26,7 +26,7 @@ function PostList(props) {
 
   return (
     <View style={styles.content}>
-      <SearchPostBar onChangeText={onChangeText} />
+      <SearchBar onChangeText={onChangeText} />
       <List listData={postList} onItemPress={onListItemPress} />
       <TouchableOpacity onPress={Actions.PostDetail} />
     </View>
