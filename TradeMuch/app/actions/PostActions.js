@@ -35,9 +35,7 @@ export async function requestCreate(data = {
   images: '',
 }) {
   const postCreateApi = '/rest/post/create';
-  console.log("!", postCreateApi);
   const response = await fetchWithAuth(postCreateApi, 'POST', data);
-  console.log("!!!!!!!!!!", response);
   return (dispatch) => {
     dispatch(receivedCreate(response));
   };
