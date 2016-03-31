@@ -59,7 +59,14 @@ export default class AppRoutes extends Component {
     return (
       <TouchableOpacity
         style={styles.leftButtonContainer}
-        onPress={() => {this.drawer.open();}}
+        onPress={() => {
+          console.log(this.drawer.drawerOpen);
+          if (!this.drawer.drawerOpen) {
+            this.drawer.open();
+          } else {
+            this.drawer.close();
+          }
+        }}
       >
         <Image
           source={{ uri: 'https://cdn4.iconfinder.com/data/icons/wirecons-free-vector-icons/32/menu-alt-64.png' }}
@@ -119,7 +126,7 @@ export default class AppRoutes extends Component {
 
         {/* ------------------- SideDrawer Routor -------------------------- */}
         <Route name="drawer" hideNavBar type="reset" initial>
-          <SideDrawer ref={(c) => { c ? this.drawer = c.drawer : this.drawer }}>
+          <SideDrawer ref={(ref) => { ref ? this.drawer = ref.drawer : this.drawer; }}>
             <Router
               name="drawerRoot"
               sceneStyle={styles.routerScene}

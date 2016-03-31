@@ -36,18 +36,19 @@ export default class SideDrawer extends Component {
   render() {
     return (
       <Drawer
-        ref={(c) => {this.drawer = c;}}
+        ref={(ref) => {this.drawer = ref;}}
         type="static"
         content={<SideDrawerContent closeDrawer={this.closeDrawer} />}
-        openDrawerOffset={80}
         tapToClose
         onOpen={() => {
+
           console.log('onopen')
-          this.setState({drawerOpen: true})
+          // this.setState({drawerOpen: true})
+          // if(this.sta)
         }}
         onClose={() => {
           console.log('onclose')
-          this.setState({drawerOpen: false})
+          // this.setState({drawerOpen: false})
         }}
         disabled={this.state.drawerDisabled}
         styles={styles.drawerStyles}
@@ -56,6 +57,7 @@ export default class SideDrawer extends Component {
         negotiatePan
         panThreshold={0.08}
         openDrawerOffset={0.2}
+        closedDrawerOffset={-5}
         panOpenMask={0.2}
       >
         {
