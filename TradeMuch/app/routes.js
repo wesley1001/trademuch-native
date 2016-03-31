@@ -116,7 +116,7 @@ export default class AppRoutes extends Component {
         />
 
         {/* ------------------- Facebook Login Routor ---------------------- */}
-        <Route name="login" schema="boot" component={Login} title="Login" />
+        <Route name="login" schema="boot" component={Login} title="登入" />
         <Route name="policies" component={Policies} title="服務條款" />
         <Route name="editProfile">
           <Router name="editProfileRouter">
