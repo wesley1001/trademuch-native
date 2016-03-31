@@ -140,13 +140,13 @@ export default class SideDrawerContent extends Component {
           <Text style={styles.textUserName}>{'Gloria'}</Text>
         </View>
 
-				<View style={styles.contentBody}>
+        <View style={styles.contentBody}>
           <TouchableOpacity style={styles.contentBlock} onPress={ this.postLit.bind(this) }>
             <View style={styles.blockIcon}>
               <Image source={{ uri: 'http://qa.trademuch.co.uk/img/map.png' }} style={styles.icon} />
             </View>
             <View style={styles.blockTitle}>
-              <Button style={styles.button} onPress={ this.postLit.bind(this)>{'附近的好康物品'}</Button>
+              <Button style={styles.button} onPress={ this.postLit.bind(this)}>{'附近的好康物品'}</Button>
             </View>
             <View style={styles.blockNotification}>
               <Text style={styles.textNotification}>{'0'}</Text>
