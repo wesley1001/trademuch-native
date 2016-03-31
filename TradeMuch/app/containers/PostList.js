@@ -10,6 +10,7 @@ const styles = React.StyleSheet.create({
   content: {
     flex: 1,
     marginTop: 20,
+    backgroundColor: '#fff'
   },
 });
 
@@ -31,9 +32,7 @@ function PostList(props) {
     <View style={styles.content}>
         <SearchPostBar />
         {postListContainer}
-        <TouchableOpacity onPress={Actions.PostDetail}>
-          <Text style={styles.disclaimerText}>List Test Page</Text>
-        </TouchableOpacity>
+        <TouchableOpacity onPress={Actions.PostDetail} />
     </View>
   );
 }

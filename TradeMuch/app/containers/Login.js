@@ -8,9 +8,10 @@ import React, {
   Alert,
 } from 'react-native';
 import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
 import { FBSDKLoginButton } from 'react-native-fbsdklogin';
 import { FBSDKAccessToken } from 'react-native-fbsdkcore';
-import { requestUserInfo } from '../actions/AuthActions';
+import { registFbToken, requestUserInfo, logout } from '../actions/AuthActions';
 import Dimensions from 'Dimensions';
 const windowSize = Dimensions.get('window');
 
@@ -50,9 +51,31 @@ const styles = StyleSheet.create({
 });
 
 export default class Login extends Component {
+
+  static propTypes = {
+    requestUserInfo: React.PropTypes.func,
+    registFbToken: React.PropTypes.func,
+    logout: React.PropTypes.func,
+    isLogin: React.PropTypes.bool,
+  };
+
   constructor(props) {
     super(props);
     this.handleLoginFinished = this.handleLoginFinished.bind(this);
+    this.handleLogoutFinished = this.handleLogoutFinished.bind(this);
+  }
+
+  componentWillUpdate(nextProps) {
+    const { isLogin, isFirstLogin, isAgreePolicies } = nextProps;
+    if (isLogin && isFirstLogin) {
+      if (isAgreePolicies === false) {
+        Actions.policies();
+      } else if (isAgreePolicies === true) {
+        Actions.editProfile();
+      }
+    } else if (isLogin && isFirstLogin === false && isAgreePolicies === true) {
+      Actions.postList();
+    }
   }
 
   handleLoginFinished(error, result) {
@@ -63,7 +86,7 @@ export default class Login extends Component {
         // alert('Login cancelled.');
       } else {
         FBSDKAccessToken.getCurrentAccessToken(async userIdentities => {
-          this.props.requestUserInfo(userIdentities);
+          this.props.registFbToken(userIdentities);
           if (result === null) {
             // alert('Start logging in.');
           } else {
@@ -72,6 +95,10 @@ export default class Login extends Component {
         });
       }
     }
+  }
+
+  handleLogoutFinished() {
+    this.props.logout();
   }
 
   render() {
@@ -86,6 +113,7 @@ export default class Login extends Component {
           <FBSDKLoginButton
             style={styles.loginButton}
             onLoginFinished={this.handleLoginFinished}
+            onLogoutFinished={this.handleLogoutFinished}
             readPermissions={[]}
             publishPermissions={[]}
           />
@@ -94,13 +122,19 @@ export default class Login extends Component {
     );
   }
 }
-function _injectPropsFromStore() {
+
+function _injectPropsFromStore({ auth }) {
   return {
+    isLogin: auth.isLogin,
+    isFirstLogin: auth.userInfo.isFirstLogin,
+    isAgreePolicies: auth.userInfo.isAgreePolicies,
   };
 }
 
 const _injectPropsFormActions = {
   requestUserInfo,
+  registFbToken,
+  logout,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(Login);

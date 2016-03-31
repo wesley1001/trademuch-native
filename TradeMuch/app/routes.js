@@ -1,25 +1,27 @@
+import { connect } from 'react-redux';
+import { loginValidation } from './actions/AuthActions';
 import React, {
   Navigator,
 	StyleSheet,
 	TouchableOpacity,
 	Image,
   Component,
+  PropTypes,
  } from 'react-native';
-import { connect } from 'react-redux';
 import RNRF, {
    Route,
    Schema,
-   Actions,
  } from 'react-native-router-flux';
 const Router = connect()(RNRF.Router);
 
 // View
-import PostList from './containers/PostList';
-import PostDetail from './containers/PostDetail';
+import Login from './containers/Login';
+import Policies from './containers/Policies';
 import EditProfile from './containers/EditProfile';
-// import Messenger from './containers/Messenger';
-// import Login from './containers/Login';
 import SideDrawer from './components/SideDrawer';
+import PostList from './containers/PostList';
+import CreatePost from './containers/CreatePost';
+// import Messenger from './containers/Messenger';
 // import NHSample from './containers/sampleApp';
 
 const styles = StyleSheet.create({
@@ -45,8 +47,13 @@ const styles = StyleSheet.create({
   },
 });
 
-
 export default class AppRoutes extends Component {
+  static propTypes = {
+    loginValidation: PropTypes.func,
+  };
+  componentWillMount() {
+    this.props.loginValidation();
+  }
   renderMenuButton = () => {
     return (
       <TouchableOpacity
@@ -60,7 +67,6 @@ export default class AppRoutes extends Component {
       </TouchableOpacity>
     );
   }
-
   renderBackButton = () =>  {
     return (
       <TouchableOpacity
@@ -74,22 +80,43 @@ export default class AppRoutes extends Component {
       </TouchableOpacity>
     );
   }
-
   render() {
     return (
-      <Router name="root">
+      <Router name="root" hideNavBar>
 
+        {/* ------------------- Schemas ------------------------------------ */}
+        <Schema name="default" sceneConfig={ Navigator.SceneConfigs.FloatFromRight } />
+        <Schema name="left" sceneConfig={Navigator.SceneConfigs.FloatFromLeft} />
+        <Schema name="modal" sceneConfig={Navigator.SceneConfigs.FloatFromBottom} />
         <Schema
           name="boot"
           sceneConfig={Navigator.SceneConfigs.FloatFromRight}
           hideNavBar
           type="replace"
         />
+        <Schema
+          name="home"
+          sceneConfig={Navigator.SceneConfigs.FloatFromRight}
+          hideNavBar={false}
+          renderLeftButton={this.renderMenuButton}
+        />
+        <Schema
+          name="interior"
+          sceneConfig={Navigator.SceneConfigs.FloatFromRight}
+          hideNavBar={false}
+          renderLeftButton={this.renderBackButton}
+        />
 
-        {/*
-        <Schema name="default" sceneConfig={ Navigator.SceneConfigs.FloatFromRight } />
-         <Route name="Login" schema="boot" component={Login} title="Login" />*/}
+        {/* ------------------- Facebook Login Routor ---------------------- */}
+        <Route name="login" schema="boot" component={Login} title="Login" />
+        <Route name="policies" component={Policies} title="服務條款" />
+        <Route name="editProfile">
+          <Router name="editProfileRouter">
+            <Route name="editProfileView" component={EditProfile} title="確認個人資料" />
+          </Router>
+        </Route>
 
+        {/* ------------------- SideDrawer Routor -------------------------- */}
         <Route name="Drawer" hideNavBar type="reset" initial>
           <SideDrawer ref={c => { c ? this.drawer = c.drawer : this.drawer }}>
             <Router
@@ -98,22 +125,18 @@ export default class AppRoutes extends Component {
               navigationBarStyle={styles.navBar}
               titleStyle={styles.navTitle}
             >
-              <Schema
-                name="home"
-                sceneConfig={Navigator.SceneConfigs.FloatFromRight}
+              <Route name="postList" schema="home" component={PostList} title="TradeMuch" />
+              <Route
+                name="createPost"
+                component={CreatePost}
+                schema="home"
+                title="發布"
                 hideNavBar={false}
-                renderLeftButton={this.renderMenuButton}
               />
-              <Schema
-                name="interior"
-                sceneConfig={Navigator.SceneConfigs.FloatFromRight}
-                hideNavBar={false}
-                renderLeftButton={this.renderBackButton}
-              />
-              <Route name="PostList" component={PostList} schema="home" title="PostList" />
-              {/*<Route name="Messenger" component={Messenger} schema="interior" title="Messenger" />*/}
-              <Route name="EditProfile" component={EditProfile} schema="interior" title="確認個人資料" />
-              <Route name="PostDetail" component={PostDetail} schema="interior" title="發布" />
+              <Route name="editProfile" component={EditProfile} schema="interior" title="確認個人資料" />
+              {/*
+                <Route name="Messenger" component={Messenger} schema="home" title="Messenger" />
+              */}
             </Router>
           </SideDrawer>
         </Route>
@@ -126,3 +149,13 @@ AppRoutes.propTypes = {
   renderMenuButton: React.PropTypes.func,
   renderBackButton: React.PropTypes.func,
 };
+
+function _injectPropsFromStore() {
+  return {};
+}
+
+const _injectPropsFormActions = {
+  loginValidation,
+};
+
+export default connect(_injectPropsFromStore, _injectPropsFormActions)(AppRoutes);

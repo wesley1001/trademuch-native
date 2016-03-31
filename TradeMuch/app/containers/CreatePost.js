@@ -51,12 +51,13 @@ const styles = React.StyleSheet.create({
   cameraButtonContainer: {
     flex: 0.69,
   },
-  cameraButton: {
-    // backgroundColor: 'rgba(255, 255, 255, 1)',
-    height: 50,
-    width: 50,
+  title: {
     marginTop: 100,
     marginLeft: 20,
+    color: 'rgba(255, 255, 255, 1)',
+    fontSize: 25,
+    textAlign: 'left',
+    height: 30,
   },
   imageContainer: {
     flex: 1,
@@ -73,7 +74,7 @@ const styles = React.StyleSheet.create({
     marginLeft: 10,
     marginBottom: 15,
   },
-  title: {
+  description: {
     color: 'rgba(255, 255, 255, 1)',
     fontSize: 25,
     marginBottom: 5,
@@ -91,12 +92,12 @@ const styles = React.StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    borderTopWidth: 2,
-    borderColor: '#d6d7da',
+    flexDirection: 'row',
   },
   button: {
+    flex: 1,
+    margin: 20,
     height: 50,
-    width: 210,
     backgroundColor: 'rgba(74, 74, 74, 0.3)',
     borderRadius: 9,
     borderWidth: 2,
@@ -165,26 +166,37 @@ export default class PostDetail extends Component {
   }
 
   render() {
+    const { photo, title} = this.props;
     if (this.props.postFinishData.id !== null) {
-      Actions.PostList();
+      Actions.postList();
     }
-
+    let backImg;
+    if( photo ) {
+      backImg = <Image source={this.props.photo} style={styles.itemImg} />;
+    }
     return (
       <View style={styles.imageContainer}>
-        <Image source={this.props.photo} style={styles.itemImg} />
+        {backImg}
         <LinearGradient
           colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0)',
             'rgba(0, 0, 0, 0.5)', 'rgba(0, 0, 0, 1)']}
           style={styles.footBackColor}
         />
         <View style={styles.cameraButtonContainer}>
-          <TouchableOpacity onPress={ this.selectPhotoButtonHandle } >
+          {/*<TouchableOpacity onPress={ this.selectPhotoButtonHandle } >
             <Image source={{uri: 'https://googledrive.com/host/0B-XkApzKpJ7QWHZNeFRXRzNZcHM'}} style={styles.cameraButton}/>
-          </TouchableOpacity>
+          </TouchableOpacity>*/}
+          <TextInput
+            style={styles.title}
+            placeholder="點擊輸入標題"
+            placeholderTextColor="#FFF"
+            value={this.props.title}
+            onChangeText= { this.inputTitleHandle }
+          />
         </View>
         <View style={styles.itemDescriptionContainer}>
           <TextInput
-            style={styles.title}
+            style={styles.description}
             placeholder="點擊輸入描述"
             placeholderTextColor="#FFF"
             value={this.props.title}
@@ -197,7 +209,19 @@ export default class PostDetail extends Component {
               style={styles.button}
               onPress={ this.postCreateButtonHandle }
             >
-              <Text style={styles.buttonText} >發表</Text>
+              <Text style={styles.buttonText} >取消</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={ this.postCreateButtonHandle }
+            >
+              <Text style={styles.buttonText} >完成</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={ this.postCreateButtonHandle }
+            >
+              <Text style={styles.buttonText} >拍照</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -222,6 +246,10 @@ PostDetail.propTypes = {
   photoInfo: React.PropTypes.object,
   imgSrc: React.PropTypes.array,
   postFinishData: React.PropTypes.object,
+  requestTakePhoto: React.PropTypes.func,
+  requestCreate: React.PropTypes.func,
+  requestUploadImg: React.PropTypes.func,
+  requestInputTitle: React.PropTypes.func,
 };
 
 PostDetail.defaultProps = {
