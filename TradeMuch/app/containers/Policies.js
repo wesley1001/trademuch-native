@@ -66,10 +66,10 @@ export default class Policies extends Component {
     this.cancel = this.cancel.bind(this);
   }
   componentWillUpdate(nextProps) {
-    const { isLogin, isAgreePolicies } = nextProps;
-    if (isLogin && isAgreePolicies) {
-      Actions.editProfile();
-    }
+    // const { isLogin, isAgreePolicies } = nextProps;
+    // if (isLogin && isAgreePolicies) {
+      // Actions.editProfile();
+    // }
   }
 
   cancel() {
