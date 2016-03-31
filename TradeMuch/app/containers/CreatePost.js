@@ -7,16 +7,19 @@ import React, {
   Text,
   TextInput,
   Component,
+  Alert,
 } from 'react-native';
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Dimensions from 'Dimensions';
+import LoadSpinner from 'react-native-loading-spinner-overlay';
 import { ImagePickerManager } from 'NativeModules';
 import { requestTakePhoto } from '../actions/TakePhotoActions';
 import {
   requestCreate,
   requestUploadImg,
   requestInputTitle,
+  requestInputDescription,
  } from '../actions/PostActions';
 import { Actions } from 'react-native-router-flux';
 const windowSize = Dimensions.get('window');
@@ -48,7 +51,7 @@ const options = {
 
 
 const styles = React.StyleSheet.create({
-  cameraButtonContainer: {
+  titleContainer: {
     flex: 0.69,
   },
   title: {
@@ -70,8 +73,16 @@ const styles = React.StyleSheet.create({
     width: windowSize.width,
     height: windowSize.height,
   },
+  noneImg: {
+    position: 'absolute',
+    left: windowSize.width / 2 - 50,
+    top: windowSize.width / 2,
+    width: 100,
+    height: 100,
+    borderColor: 'rgba(255, 255, 255, 1)',
+  },
   itemDescriptionContainer: {
-    marginLeft: 10,
+    marginLeft: 20,
     marginBottom: 15,
   },
   description: {
@@ -127,6 +138,7 @@ export default class PostDetail extends Component {
     this.selectPhotoButtonHandle = this.selectPhotoButtonHandle.bind(this);
     this.inputTitleHandle = this.inputTitleHandle.bind(this);
     this.postCreateButtonHandle = this.postCreateButtonHandle.bind(this);
+    this.inputDescriptionHandle = this.inputDescriptionHandle.bind(this);
   }
 
   selectPhotoButtonHandle() {
@@ -148,41 +160,67 @@ export default class PostDetail extends Component {
   }
 
   postCreateButtonHandle() {
-    this.props.requestCreate({
-      detail: {
-        title: this.props.title,
-        startDate: new Date(),
-      },
-      location: {
-        latitude: 24.148657699999998,
-        longitude: 120.67413979999999,
-      },
-      images: this.props.imgSrc[0].src,
-    });
+    if (this.props.title && this.props.imgSrc[0].src) {
+      this.props.requestCreate({
+        detail: {
+          title: this.props.title,
+          description: this.props.description,
+          startDate: new Date(),
+        },
+        location: {
+          latitude: 24.148657699999998,
+          longitude: 120.67413979999999,
+        },
+        images: this.props.imgSrc[0].src,
+      });
+    } else {
+      Alert.alert('注意', '照片跟標題是必填喔');
+    }
   }
 
   inputTitleHandle(text) {
     this.props.requestInputTitle(text);
   }
 
+  inputDescriptionHandle(text) {
+    this.props.requestInputDescription(text);
+  }
+
   render() {
-    const { photo, title} = this.props;
+    const { photo, title, description } = this.props;
     if (this.props.postFinishData.id !== null) {
       Actions.postList();
     }
     let backImg;
-    if( photo ) {
-      backImg = <Image source={this.props.photo} style={styles.itemImg} />;
+    if (photo.uri) {
+      backImg = [
+        <LoadSpinner key="loadSpinner" visible={this.props.imgSrc[0].src === ''} />,
+        <Image key="img" source={this.props.photo} style={styles.itemImg} />,
+        <LinearGradient
+          key="backGround"
+          colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 1)']}
+          style={styles.footBackColor}
+        />,
+      ];
+    } else {
+      backImg = [
+        <LinearGradient
+          key="backGround"
+          colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 1)']}
+          style={styles.footBackColor}
+        />,
+        <Image
+          key="img"
+          source={{ uri: 'https://googledrive.com/host/0B-XkApzKpJ7QWHZNeFRXRzNZcHM' }}
+          style={styles.noneImg}
+        />,
+      ];
     }
+
     return (
       <View style={styles.imageContainer}>
         {backImg}
-        <LinearGradient
-          colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0)',
-            'rgba(0, 0, 0, 0.5)', 'rgba(0, 0, 0, 1)']}
-          style={styles.footBackColor}
-        />
-        <View style={styles.cameraButtonContainer}>
+        <View style={styles.titleContainer}>
           {/*<TouchableOpacity onPress={ this.selectPhotoButtonHandle } >
             <Image source={{uri: 'https://googledrive.com/host/0B-XkApzKpJ7QWHZNeFRXRzNZcHM'}} style={styles.cameraButton}/>
           </TouchableOpacity>*/}
@@ -190,7 +228,7 @@ export default class PostDetail extends Component {
             style={styles.title}
             placeholder="點擊輸入標題"
             placeholderTextColor="#FFF"
-            value={this.props.title}
+            value={title}
             onChangeText= { this.inputTitleHandle }
           />
         </View>
@@ -199,15 +237,15 @@ export default class PostDetail extends Component {
             style={styles.description}
             placeholder="點擊輸入描述"
             placeholderTextColor="#FFF"
-            value={this.props.title}
-            onChangeText= { this.inputTitleHandle }
+            value={description}
+            onChangeText= { this.inputDescriptionHandle }
           />
         </View>
         <View style={styles.footContainer}>
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={styles.button}
-              onPress={ this.postCreateButtonHandle }
+              onPress={ Actions.postList }
             >
               <Text style={styles.buttonText} >取消</Text>
             </TouchableOpacity>
@@ -219,7 +257,7 @@ export default class PostDetail extends Component {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.button}
-              onPress={ this.postCreateButtonHandle }
+              onPress={ this.selectPhotoButtonHandle }
             >
               <Text style={styles.buttonText} >拍照</Text>
             </TouchableOpacity>
@@ -233,6 +271,7 @@ export default class PostDetail extends Component {
 function _injectPropsFromStore(state) {
   return {
     title: state.post.title,
+    description: state.post.description,
     photo: state.takePhoto.photoSource,
     photoInfo: state.takePhoto.photoInfo,
     imgSrc: state.post.upLoadImg,
@@ -242,6 +281,7 @@ function _injectPropsFromStore(state) {
 
 PostDetail.propTypes = {
   title: React.PropTypes.string,
+  description: React.PropTypes.string,
   photo: React.PropTypes.object,
   photoInfo: React.PropTypes.object,
   imgSrc: React.PropTypes.array,
@@ -250,11 +290,13 @@ PostDetail.propTypes = {
   requestCreate: React.PropTypes.func,
   requestUploadImg: React.PropTypes.func,
   requestInputTitle: React.PropTypes.func,
+  requestInputDescription: React.PropTypes.func,
 };
 
 PostDetail.defaultProps = {
   title: '',
-  photo: { uri: 'https://images.unsplash.com/photo-1453053507108-9f5456eb481f?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=1080&fit=max&s=e0d75a1d1e2605e4c9f9302de0679508' },
+  description: '',
+  photo: {},
   photoInfo: {},
   imgSrc: [{ name: '', src: '' }],
   postFinishData: { id: null, uuid: '', title: '', startDate: '', user_id: null, UserId: null },
@@ -265,6 +307,7 @@ const _injectPropsFormActions = {
   requestCreate,
   requestUploadImg,
   requestInputTitle,
+  requestInputDescription,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(PostDetail);
