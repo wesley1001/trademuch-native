@@ -132,7 +132,7 @@ export default class SideDrawerContent extends Component {
   render() {
     // const { drawer } = this.context
     return (
-			<View style={styles.contentWrapper}>
+      <View style={styles.contentWrapper}>
         <View style={styles.contentAvatar}>
           <TouchableOpacity style={styles.avatarBlock} onPress={ this.profile.bind(this) }>
             <Image source={{ uri: 'http://qa.trademuch.co.uk/img/human.png' }} style={styles.avatarImage} />
@@ -191,7 +191,7 @@ export default class SideDrawerContent extends Component {
             <TouchableOpacity style={styles.contentBlock} onPress={ this.postDetail.bind(this) }>
               <View style={styles.blockIcon}>
                 <Image source={{ uri: 'http://qa.trademuch.co.uk/img/chat%EF%BC%BF60x60.png' }} style={styles.icon} />
-    					</View>
+              </View>
               <View style={styles.blockTitle}>
                 <Button onPress={ this.postDetail.bind(this) } style={styles.button}>{'我的留言版'}</Button>
               </View>
@@ -202,7 +202,7 @@ export default class SideDrawerContent extends Component {
           </View>
 
         </View>
-			</View>
+      </View>
 		);
   }
 }
