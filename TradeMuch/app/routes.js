@@ -8,7 +8,7 @@ const Router = connect()(RNRF.Router);
 
 // View
 import PostList from './containers/PostList';
-import PostDetail from './containers/PostDetail';
+import CreatePost from './containers/CreatePost';
 import EditProfile from './containers/EditProfile';
 // import Messenger from './containers/Messenger';
 import Login from './containers/Login';
@@ -39,7 +39,7 @@ class AppRoutes extends Component {
             <Route name="editProfileView" component={EditProfile} title="確認個人資料" />
           </Router>
         </Route>
-        <Route name="postDetail" component={PostDetail} title="發布" />
+        <Route name="createPost" component={CreatePost} title="發布" hideNavBar={false} />
         <Route name="policies" component={Policies} title="服務條款" />
       </Router>
     );
