@@ -11,6 +11,7 @@ import React, {
 import RNRF, {
    Route,
    Schema,
+   Actions,
  } from 'react-native-router-flux';
 const Router = connect()(RNRF.Router);
 
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'green',
+    backgroundColor: '#666',
   },
   navTitle: {
     color: 'white',
@@ -58,11 +59,11 @@ export default class AppRoutes extends Component {
     return (
       <TouchableOpacity
         style={styles.leftButtonContainer}
-        onPress={() => this.drawer.open()}
+        onPress={() => {this.drawer.open();}}
       >
         <Image
-          source={{ uri: 'https://github.com/efkan/rndrawer-implemented-rnrouter/blob/master/src/ic_menu_white_24dp.png' }}
-          style={{ height: 24, width: 24, backgroundColor: '#790c0c' }}
+          source={{ uri: 'https://cdn4.iconfinder.com/data/icons/wirecons-free-vector-icons/32/menu-alt-64.png' }}
+          style={{ height: 24, width: 24 }}
         />
       </TouchableOpacity>
     );
@@ -71,11 +72,11 @@ export default class AppRoutes extends Component {
     return (
       <TouchableOpacity
         style={styles.leftButtonContainer}
-        onPress={() => this.drawer.close()}
+        onPress={Actions.pop}
       >
         <Image
-          source={{ url: 'https://github.com/efkan/rndrawer-implemented-rnrouter/blob/master/src/ic_arrow_back_white_24dp.png' }}
-          style={{ height: 24, width: 24, backgroundColor: '#c23a3a' }}
+          source={{ uri: 'http://i.stack.imgur.com/rXZga.png' }}
+          style={{ height: 24, width: 24 }}
         />
       </TouchableOpacity>
     );
@@ -117,8 +118,8 @@ export default class AppRoutes extends Component {
         </Route>
 
         {/* ------------------- SideDrawer Routor -------------------------- */}
-        <Route name="Drawer" hideNavBar type="reset" initial>
-          <SideDrawer ref={c => { c ? this.drawer = c.drawer : this.drawer }}>
+        <Route name="drawer" hideNavBar type="reset" initial>
+          <SideDrawer ref={(c) => { c ? this.drawer = c.drawer : this.drawer }}>
             <Router
               name="drawerRoot"
               sceneStyle={styles.routerScene}
@@ -135,7 +136,7 @@ export default class AppRoutes extends Component {
               />
               <Route name="editProfile" component={EditProfile} schema="interior" title="確認個人資料" />
               {/*
-                <Route name="Messenger" component={Messenger} schema="home" title="Messenger" />
+                <Route name="messenger" component={Messenger} schema="home" title="Messenger" />
               */}
             </Router>
           </SideDrawer>

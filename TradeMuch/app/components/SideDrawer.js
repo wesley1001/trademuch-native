@@ -23,16 +23,40 @@ const styles = {
 };
 
 export default class SideDrawer extends Component {
+  state={
+    drawerOpen: false,
+    drawerDisabled: false,
+  };
+  closeDrawer = () => {
+    this._drawer.close()
+  };
+  openDrawer = () => {
+    this._drawer.open()
+  };
   render() {
     return (
       <Drawer
-        ref={c => this.drawer = c}
+        ref={(c) => {this.drawer = c;}}
         type="static"
-        content={<SideDrawerContent />}
+        content={<SideDrawerContent closeDrawer={this.closeDrawer} />}
         openDrawerOffset={80}
         tapToClose
+        onOpen={() => {
+          console.log('onopen')
+          this.setState({drawerOpen: true})
+        }}
+        onClose={() => {
+          console.log('onclose')
+          this.setState({drawerOpen: false})
+        }}
+        disabled={this.state.drawerDisabled}
         styles={styles.drawerStyles}
         tweenHandler={Drawer.tweenPresets.parallax}
+        tweenDuration={100}
+        negotiatePan
+        panThreshold={0.08}
+        openDrawerOffset={0.2}
+        panOpenMask={0.2}
       >
         {
           React.Children.map(

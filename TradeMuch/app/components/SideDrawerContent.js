@@ -112,21 +112,25 @@ export default class SideDrawerContent extends Component {
     super(props);
   }
 
+  login() {
+    this.context.drawer.close();
+    Actions.login.call();
+  }
   profile() {
     this.context.drawer.close();
-    Actions.EditProfile.call();
+    Actions.editProfile.call();
   }
   postLit() {
     this.context.drawer.close();
-    Actions.PostList.call();
+    Actions.postList.call();
   }
-  postDetail() {
+  createPost() {
     this.context.drawer.close();
-    Actions.PostDetail.call();
+    Actions.createPost.call();
   }
   messenger() {
     this.context.drawer.close();
-    Actions.Messenger.call();
+    Actions.messenger.call();
   }
 
   render() {
@@ -172,12 +176,12 @@ export default class SideDrawerContent extends Component {
           <View style={styles.cellBorder} />
 
           <View>
-            <TouchableOpacity style={styles.contentBlock} onPress={ this.postDetail.bind(this) }>
+            <TouchableOpacity style={styles.contentBlock} onPress={ this.createPost.bind(this) }>
               <View style={styles.blockIcon}>
                 <Image source={{ uri: 'http://qa.trademuch.co.uk/img/add.png' }} style={styles.icon} />
               </View>
               <View style={styles.blockTitle}>
-                <Button onPress={ this.postDetail.bind(this) }	style={styles.button}>{'PostDetail'}</Button>
+                <Button onPress={ this.createPost.bind(this) }	style={styles.button}>{'createPost'}</Button>
               </View>
               <View style={styles.blockNotification}>
                 <Text style={styles.textNotification}>{'1'}</Text>
@@ -188,12 +192,12 @@ export default class SideDrawerContent extends Component {
           <View style={styles.cellBorder} />
 
           <View onPress={ this.messenger.bind(this) }>
-            <TouchableOpacity style={styles.contentBlock} onPress={ this.postDetail.bind(this) }>
+            <TouchableOpacity style={styles.contentBlock} onPress={ this.createPost.bind(this) }>
               <View style={styles.blockIcon}>
                 <Image source={{ uri: 'http://qa.trademuch.co.uk/img/chat%EF%BC%BF60x60.png' }} style={styles.icon} />
               </View>
               <View style={styles.blockTitle}>
-                <Button onPress={ this.postDetail.bind(this) } style={styles.button}>{'我的留言版'}</Button>
+                <Button onPress={ this.createPost.bind(this) } style={styles.button}>{'我的留言版'}</Button>
               </View>
               <View style={styles.blockNotification}>
                 <Text style={styles.textNotification}>{'1'}</Text>
