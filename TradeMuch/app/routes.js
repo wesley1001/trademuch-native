@@ -27,7 +27,7 @@ class AppRoutes extends Component {
         <Schema name="default" sceneConfig={Navigator.SceneConfigs.FloatFromRight} />
         <Schema name="left" sceneConfig={Navigator.SceneConfigs.FloatFromLeft} />
         <Schema name="modal" sceneConfig={Navigator.SceneConfigs.FloatFromBottom} />
-        <Route name="login" component={Login} title="登入" initial />
+        <Route name="login" component={Login} title="登入"/>
         {/*<Route name="Messenger" component={Messenger} title="Messenger" />*/}
         <Route name="postList" >
           <Router name="listRouter">
@@ -39,7 +39,7 @@ class AppRoutes extends Component {
             <Route name="editProfileView" component={EditProfile} title="確認個人資料" />
           </Router>
         </Route>
-        <Route name="createPost" component={CreatePost} title="發布" hideNavBar={false} />
+        <Route name="createPost" component={CreatePost} title="發布" hideNavBar={false} initial />
         <Route name="policies" component={Policies} title="服務條款" />
       </Router>
     );
