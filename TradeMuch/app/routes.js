@@ -23,6 +23,7 @@ import SideDrawer from './components/SideDrawer';
 import PostList from './containers/PostList';
 import CreatePost from './containers/CreatePost';
 import Messenger from './containers/Messenger';
+import PostDetail from './containers/PostDetail';
 // import NHSample from './containers/sampleApp';
 
 const styles = StyleSheet.create({
@@ -156,6 +157,13 @@ export default class AppRoutes extends Component {
                 component={CreatePost}
                 schema="home"
                 title="發布"
+                hideNavBar={false}
+              />
+              <Route
+                name="postDetail"
+                component={PostDetail}
+                schema="interior"
+                title="物品檢視"
                 hideNavBar={false}
               />
               <Route name="editProfile" component={EditProfile} schema="interior" title="確認個人資料" />

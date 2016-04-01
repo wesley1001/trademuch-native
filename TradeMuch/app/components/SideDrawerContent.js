@@ -132,6 +132,17 @@ export default class SideDrawerContent extends Component {
     this.context.drawer.close();
     Actions.messenger.call();
   }
+  postDetail() {
+    this.context.drawer.close();
+    Actions.postDetail({
+      title: 'test title', // navBar title
+      id: 2,
+      itemTitle: 'test title',
+      itemDescription: 'test desc',
+      src: 'http://qa.trademuch.co.uk/img/human.png',
+      url: 'https://www.google.com.tw/maps/@21.9943634,118.8577573,8z',
+    });
+  }
 
   render() {
     // const { drawer } = this.context
@@ -198,6 +209,23 @@ export default class SideDrawerContent extends Component {
               </View>
               <View style={styles.blockTitle}>
                 <Button onPress={ this.createPost.bind(this) } style={styles.button}>{'我的留言版'}</Button>
+              </View>
+              <View style={styles.blockNotification}>
+                <Text style={styles.textNotification}>{'1'}</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.cellBorder} />
+
+          {/* postDetail */}
+          <View onPress={ this.messenger.bind(this) }>
+            <TouchableOpacity style={styles.contentBlock} onPress={ this.postDetail.bind(this) }>
+              <View style={styles.blockIcon}>
+                <Image source={{ uri: 'http://qa.trademuch.co.uk/img/add.png' }} style={styles.icon} />
+              </View>
+              <View style={styles.blockTitle}>
+                <Button onPress={ this.postDetail.bind(this) } style={styles.button}>{'檢視物品'}</Button>
               </View>
               <View style={styles.blockNotification}>
                 <Text style={styles.textNotification}>{'1'}</Text>
