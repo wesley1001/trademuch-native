@@ -69,7 +69,6 @@ export async function requestUploadImg(data = {
   };
 }
 
-
 function receivedInputTitle(data) {
   return {
     type: RECEIVED_INPUT_TITLE,

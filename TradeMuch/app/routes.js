@@ -22,7 +22,7 @@ import EditProfile from './containers/EditProfile';
 import SideDrawer from './components/SideDrawer';
 import PostList from './containers/PostList';
 import CreatePost from './containers/CreatePost';
-// import Messenger from './containers/Messenger';
+import Messenger from './containers/Messenger';
 // import NHSample from './containers/sampleApp';
 
 const styles = StyleSheet.create({
@@ -52,21 +52,36 @@ export default class AppRoutes extends Component {
   static propTypes = {
     loginValidation: PropTypes.func,
   };
+
+  constructor(props) {
+    super(props);
+    this.renderMenuButton = this.renderMenuButton.bind(this);
+  }
+
   componentWillMount() {
     this.props.loginValidation();
   }
-  renderMenuButton = () => {
+
+  refSideDrawer = (ref) => {
+    if (ref) {
+      this.drawer = ref.drawer;
+    } else {
+      this.drawer = this.drawer;
+    }
+  }
+
+  renderMenuButton() {
+    const switchSideDrawer = () => {
+      if (!this.drawer._open) {
+        this.drawer.open();
+      } else {
+        this.drawer.close();
+      }
+    };
     return (
       <TouchableOpacity
         style={styles.leftButtonContainer}
-        onPress={() => {
-          console.log(this.drawer.drawerOpen);
-          if (!this.drawer.drawerOpen) {
-            this.drawer.open();
-          } else {
-            this.drawer.close();
-          }
-        }}
+        onPress={switchSideDrawer}
       >
         <Image
           source={{ uri: 'https://cdn4.iconfinder.com/data/icons/wirecons-free-vector-icons/32/menu-alt-64.png' }}
@@ -75,7 +90,8 @@ export default class AppRoutes extends Component {
       </TouchableOpacity>
     );
   }
-  renderBackButton = () =>  {
+
+  renderBackButton() {
     return (
       <TouchableOpacity
         style={styles.leftButtonContainer}
@@ -88,6 +104,8 @@ export default class AppRoutes extends Component {
       </TouchableOpacity>
     );
   }
+
+
   render() {
     return (
       <Router name="root" hideNavBar>
@@ -123,10 +141,9 @@ export default class AppRoutes extends Component {
             <Route name="editProfileView" component={EditProfile} title="確認個人資料" />
           </Router>
         </Route>
-
         {/* ------------------- SideDrawer Routor -------------------------- */}
         <Route name="drawer" hideNavBar type="reset" initial>
-          <SideDrawer ref={(ref) => { ref ? this.drawer = ref.drawer : this.drawer; }}>
+          <SideDrawer ref={this.refSideDrawer}>
             <Router
               name="drawerRoot"
               sceneStyle={styles.routerScene}
@@ -142,9 +159,7 @@ export default class AppRoutes extends Component {
                 hideNavBar={false}
               />
               <Route name="editProfile" component={EditProfile} schema="interior" title="確認個人資料" />
-              {/*
-                <Route name="messenger" component={Messenger} schema="home" title="Messenger" />
-              */}
+              <Route name="messenger" component={Messenger} schema="home" title="Messenger" />
             </Router>
           </SideDrawer>
         </Route>
