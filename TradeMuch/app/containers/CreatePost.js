@@ -133,12 +133,31 @@ const styles = React.StyleSheet.create({
 
 
 export default class PostDetail extends Component {
+  let watchID = null;
   constructor(props) {
     super(props);
     this.selectPhotoButtonHandle = this.selectPhotoButtonHandle.bind(this);
     this.inputTitleHandle = this.inputTitleHandle.bind(this);
     this.postCreateButtonHandle = this.postCreateButtonHandle.bind(this);
     this.inputDescriptionHandle = this.inputDescriptionHandle.bind(this);
+  }
+
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        var initialPosition = JSON.stringify(position);
+        console.log(initialPosition);
+      },
+      (error) => alert(error.message),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    );
+    this.watchID = navigator.geolocation.watchPosition((position) => {
+      var lastPosition = JSON.stringify(position);
+      console.log(lastPosition);
+    });
+  }
+  componentWillUnmoun() {
+    navigator.geolocation.clearWatch(this.watchID);
   }
 
   selectPhotoButtonHandle() {
@@ -286,6 +305,7 @@ PostDetail.propTypes = {
   photoInfo: React.PropTypes.object,
   imgSrc: React.PropTypes.array,
   postFinishData: React.PropTypes.object,
+  watchID: React.PropTypes.number,
   requestTakePhoto: React.PropTypes.func,
   requestCreate: React.PropTypes.func,
   requestUploadImg: React.PropTypes.func,
@@ -296,6 +316,7 @@ PostDetail.propTypes = {
 PostDetail.defaultProps = {
   title: '',
   description: '',
+  watchID: null,
   photo: {},
   photoInfo: {},
   imgSrc: [{ name: '', src: '' }],
