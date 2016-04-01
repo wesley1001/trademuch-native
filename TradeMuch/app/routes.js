@@ -22,7 +22,7 @@ import EditProfile from './containers/EditProfile';
 import SideDrawer from './components/SideDrawer';
 import PostList from './containers/PostList';
 import CreatePost from './containers/CreatePost';
-import Messenger from './containers/Messenger';
+// import Messenger from './containers/Messenger';
 // import NHSample from './containers/sampleApp';
 
 const styles = StyleSheet.create({
@@ -159,7 +159,9 @@ export default class AppRoutes extends Component {
                 hideNavBar={false}
               />
               <Route name="editProfile" component={EditProfile} schema="interior" title="確認個人資料" />
+              {/*
               <Route name="messenger" component={Messenger} schema="home" title="Messenger" />
+              */}
             </Router>
           </SideDrawer>
         </Route>
