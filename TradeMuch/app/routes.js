@@ -141,7 +141,6 @@ export default class AppRoutes extends Component {
             <Route name="editProfileView" component={EditProfile} title="確認個人資料" />
           </Router>
         </Route>
-
         {/* ------------------- SideDrawer Routor -------------------------- */}
         <Route name="drawer" hideNavBar type="reset" initial>
           <SideDrawer ref={this.refSideDrawer}>
