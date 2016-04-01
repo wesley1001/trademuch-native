@@ -132,6 +132,10 @@ export default class SideDrawerContent extends Component {
     this.context.drawer.close();
     Actions.messenger.call();
   }
+  nearByPosts() {
+    this.context.drawer.close();
+    Actions.nearByPosts.call();
+  }
 
   render() {
     // const { drawer } = this.context
@@ -198,6 +202,20 @@ export default class SideDrawerContent extends Component {
               </View>
               <View style={styles.blockTitle}>
                 <Button onPress={ this.createPost.bind(this) } style={styles.button}>{'我的留言版'}</Button>
+              </View>
+              <View style={styles.blockNotification}>
+                <Text style={styles.textNotification}>{'1'}</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          <View onPress={ this.messenger.bind(this) }>
+            <TouchableOpacity style={styles.contentBlock} onPress={ this.nearByPosts.bind(this) }>
+              <View style={styles.blockIcon}>
+                <Image source={{ uri: 'http://qa.trademuch.co.uk/img/chat%EF%BC%BF60x60.png' }} style={styles.icon} />
+              </View>
+              <View style={styles.blockTitle}>
+                <Button onPress={ this.createPost.bind(this) } style={styles.button}>{'附近好康'}</Button>
               </View>
               <View style={styles.blockNotification}>
                 <Text style={styles.textNotification}>{'1'}</Text>
