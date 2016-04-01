@@ -15,6 +15,7 @@ import Dimensions from 'Dimensions';
 import LoadSpinner from 'react-native-loading-spinner-overlay';
 import { ImagePickerManager } from 'NativeModules';
 import { requestTakePhoto } from '../actions/TakePhotoActions';
+import { requestSetLocation } from '../actions/GeoActions';
 import {
   requestCreate,
   requestUploadImg,
@@ -133,7 +134,6 @@ const styles = React.StyleSheet.create({
 
 
 export default class PostDetail extends Component {
-  let watchID = null;
   constructor(props) {
     super(props);
     this.selectPhotoButtonHandle = this.selectPhotoButtonHandle.bind(this);
@@ -145,19 +145,11 @@ export default class PostDetail extends Component {
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        var initialPosition = JSON.stringify(position);
-        console.log(initialPosition);
+        this.props.requestSetLocation(position);
       },
-      (error) => alert(error.message),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+      (error) => Alert.alert(error.message),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
-    this.watchID = navigator.geolocation.watchPosition((position) => {
-      var lastPosition = JSON.stringify(position);
-      console.log(lastPosition);
-    });
-  }
-  componentWillUnmoun() {
-    navigator.geolocation.clearWatch(this.watchID);
   }
 
   selectPhotoButtonHandle() {
@@ -186,10 +178,7 @@ export default class PostDetail extends Component {
           description: this.props.description,
           startDate: new Date(),
         },
-        location: {
-          latitude: 24.148657699999998,
-          longitude: 120.67413979999999,
-        },
+        location: this.props.location,
         images: this.props.imgSrc[0].src,
       });
     } else {
@@ -295,6 +284,7 @@ function _injectPropsFromStore(state) {
     photoInfo: state.takePhoto.photoInfo,
     imgSrc: state.post.upLoadImg,
     postFinishData: state.post.postFinishData,
+    location: state.geo.location,
   };
 }
 
@@ -305,20 +295,24 @@ PostDetail.propTypes = {
   photoInfo: React.PropTypes.object,
   imgSrc: React.PropTypes.array,
   postFinishData: React.PropTypes.object,
-  watchID: React.PropTypes.number,
+  location: React.PropTypes.object,
   requestTakePhoto: React.PropTypes.func,
   requestCreate: React.PropTypes.func,
   requestUploadImg: React.PropTypes.func,
   requestInputTitle: React.PropTypes.func,
   requestInputDescription: React.PropTypes.func,
+  requestSetLocation: React.PropTypes.func,
 };
 
 PostDetail.defaultProps = {
   title: '',
   description: '',
-  watchID: null,
   photo: {},
   photoInfo: {},
+  location: {
+    latitude: 24.148657699999998,
+    longitude: 120.67413979999999,
+  },
   imgSrc: [{ name: '', src: '' }],
   postFinishData: { id: null, uuid: '', title: '', startDate: '', user_id: null, UserId: null },
 };
@@ -329,6 +323,7 @@ const _injectPropsFormActions = {
   requestUploadImg,
   requestInputTitle,
   requestInputDescription,
+  requestSetLocation,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(PostDetail);
