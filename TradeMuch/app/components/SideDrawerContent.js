@@ -215,7 +215,7 @@ export default class SideDrawerContent extends Component {
                 <Image source={{ uri: 'http://qa.trademuch.co.uk/img/chat%EF%BC%BF60x60.png' }} style={styles.icon} />
               </View>
               <View style={styles.blockTitle}>
-                <Button onPress={ this.createPost.bind(this) } style={styles.button}>{'附近好康'}</Button>
+                <Button onPress={ this.nearByPosts.bind(this) } style={styles.button}>{'附近好康'}</Button>
               </View>
               <View style={styles.blockNotification}>
                 <Text style={styles.textNotification}>{'1'}</Text>
