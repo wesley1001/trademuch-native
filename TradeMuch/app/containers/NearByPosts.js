@@ -13,7 +13,7 @@ const styles = React.StyleSheet.create({
   },
 });
 
-function NearByGoods(props) {
+function NearByPosts(props) {
   const { postList } = props;
 
   function onChangeText(value) {
@@ -33,7 +33,7 @@ function NearByGoods(props) {
   );
 }
 
-NearByGoods.propTypes = {
+NearByPosts.propTypes = {
   postList: React.PropTypes.array,
   requestSearchPost: React.PropTypes.func,
   onListItemPress: React.PropTypes.func,
@@ -49,4 +49,4 @@ const _injectPropsFormActions = {
   requestSearchPost,
 };
 
-export default connect(_injectPropsFromStore, _injectPropsFormActions)(NearByGoods);
+export default connect(_injectPropsFromStore, _injectPropsFormActions)(NearByPosts);
