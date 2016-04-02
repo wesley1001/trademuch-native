@@ -19,7 +19,7 @@ const Router = connect()(RNRF.Router);
 import Login from './containers/Login';
 import Policies from './containers/Policies';
 import EditProfile from './containers/EditProfile';
-import SideDrawer from './components/SideDrawer';
+import SideDrawer from './components/SideDrawer/SideDrawer';
 import PostList from './containers/PostList';
 import CreatePost from './containers/CreatePost';
 import NearByPosts from './containers/NearByPosts';
@@ -153,6 +153,7 @@ export default class AppRoutes extends Component {
               titleStyle={styles.navTitle}
             >
               <Route name="postList" schema="home" component={PostList} title="TradeMuch" />
+              <Route name="login" schema="interior" component={Login} title="登入" />
               <Route
                 name="createPost"
                 component={CreatePost}
