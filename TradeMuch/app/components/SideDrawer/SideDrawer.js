@@ -27,29 +27,36 @@ export default class SideDrawer extends Component {
     drawerOpen: false,
     drawerDisabled: false,
   };
-  closeDrawer = () => {
-    this._drawer.close()
-  };
+
+  onOpen = () => {
+
+  }
+
+  onClose = () => {
+
+  }
+
   openDrawer = () => {
-    this._drawer.open()
+    this._drawer.open();
   };
+
+  closeDrawer = () => {
+    this._drawer.close();
+  };
+
+  refDrawer = (ref) => {
+    this.drawer = ref;
+  }
+
   render() {
     return (
       <Drawer
-        ref={(ref) => {this.drawer = ref;}}
+        ref={this.refDrawer}
         type="static"
         content={<SideDrawerContent closeDrawer={this.closeDrawer} />}
         tapToClose
-        onOpen={() => {
-
-          console.log('onopen')
-          // this.setState({drawerOpen: true})
-          // if(this.sta)
-        }}
-        onClose={() => {
-          console.log('onclose')
-          // this.setState({drawerOpen: false})
-        }}
+        onOpen={this.onOpen}
+        onClose={this.onClose}
         disabled={this.state.drawerDisabled}
         styles={styles.drawerStyles}
         tweenHandler={Drawer.tweenPresets.parallax}
@@ -72,11 +79,5 @@ export default class SideDrawer extends Component {
 
 SideDrawer.propTypes = {
   children: PropTypes.node,
-  route: React.PropTypes.object,
-};
-
-SideDrawer.defaultProps = {
-  title: '',
-  description: '',
-  uri: 'https://unsplash.it/200 / 300 /? random ',
+  route: PropTypes.object,
 };
