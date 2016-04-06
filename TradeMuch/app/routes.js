@@ -19,9 +19,10 @@ const Router = connect()(RNRF.Router);
 import Login from './containers/Login';
 import Policies from './containers/Policies';
 import EditProfile from './containers/EditProfile';
-import SideDrawer from './components/SideDrawer';
+import SideDrawer from './components/SideDrawer/SideDrawer';
 import PostList from './containers/PostList';
 import CreatePost from './containers/CreatePost';
+import NearByPosts from './containers/NearByPosts';
 // import Messenger from './containers/Messenger';
 // import NHSample from './containers/sampleApp';
 
@@ -142,6 +143,7 @@ export default class AppRoutes extends Component {
           </Router>
         </Route>
         {/* ------------------- SideDrawer Routor -------------------------- */}
+        <Route name="nearByPosts" component={NearByPosts} title="附近好康" />
         <Route name="drawer" hideNavBar type="reset" initial>
           <SideDrawer ref={this.refSideDrawer}>
             <Router
@@ -151,6 +153,7 @@ export default class AppRoutes extends Component {
               titleStyle={styles.navTitle}
             >
               <Route name="postList" schema="home" component={PostList} title="TradeMuch" />
+              <Route name="login" schema="interior" component={Login} title="登入" />
               <Route
                 name="createPost"
                 component={CreatePost}
@@ -159,6 +162,7 @@ export default class AppRoutes extends Component {
                 hideNavBar={false}
               />
               <Route name="editProfile" component={EditProfile} schema="interior" title="確認個人資料" />
+              <Route name="nearByPosts" component={NearByPosts} schema="interior" title="附近好康" />
               {/*
               <Route name="messenger" component={Messenger} schema="home" title="Messenger" />
               */}
