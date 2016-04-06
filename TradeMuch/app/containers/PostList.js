@@ -1,8 +1,7 @@
-import React, { View, TouchableOpacity, ScrollView, Component, ListView, Text} from 'react-native';
+import React, { View, TouchableOpacity, Component, ListView } from 'react-native';
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import List from '../components/PostList/List';
 import ListItem from '../components/PostList/ListItem';
 import SearchBar from '../components/SearchBar';
 import {
@@ -49,7 +48,6 @@ export default class PostList extends Component {
     );
   }
   componentWillReceiveProps(nextProps) {
-    console.log("nextProps!!!!!!!!!!",nextProps.postList, this.props.postList, nextProps.postList !== this.props.postList);
     if (nextProps.postList !== this.props.postList) {
       const postList = nextProps.postList.map((post, i) => {
         const item = {
@@ -74,11 +72,9 @@ export default class PostList extends Component {
   }
 
   onListItemPress(itemDataId) {
-    console.log("!!!!click",itemDataId);
   }
 
   getListItem(rowData) {
-    console.log("rowData!!!",rowData);
     return (
       <ListItem
         index={rowData.index}
