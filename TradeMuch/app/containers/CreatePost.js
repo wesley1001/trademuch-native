@@ -15,6 +15,7 @@ import Dimensions from 'Dimensions';
 import LoadSpinner from 'react-native-loading-spinner-overlay';
 import { ImagePickerManager } from 'NativeModules';
 import { requestTakePhoto } from '../actions/TakePhotoActions';
+import { requestSetLocation } from '../actions/GeoActions';
 import {
   requestCreate,
   requestUploadImg,
@@ -141,6 +142,16 @@ export default class PostDetail extends Component {
     this.inputDescriptionHandle = this.inputDescriptionHandle.bind(this);
   }
 
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.props.requestSetLocation(position);
+      },
+      (error) => Alert.alert(error.message),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+    );
+  }
+
   selectPhotoButtonHandle() {
     ImagePickerManager.showImagePicker(options, (response) => {
       if (!response.didCancel) {
@@ -167,10 +178,7 @@ export default class PostDetail extends Component {
           description: this.props.description,
           startDate: new Date(),
         },
-        location: {
-          latitude: 24.148657699999998,
-          longitude: 120.67413979999999,
-        },
+        location: this.props.location,
         images: this.props.imgSrc[0].src,
       });
     } else {
@@ -276,6 +284,7 @@ function _injectPropsFromStore(state) {
     photoInfo: state.takePhoto.photoInfo,
     imgSrc: state.post.upLoadImg,
     postFinishData: state.post.postFinishData,
+    location: state.geo.location,
   };
 }
 
@@ -286,11 +295,13 @@ PostDetail.propTypes = {
   photoInfo: React.PropTypes.object,
   imgSrc: React.PropTypes.array,
   postFinishData: React.PropTypes.object,
+  location: React.PropTypes.object,
   requestTakePhoto: React.PropTypes.func,
   requestCreate: React.PropTypes.func,
   requestUploadImg: React.PropTypes.func,
   requestInputTitle: React.PropTypes.func,
   requestInputDescription: React.PropTypes.func,
+  requestSetLocation: React.PropTypes.func,
 };
 
 PostDetail.defaultProps = {
@@ -298,6 +309,10 @@ PostDetail.defaultProps = {
   description: '',
   photo: {},
   photoInfo: {},
+  location: {
+    latitude: 24.148657699999998,
+    longitude: 120.67413979999999,
+  },
   imgSrc: [{ name: '', src: '' }],
   postFinishData: { id: null, uuid: '', title: '', startDate: '', user_id: null, UserId: null },
 };
@@ -308,6 +323,7 @@ const _injectPropsFormActions = {
   requestUploadImg,
   requestInputTitle,
   requestInputDescription,
+  requestSetLocation,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(PostDetail);
