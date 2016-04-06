@@ -257,7 +257,10 @@ PostDetail.propTypes = {
   description: React.PropTypes.string,
   isFav: React.PropTypes.bool,
   location: React.PropTypes.object,
-  distance: React.PropTypes.string,
+  distance: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.number,
+  ]),
   pic: React.PropTypes.string,
   // postList[index]
   index: React.PropTypes.number,
