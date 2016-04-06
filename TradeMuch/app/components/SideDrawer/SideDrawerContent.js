@@ -123,6 +123,20 @@ export default class SideDrawerContent extends Component {
     Actions.editProfile.call();
   }
 
+  postDetail() {
+    this.context.drawer.close();
+    Actions.postDetail({
+      id: 1,
+      index: 1,
+      title: '[標題]',
+      description: '[描述]',
+      isFav: true,
+      location: { lat: 80.1, lon: 100 },
+      distance: 100,
+      pic: 'http://qa.trademuch.co.uk/img/human.png',
+    });
+  }
+
 
   render() {
     // const { drawer } = this.context
@@ -139,6 +153,7 @@ export default class SideDrawerContent extends Component {
           <MenuItem id="postList" title="物品清單" img="http://qa.trademuch.co.uk/img/map.png" notification="5" onItemPress={this.onItemPress} />
           <MenuItem id="editProfile" title="Edit Profile" img="http://qa.trademuch.co.uk/img/login.png" notification="" onItemPress={this.onItemPress} />
           <MenuItem id="createPost" title="Create Post" img="http://qa.trademuch.co.uk/img/add.png" notification="" onItemPress={this.onItemPress} />
+          <MenuItem id="postDetail" title="postDetail" img="http://qa.trademuch.co.uk/img/add.png" notification="" onItemPress={this.postDetail.bind(this)} />
           <MenuItem id="messenger" title="我的留言板" img="http://qa.trademuch.co.uk/img/chat%EF%BC%BF60x60.png" notification="" onItemPress={this.onItemPress} />
           <MenuItem id="login" title="登入" img="http://qa.trademuch.co.uk/img/login.png" notification="" onItemPress={this.onItemPress} />
         </View>

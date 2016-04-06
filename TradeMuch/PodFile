@@ -2,7 +2,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 xcodeproj 'TradeMuch'
 
-pod 'React', :subspecs => ['Core', 'RCTImage', 'RCTNetwork', 'RCTText', 'RCTWebSocket', 'Linking'], :path => 'node_modules/react-native'
+pod 'React', :subspecs => ['Core', 'RCTImage', 'RCTNetwork', 'RCTText', 'RCTWebSocket', 'RTCLinking'], :path => 'node_modules/react-native'
 pod 'react-native-fbsdkcore', :path => 'node_modules/react-native-fbsdkcore'
 pod 'react-native-fbsdklogin', :path => 'node_modules/react-native-fbsdklogin'
 pod 'react-native-fbsdkshare', :path => 'node_modules/react-native-fbsdkshare'

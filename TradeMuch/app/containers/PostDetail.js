@@ -6,7 +6,6 @@ import React, {
   TouchableOpacity,
   Text,
   Component,
-  Alert,
   Linking,
   PixelRatio,
 } from 'react-native';
@@ -35,7 +34,7 @@ const styles = React.StyleSheet.create({
   },
   noneImg: {
     position: 'absolute',
-    left: windowSize.width / 2 - 50,
+    left: windowSize.width / 2 - 50 * PixelRatio.get(),
     top: windowSize.width / 2,
     width: 100 * PixelRatio.get(),
     height: 100 * PixelRatio.get(),
@@ -49,16 +48,16 @@ const styles = React.StyleSheet.create({
   },
   title: {
     color: 'rgba(255, 255, 255, 1)',
-    fontSize: 25,
+    fontSize: 11 * PixelRatio.get(),
     textAlign: 'left',
   },
-  itemDescriptionContainer: {
+  descriptionContainer: {
     paddingLeft: 10 * PixelRatio.get(),
     marginBottom: 5 * PixelRatio.get(),
   },
   description: {
     color: 'rgba(255, 255, 255, 1)',
-    fontSize: 15,
+    fontSize: 10 * PixelRatio.get(),
     marginBottom: 5 * PixelRatio.get(),
     textAlign: 'left',
     height: 30 * PixelRatio.get(),
@@ -85,7 +84,7 @@ const styles = React.StyleSheet.create({
   },
   buttonText: {
     color: 'rgba(255, 255, 255, 1)',
-    fontSize: 18,
+    fontSize: 6 * PixelRatio.get(),
   },
   footContainer: {
     flex: 0.7,
@@ -119,7 +118,8 @@ const styles = React.StyleSheet.create({
 export default class PostDetail extends Component {
   constructor(props) {
     super(props);
-    this.AddToFavoriteButtonHandle = this.AddToFavoriteButtonHandle.bind(this);
+    this.AddItemToFavoriteButtonHandle = this.AddItemToFavoriteButtonHandle.bind(this);
+    this.DeleteFavoriteItemButtonHandle = this.DeleteFavoriteItemButtonHandle.bind(this);
     this.OpenChatRoomButtonHandle = this.OpenChatRoomButtonHandle.bind(this);
     this.OpenMapButtonHandle = this.OpenMapButtonHandle.bind(this);
     this.GetItNowButtonHandle = this.GetItNowButtonHandle.bind(this);
@@ -129,9 +129,12 @@ export default class PostDetail extends Component {
     Actions.Messenger.call();
   }
 
-  AddToFavoriteButtonHandle() {
+  AddItemToFavoriteButtonHandle() {
     this.props.requestAddItemToFavList({ id: this.props.id });
-    // this.props.requestDeleteItemToFavList({ id: this.props.id });
+  }
+
+  DeleteFavoriteItemButtonHandle() {
+    this.props.requestDeleteItemToFavList({ id: this.props.id });
   }
 
   GetItNowButtonHandle() {
@@ -139,26 +142,54 @@ export default class PostDetail extends Component {
   }
 
   OpenMapButtonHandle() {
-    console.log(`OpenMapButtonHandle=>${this.props.url}`);
-    Linking.canOpenURL(this.props.url).then(supported => {
+    const lon = this.props.location.lon;
+    const lat = this.props.location.lat;
+    const url = `https://www.google.com.tw/maps/@,${lat},${lon}`;
+    console.log(`OpenMapButtonHandle url=>${url}`);
+    Linking.canOpenURL(url).then(supported => {
       if (supported) {
-        Linking.openURL(this.props.url);
+        Linking.openURL(url);
       } else {
-        console.log('Don\'t know how to open URI: ' + this.props.url);
+        console.log(`Don\'t know how to open URI: ${url}`);
       }
     });
   }
 
   render() {
-    const { url, src, photo, itemTitle, itemDescription } = this.props;
-    console.log("!!!",itemDescription);
-    if (this.props.postFinishData.id !== null) {
-      Actions.postList();
+    const { title, description, pic, isFav } = this.props;
+    console.log(`[title,description]=>[${title},${description}]`);
+    if (this.props.title === null) {
+      Actions.postList.call();
+    }
+
+    let favButton = '';
+    if (isFav !== null) {
+      if (isFav === false) {
+        favButton = [
+          <TouchableOpacity
+            key="favButton"
+            style={styles.button}
+            onPress={ this.AddItemToFavoriteButtonHandle }
+          >
+            <Text style={styles.buttonText} >追蹤</Text>
+          </TouchableOpacity>,
+        ];
+      } else if (isFav === true) {
+        favButton = [
+          <TouchableOpacity
+            key="favButton"
+            style={styles.button}
+            onPress={ this.DeleteFavoriteItemButtonHandle }
+          >
+            <Text style={styles.buttonText} >取消追蹤</Text>
+          </TouchableOpacity>,
+        ];
+      }
     }
 
     return (
       <View style={styles.imageContainer}>
-        <Image key="img" source={{uri: src}} style={styles.itemImg} />
+        <Image source={{ uri: pic }} style={styles.itemImg} />
         <LinearGradient
           key="backGround"
           colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 1)']}
@@ -173,10 +204,10 @@ export default class PostDetail extends Component {
           </TouchableOpacity>
         </View>
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>{itemTitle}</Text>
+          <Text style={styles.title}>{title}</Text>
         </View>
-        <View style={styles.itemDescriptionContainer}>
-          <Text style={styles.description}>{itemDescription}</Text>
+        <View style={styles.descriptionContainer}>
+          <Text style={styles.description}>{description}</Text>
         </View>
         <View style={styles.footContainer}>
           <View style={styles.buttonContainer}>
@@ -192,12 +223,7 @@ export default class PostDetail extends Component {
             >
               <Text style={styles.buttonText} >地圖</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={ this.AddToFavoriteButtonHandle }
-            >
-              <Text style={styles.buttonText} >追蹤</Text>
-            </TouchableOpacity>
+            {favButton}
           </View>
         </View>
       </View>
@@ -205,36 +231,42 @@ export default class PostDetail extends Component {
   }
 }
 
-
-function _injectPropsFromStore(state) {
-  return {
-    // itemTitle: state.post.title,
-    // itemDescription: state.post.description,
-    // photo: state.takePhoto.photoSource,
-    // photoInfo: state.takePhoto.photoInfo,
-    // imgSrc: state.post.upLoadImg,
-    // postFinishData: state.post.postFinishData,
-  };
-}
-
 PostDetail.propTypes = {
-  id: React.PropTypes.string,
-  itemTitle: React.PropTypes.string,
-  itemDescription: React.PropTypes.string,
-  url: React.PropTypes.string,
-  src: React.PropTypes.string,
+  id: React.PropTypes.number,
+  index: React.PropTypes.number,
+  title: React.PropTypes.string,
+  description: React.PropTypes.string,
+  isFav: React.PropTypes.bool,
+  location: React.PropTypes.object,
+  distance: React.PropTypes.number,
+  pic: React.PropTypes.string,
   requestAddItemToFavList: React.PropTypes.func,
   requestDeleteItemToFavList: React.PropTypes.func,
 };
 
 PostDetail.defaultProps = {
-  itemTitle: '[標題]',
-  itemDescription: '[描述]',
-  photo: {},
-  photoInfo: {},
-  imgSrc: [{ name: '', src: '' }],
-  postFinishData: { id: null, uuid: '', title: '', startDate: '', user_id: null, UserId: null },
+  id: 0,
+  index: 0,
+  title: '[標題]',
+  description: '[描述]',
+  isFav: null,
+  location: { lat: 80.1, lon: 100 },
+  distance: 1,
+  pic: 'http://qa.trademuch.co.uk/img/human.png',
 };
+
+function _injectPropsFromStore(state) {
+  return {
+    // id: React.PropTypes.string,
+    // index: React.PropTypes.number,
+    // title: React.PropTypes.string,
+    // description: React.PropTypes.string,
+    // isFav: React.PropTypes.bool,
+    // location: React.PropTypes.object,
+    // distance: React.PropTypes.number,
+    // pic: React.PropTypes.string,
+  };
+}
 
 const _injectPropsFormActions = {
   requestAddItemToFavList,

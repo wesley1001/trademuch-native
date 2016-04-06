@@ -11,7 +11,7 @@ const styles = {
       flexDirection: 'column',
     },
     main: {
-      paddingLeft: 3,
+      backgroundColor: '#ffffff',
       shadowColor: '#000000',
       shadowOpacity: 0.4,
       shadowRadius: 3,
@@ -63,9 +63,9 @@ export default class SideDrawer extends Component {
         tweenDuration={100}
         negotiatePan
         panThreshold={0.08}
-        openDrawerOffset={0.2}
-        closedDrawerOffset={-5}
-        panOpenMask={0.2}
+        panOpenMask={2}
+        openDrawerOffset={70}
+        closedDrawerOffset={0}
       >
         {
           React.Children.map(
