@@ -63,21 +63,10 @@ export function receivedSearchPostNextPage(postList) {
   };
 }
 
-export async function requestSearchPostNextPage(keyword, distance, location, from) {
-  const paramArray = [];
-  if (keyword) {
-    paramArray.push(`keyword=${keyword}`);
-  }
-  if (location) {
-    paramArray.push(`lat=${location.lat}`);
-    paramArray.push(`lon=${location.lon}`);
-  }
-  if (distance) {
-    paramArray.push(`distance=${distance}`);
-  }
-  if (from) {
-    paramArray.push(`from=${from}`);
-  }
+export async function requestSearchPostNextPage(lastSearchApi, from) {
+  let paramArray = [];
+  paramArray = lastSearchApi.split('&');
+  paramArray.push(`from=${from}`);
   const param = paramArray.join('&');
   const searchApi = `/rest/post/search?${param}`;
   const postList = await fetchWithAuth(searchApi);
