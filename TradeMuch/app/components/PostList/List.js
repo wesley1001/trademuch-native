@@ -4,7 +4,6 @@ import ListItem from './ListItem';
 const styles = StyleSheet.create({
   list: {
     flex: 1,
-    marginTop: 65,
     backgroundColor: '#fff',
   },
 });
