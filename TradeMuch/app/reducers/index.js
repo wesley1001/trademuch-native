@@ -1,7 +1,4 @@
-export * from './routerReducer';
-export * from './AuthReducer';
-export * from './SearchPostReducer';
-export * from './MessengerReducers';
-export * from './TakePhotoReducer';
-export * from './PostReducer';
-export * from './GeoReducer';
+import { combineReducers } from 'redux';
+import * as reducers from './reducerRegister';
+const rootReducer = combineReducers(reducers);
+export default rootReducer;
