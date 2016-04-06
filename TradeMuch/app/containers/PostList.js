@@ -6,6 +6,7 @@ import List from '../components/PostList/List';
 import ListItem from '../components/PostList/ListItem';
 import SearchBar from '../components/SearchBar';
 import {
+  requestSearchLoadMore,
   requestSearchPost,
   requestSearchPostNextPage,
 } from '../actions/SearchPostActions';
@@ -42,6 +43,7 @@ export default class PostList extends Component {
       (position) => {
         console.log(position);
         this.props.requestSetLocation(position);
+        this.props.requestSearchLoadMore(false);
         this.props.requestSearchPost(null, '300km', {
           lat: position.coords.latitude,
           lon: position.coords.longitude,
@@ -76,6 +78,7 @@ export default class PostList extends Component {
 
   onChangeText(value) {
     const { location } = this.props;
+    this.props.requestSearchLoadMore(false);
     this.props.requestSearchPost(value, '60000km', {
       lat: location.latitude,
       lon: location.longitude,
@@ -112,6 +115,7 @@ export default class PostList extends Component {
     // searchDistance: '300km',
     // searchLat: position.coords.latitude,
     // searchLon: position.coords.longitude,
+    this.props.requestSearchLoadMore(false);
     this.props.requestSearchPostNextPage(
       this.state.searchText,
       this.state.searchDistance,
@@ -141,6 +145,7 @@ export default class PostList extends Component {
 PostList.propTypes = {
   postList: React.PropTypes.array,
   location: React.PropTypes.object,
+  requestSearchLoadMore: React.PropTypes.func,
   requestSearchPost: React.PropTypes.func,
   onListItemPress: React.PropTypes.func,
   requestSetLocation: React.PropTypes.func,
@@ -163,6 +168,7 @@ function _injectPropsFromStore(state) {
 }
 
 const _injectPropsFormActions = {
+  requestSearchLoadMore,
   requestSearchPost,
   requestSetLocation,
   requestSearchPostNextPage,
