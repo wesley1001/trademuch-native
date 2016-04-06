@@ -9,7 +9,6 @@ import React, {
   Text,
   Image,
 } from 'react-native';
-import Button from 'react-native-button';
 import { Actions } from 'react-native-router-flux';
 import MenuItem from '../Menu/MenuItem';
 const PIXEL_RATIO = PixelRatio.get();
