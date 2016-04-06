@@ -130,11 +130,17 @@ export default class PostDetail extends Component {
   }
 
   AddItemToFavoriteButtonHandle() {
-    this.props.requestAddItemToFavList({ id: this.props.id });
+    this.props.requestAddItemToFavList({
+      postList: this.props.postList,
+      index: this.props.index,
+    });
   }
 
   DeleteFavoriteItemButtonHandle() {
-    this.props.requestDeleteItemToFavList({ id: this.props.id });
+    this.props.requestDeleteItemToFavList({
+      postList: this.props.postList,
+      index: this.props.index,
+    });
   }
 
   GetItNowButtonHandle() {
@@ -232,39 +238,40 @@ export default class PostDetail extends Component {
 }
 
 PostDetail.propTypes = {
+  // ...postList
   id: React.PropTypes.number,
-  index: React.PropTypes.number,
   title: React.PropTypes.string,
   description: React.PropTypes.string,
   isFav: React.PropTypes.bool,
   location: React.PropTypes.object,
   distance: React.PropTypes.number,
   pic: React.PropTypes.string,
+  // postList[index]
+  index: React.PropTypes.number,
+  // postList array
+  postList: React.PropTypes.array,
   requestAddItemToFavList: React.PropTypes.func,
   requestDeleteItemToFavList: React.PropTypes.func,
 };
 
 PostDetail.defaultProps = {
+  // ...postList
   id: 0,
-  index: 0,
   title: '[標題]',
   description: '[描述]',
   isFav: null,
   location: { lat: 80.1, lon: 100 },
   distance: 1,
   pic: 'http://qa.trademuch.co.uk/img/human.png',
+  // postList[index]
+  index: 0,
+  // postList array
+  postList: [],
 };
 
 function _injectPropsFromStore(state) {
   return {
-    // id: React.PropTypes.string,
-    // index: React.PropTypes.number,
-    // title: React.PropTypes.string,
-    // description: React.PropTypes.string,
-    // isFav: React.PropTypes.bool,
-    // location: React.PropTypes.object,
-    // distance: React.PropTypes.number,
-    // pic: React.PropTypes.string,
+    // postList: state.search.postList,
   };
 }
 
