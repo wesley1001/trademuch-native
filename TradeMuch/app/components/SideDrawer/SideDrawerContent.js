@@ -136,7 +136,7 @@ export default class SideDrawerContent extends Component {
     //   pic: 'http://qa.trademuch.co.uk/img/human.png',
     // });
     // Actions.postDetail({
-    //   ...this.props.postList,
+    //   ...this.props.postList[index],
     //   index: this.props.index,
     //   postList: his.props.postList,
     // });

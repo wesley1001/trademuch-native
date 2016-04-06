@@ -41,9 +41,11 @@ const styles = React.StyleSheet.create({
     borderColor: 'rgba(255, 255, 255, 1)',
   },
   titleContainer: {
-    flex: 1,
+    top: 15 * PixelRatio.get(),
+    position: 'absolute',
+    flex: 0.5,
     alignItems: 'flex-start',
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-start',
     paddingLeft: 10 * PixelRatio.get(),
   },
   title: {
@@ -52,31 +54,35 @@ const styles = React.StyleSheet.create({
     textAlign: 'left',
   },
   descriptionContainer: {
-    paddingLeft: 10 * PixelRatio.get(),
-    marginBottom: 5 * PixelRatio.get(),
+    justifyContent: 'flex-end',
+    height: 150 * PixelRatio.get(),
   },
   description: {
     color: 'rgba(255, 255, 255, 1)',
-    fontSize: 10 * PixelRatio.get(),
+    fontSize: 9 * PixelRatio.get(),
     marginBottom: 5 * PixelRatio.get(),
     textAlign: 'left',
     height: 30 * PixelRatio.get(),
   },
   buttonContainer: {
+    width: windowSize.width,
+    bottom: 10 * PixelRatio.get(),
+    position: 'absolute',
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     paddingLeft: 5 * PixelRatio.get(),
     paddingRight: 5 * PixelRatio.get(),
+    paddingTop: 50 * PixelRatio.get(),
   },
   button: {
     flex: 1,
     margin: 5 * PixelRatio.get(),
-    height: 25 * PixelRatio.get(),
+    height: 15 * PixelRatio.get(),
     width: 100 * PixelRatio.get(),
-    borderRadius: 5 * PixelRatio.get(),
-    borderWidth: 1 * PixelRatio.get(),
+    borderRadius: 3 * PixelRatio.get(),
+    borderWidth: 0.5 * PixelRatio.get(),
     backgroundColor: 'rgba(74, 74, 74, 0.3)',
     borderColor: 'rgba(255, 255, 255, 0.5)',
     alignItems: 'center',
@@ -84,10 +90,10 @@ const styles = React.StyleSheet.create({
   },
   buttonText: {
     color: 'rgba(255, 255, 255, 1)',
-    fontSize: 6 * PixelRatio.get(),
+    fontSize: 5 * PixelRatio.get(),
   },
   footContainer: {
-    flex: 0.7,
+    flex: 1,
   },
   footBackColor: {
     height: windowSize.height,
@@ -96,18 +102,25 @@ const styles = React.StyleSheet.create({
     bottom: 0,
   },
   buttonChatContainer: {
-    flex: 1,
+    flex: 0.5,
     flexDirection: 'row',
   },
+  openChatRoomText: {
+    color: 'rgba(255, 255, 255, 1)',
+    fontSize: 5 * PixelRatio.get(),
+    shadowColor: '#000000',
+    shadowOpacity: 0.8,
+    shadowRadius: 3 * PixelRatio.get(),
+  },
   openChatRoomButton: {
-    backgroundColor: 'rgba(74, 74, 74, 0.3)',
+    backgroundColor: 'rgba(102, 102, 102, 0.5)',
     borderColor: 'rgba(255, 255, 255, 0.5)',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 25 * PixelRatio.get(),
+    borderRadius: 15 * PixelRatio.get(),
     borderWidth: 1 * PixelRatio.get(),
-    width: 50 * PixelRatio.get(),
-    height: 50 * PixelRatio.get(),
+    width: 30 * PixelRatio.get(),
+    height: 30 * PixelRatio.get(),
     top: 15 * PixelRatio.get(),
     right: 5 * PixelRatio.get(),
     position: 'absolute',
@@ -206,14 +219,14 @@ export default class PostDetail extends Component {
             style={styles.openChatRoomButton}
             onPress={ this.OpenChatRoomButtonHandle }
           >
-            <Text style={styles.buttonText} >對話</Text>
+            <Text style={styles.openChatRoomText} >對話</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{title}</Text>
-        </View>
-        <View style={styles.descriptionContainer}>
-          <Text style={styles.description}>{description}</Text>
+          <View style={styles.descriptionContainer}>
+            <Text style={styles.description}>{description}</Text>
+          </View>
         </View>
         <View style={styles.footContainer}>
           <View style={styles.buttonContainer}>
