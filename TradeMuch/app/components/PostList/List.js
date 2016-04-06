@@ -17,8 +17,8 @@ export default function PostList(props) {
         <ListItem
           key={i}
           title={item.title}
-          img={item.img}
-          description={item.description}
+          img={`http://localhost:1337${item.pic}`}
+          description={item.distance !== -1 ? `${item.distance} km` : ''}
           onItemPress={props.onItemPress}
         />
       );

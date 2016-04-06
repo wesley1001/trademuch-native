@@ -3,9 +3,7 @@ import SearchBar from 'react-native-search-bar';
 
 export default function SearchPostBar(props) {
   function _onChangeText(value) {
-    if (value.length > 0) {
-      props.onChangeText(value);
-    }
+    props.onChangeText(value);
   }
 
   return (

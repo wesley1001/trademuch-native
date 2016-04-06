@@ -12,6 +12,9 @@ export function receivedSearchPost(postList) {
 
 export async function requestSearchPost(keyword, distance, location) {
   const paramArray = [];
+  if (keyword) {
+    paramArray.push(`keyword=${keyword}`);
+  }
   if (location) {
     paramArray.push(`lat=${location.lat}`);
     paramArray.push(`lon=${location.lon}`);
@@ -20,7 +23,7 @@ export async function requestSearchPost(keyword, distance, location) {
     paramArray.push(`distance=${distance}`);
   }
   const param = paramArray.join('&');
-  const searchApi = `/rest/post/search/${keyword}?${param}`;
+  const searchApi = `/rest/post/search?${param}`;
   const postList = await fetchWithAuth(searchApi);
   return (dispatch) => {
     dispatch(receivedSearchPost(postList));
