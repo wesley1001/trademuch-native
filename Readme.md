@@ -20,6 +20,11 @@ npm run dev
 
 open `Counter.xcworkspace` in Xcode and run
 
+##Production Mode
+
+1. edit /config/index.js  envMode = 'production'
+2. run project
+
 
 # 實體 iPhone 開發
 
