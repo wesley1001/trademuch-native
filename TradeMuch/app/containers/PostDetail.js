@@ -257,7 +257,7 @@ PostDetail.propTypes = {
   description: React.PropTypes.string,
   isFav: React.PropTypes.bool,
   location: React.PropTypes.object,
-  distance: React.PropTypes.number,
+  distance: React.PropTypes.string,
   pic: React.PropTypes.string,
   // postList[index]
   index: React.PropTypes.number,
@@ -274,7 +274,7 @@ PostDetail.defaultProps = {
   description: '[描述]',
   isFav: null,
   location: { lat: 80.1, lon: 100 },
-  distance: 1,
+  distance: '-1',
   pic: 'http://qa.trademuch.co.uk/img/human.png',
   // postList[index]
   index: 0,

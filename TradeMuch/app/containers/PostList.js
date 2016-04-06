@@ -1,4 +1,4 @@
-import React, { View, TouchableOpacity, Component, ListView } from 'react-native';
+import React, { View, TouchableOpacity, Component, ListView, Alert } from 'react-native';
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
@@ -71,7 +71,14 @@ export default class PostList extends Component {
     }, this.props.postList.length);
   }
 
-  onListItemPress(itemDataId) {
+  onListItemPress(index) {
+    const { postList } = this.props;
+    Actions.postDetail({
+      ...postList[index],
+      index,
+      isFav: false,
+      postList,
+    });
   }
 
   getListItem(rowData) {
@@ -98,7 +105,6 @@ export default class PostList extends Component {
           renderScrollComponent={props => <InfiniteScrollView {...props} />}
           dataSource={this.state.dataSource}
           renderRow={this.getListItem}
-          onEndReached={this.onListItemPress}
           onLoadMoreAsync={this.loadMorePost}
           canLoadMore={this.props.canLoadMore}
         />
