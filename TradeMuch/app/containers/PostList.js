@@ -1,9 +1,14 @@
-import React, { View, TouchableOpacity, ScrollView, Component, ListView } from 'react-native';
+import React, { View, TouchableOpacity, ScrollView, Component, ListView, Text} from 'react-native';
+import InfiniteScrollView from 'react-native-infinite-scroll-view';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import List from '../components/PostList/List';
+import ListItem from '../components/PostList/ListItem';
 import SearchBar from '../components/SearchBar';
-import { requestSearchPost } from '../actions/SearchPostActions';
+import {
+  requestSearchPost,
+  requestSearchPostNextPage,
+} from '../actions/SearchPostActions';
 import { requestSetLocation } from '../actions/GeoActions';
 
 const styles = React.StyleSheet.create({
@@ -20,6 +25,17 @@ export default class PostList extends Component {
     super(props);
     this.onChangeText = this.onChangeText.bind(this);
     this.onListItemPress = this.onListItemPress.bind(this);
+    this.getListItem = this.getListItem.bind(this);
+    this.loadMorePost = this.loadMorePost.bind(this);
+    let dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.state = {
+      dataSource,
+      searchText: '',
+      searchDistance: 0,
+      searchLat: 0,
+      searchLon: 0,
+      canLoadMore: true,
+    };
   }
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
@@ -30,10 +46,32 @@ export default class PostList extends Component {
           lat: position.coords.latitude,
           lon: position.coords.longitude,
         });
+        this.setState({
+          searchText: null,
+          searchDistance: '300km',
+          searchLat: position.coords.latitude,
+          searchLon: position.coords.longitude,
+        });
       },
       (error) => Alert.alert(error.message),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
+  }
+  componentWillReceiveProps(nextProps) {
+    console.log("nextProps!!!!!!!!!!",nextProps.postList, this.props.postList, nextProps.postList !== this.props.postList);
+    if (nextProps.postList !== this.props.postList) {
+      const postList = nextProps.postList.map((post, i) => {
+        const item = {
+          ...post,
+          index: i,
+        };
+        return item;
+      });
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(postList),
+        canLoadMore: true,
+      });
+    }
   }
 
   onChangeText(value) {
@@ -41,20 +79,59 @@ export default class PostList extends Component {
     this.props.requestSearchPost(value, '60000km', {
       lat: location.latitude,
       lon: location.longitude,
+    }, this.props.postList.length);
+    this.setState({
+      searchText: value,
+      searchDistance: '60000km',
+      searchLat: location.latitude,
+      searchLon: location.longitude,
     });
   }
 
   onListItemPress(itemDataId) {
+    console.log("!!!!click",itemDataId);
+  }
 
+  getListItem(rowData) {
+    console.log("rowData!!!",rowData);
+    return (
+      <ListItem
+        index={rowData.index}
+        title={rowData.title}
+        img={`http://localhost:1337${rowData.pic}`}
+        description={rowData.distance !== -1 ? `${rowData.distance} km` : ''}
+        onItemPress={this.onListItemPress}
+      />
+    );
+  }
+  loadMorePost() {
+    this.setState({
+      canLoadMore: false,
+    });
+    // searchText: null,
+    // searchDistance: '300km',
+    // searchLat: position.coords.latitude,
+    // searchLon: position.coords.longitude,
+    this.props.requestSearchPostNextPage(
+      this.state.searchText,
+      this.state.searchDistance,
+      { lat: this.state.searchLat,
+      lon: this.state.searchLon },
+      this.props.postList.length
+    );
   }
   render() {
-    const { postList } = this.props;
     return (
       <View style={styles.content}>
         <SearchBar onChangeText={this.onChangeText} />
-        <ScrollView>
-          <List listData={postList} onItemPress={this.onListItemPress} />
-        </ScrollView>
+        <ListView
+          renderScrollComponent={props => <InfiniteScrollView {...props} />}
+          dataSource={this.state.dataSource}
+          renderRow={this.getListItem}
+          onEndReached={this.onListItemPress}
+          onLoadMoreAsync={this.loadMorePost}
+          canLoadMore={this.state.canLoadMore}
+        />
         <TouchableOpacity onPress={Actions.PostDetail} />
       </View>
     );
@@ -67,9 +144,11 @@ PostList.propTypes = {
   requestSearchPost: React.PropTypes.func,
   onListItemPress: React.PropTypes.func,
   requestSetLocation: React.PropTypes.func,
+  requestSearchPostNextPage: React.PropTypes.func,
 };
 
 PostList.defaultProps = {
+  postList: [],
   location: {
     latitude: 24.148657699999998,
     longitude: 120.67413979999999,
@@ -86,6 +165,7 @@ function _injectPropsFromStore(state) {
 const _injectPropsFormActions = {
   requestSearchPost,
   requestSetLocation,
+  requestSearchPostNextPage,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(PostList);
