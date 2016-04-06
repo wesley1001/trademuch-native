@@ -38,7 +38,7 @@ function updateLoginStatus(isLogin) {
 }
 export async function requestInputEmail(userInfo) {
   return (dispatch) => {
-     dispatch(receivedUserInfo(userInfo));
+    dispatch(receivedUserInfo(userInfo));
   };
 }
 
