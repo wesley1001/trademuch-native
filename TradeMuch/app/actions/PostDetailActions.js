@@ -12,25 +12,38 @@ export function receivedSearchPost(postList) {
   };
 }
 
+function findItemById(id, postList, state) {
+  let tPostList = [];
+  tPostList = postList;
+  for (let i = 0; i < tPostList.length; i++) {
+    if (tPostList[i].id === id) {
+      tPostList[i].isFav = state;
+      console.log("postList[i]=>",tPostList[i]);
+    }
+  }
+  return tPostList;
+}
+
 // --------------------------------------------------- Add item to favorite list
 export async function requestAddItemToFavList(data = {
-  postList: {},
-  index: '',
+  id: '',
+  postList: [],
 }) {
-  console.log("requestAddItemToFavList data=>",data);
-
-  const favoriteApi = `/rest/favorite/${data.postList[data.index].id}`;
+  const favoriteApi = `/rest/favorite/${data.id}`;
   const response = await fetchWithAuth(favoriteApi, 'POST');
 
-  console.log("requestAddItemToFavList response=>",response);
-
-  let postList = {};
+  let postList = [];
   postList = data.postList;
 
+  console.log("id",data.id);
+  console.log("postList",data.postList);
+  console.log("response=>",response);
+
   if (response.result) {
-    const msg = `user_id:${response.item[0].user_id}/post_id:${response.item[0].post_id}`;
-    Alert.alert('result', `加入我的最愛成功! ${msg}`);
-    postList[data.index].isFav = response.result;
+    // const msg = `user_id:${response.item[0].user_id}/post_id:${response.item[0].post_id}`;
+    Alert.alert('result', '加入我的最愛成功!');
+
+    postList = findItemById(data.id, postList, true);
   } else {
     const msg = `name:${response.name}\nmessage:${response.message}`;
     Alert.alert(response.result, msg);
@@ -43,24 +56,20 @@ export async function requestAddItemToFavList(data = {
 
 // ---------------------------------------------- delete item from favorite list
 export async function requestDeleteItemToFavList(data = {
-  postList: {},
-  index: '',
+  id: '',
+  postList: [],
 }) {
-  console.log("requestDeleteItemToFavList data=>",data);
-
-  const favoriteApi = `/rest/favorite/${data.postList[data.index].id}`;
+  const favoriteApi = `/rest/favorite/${data.id}`;
   const response = await fetchWithAuth(favoriteApi, 'DELETE');
-
-  console.log("requestDeleteItemToFavList=>",response);
 
   let postList = {};
   postList = data.postList;
 
+  console.log("response=>",response);
+
   if (response.result) {
     Alert.alert('刪除我的最愛成功!');
-    postList[data.index].isFav = !response.result;
-    postList[1].isFav = false;
-    console.log("postList[data.index]",postList[data.index]);
+    postList = findItemById(data.id, postList, false);
   } else {
     const msg = `name:${response.name}\nmessage:${response.message}`;
     Alert.alert(response.result, msg);
