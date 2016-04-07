@@ -42,3 +42,9 @@ http://localhost:8081/
 Cannot set property userAgent of #<workernavigator> which has only a getter
 
 > sol: disable debug in chrome
+
+pod install failed: undefined method 'to_ary'
+
+> sol: rvm install 2.2.3 --default
+> sudo gem install cocoapods
+> pod install
