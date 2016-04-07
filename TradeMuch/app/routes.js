@@ -22,6 +22,7 @@ import EditProfile from './containers/EditProfile';
 import SideDrawer from './components/SideDrawer/SideDrawer';
 import PostList from './containers/PostList';
 import CreatePost from './containers/CreatePost';
+import PostDetail from './containers/PostDetail';
 import NearByPosts from './containers/NearByPosts';
 // import Messenger from './containers/Messenger';
 // import NHSample from './containers/sampleApp';
@@ -152,13 +153,20 @@ export default class AppRoutes extends Component {
               navigationBarStyle={styles.navBar}
               titleStyle={styles.navTitle}
             >
-              <Route name="postList" schema="home" component={PostList} title="TradeMuch" />
+              <Route name="postList" schema="home" component={PostList} title="附近的好康物品" />
               <Route name="login" schema="interior" component={Login} title="登入" />
               <Route
                 name="createPost"
                 component={CreatePost}
                 schema="home"
                 title="發布"
+                hideNavBar={false}
+              />
+              <Route
+                name="postDetail"
+                component={PostDetail}
+                schema="interior"
+                title="物品檢視"
                 hideNavBar={false}
               />
               <Route name="editProfile" component={EditProfile} schema="interior" title="確認個人資料" />
