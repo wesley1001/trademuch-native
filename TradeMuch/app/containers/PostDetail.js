@@ -130,50 +130,26 @@ const styles = React.StyleSheet.create({
 
 
 export default class PostDetail extends Component {
-  constructor(props) {
-    super(props);
-    this.AddItemToFavoriteButtonHandle = this.AddItemToFavoriteButtonHandle.bind(this);
-    this.DeleteFavoriteItemButtonHandle = this.DeleteFavoriteItemButtonHandle.bind(this);
-    this.OpenChatRoomButtonHandle = this.OpenChatRoomButtonHandle.bind(this);
-    this.OpenMapButtonHandle = this.OpenMapButtonHandle.bind(this);
-    this.GetItNowButtonHandle = this.GetItNowButtonHandle.bind(this);
-    this.state = {
-      postItem: {},
-    };
-  }
 
-  componentWillMount() {
-    // const postList = this.props.postList;
-    // for (let i = 0; i < postList.length; i++) {
-    //   if (postList[i].id === this.props.id) {
-    //     console.log('postList[i]=>',postList[i]);
-    //     this.setState({
-    //       postItem: postList[i],
-    //     });
-    //   }
-    // }
-
-  }
-
-  OpenChatRoomButtonHandle() {
+  OpenChatRoomButtonHandle = () => {
     Actions.Messenger.call();
   }
 
-  AddItemToFavoriteButtonHandle() {
+  AddItemToFavoriteButtonHandle = () => {
     this.props.requestAddItemToFavList({
       id: this.props.id,
       postList: this.props.postList,
     });
   }
 
-  DeleteFavoriteItemButtonHandle() {
+  DeleteFavoriteItemButtonHandle = () => {
     this.props.requestDeleteItemToFavList({
       id: this.props.id,
       postList: this.props.postList,
     });
   }
 
-  GetItNowButtonHandle() {
+  GetItNowButtonHandle = () => {
     Actions.Messenger({});
   }
 
@@ -182,12 +158,9 @@ export default class PostDetail extends Component {
     const lon = location.lon;
     const lat = location.lat;
     const url = `https://www.google.com.tw/maps/@${lat},${lon},13z`;
-    // console.log(`OpenMapButtonHandle url=>${url}`);
     Linking.canOpenURL(url).then(supported => {
       if (supported) {
         Linking.openURL(url);
-      } else {
-        // console.log(`Don\'t know how to open URI: ${url}`);
       }
     });
   }
@@ -197,20 +170,13 @@ export default class PostDetail extends Component {
     let postItem = {};
     for (let i = 0; i < postList.length; i++) {
       if (postList[i].id === this.props.id) {
-        // console.log('postList[i]=>',postList[i]);
-        // this.setState({
-        //   postItem: postList[i],
-        // });
         postItem = postList[i];
       }
     }
     const { title, description, pic, isFav } = postItem;
-    // console.log(`[title,description]=>[${title},${description}]`);
     if (title === null) {
       Actions.postList.call();
     }
-
-    console.log('postList=>',postList);
 
     let favButton = [];
     if (isFav === false) {
@@ -237,7 +203,7 @@ export default class PostDetail extends Component {
 
     return (
       <View style={styles.imageContainer}>
-        <Image source={{ uri: pic }} style={styles.itemImg} />
+        <Image source={{ uri: `http://localhost:1337/${pic}` }} style={styles.itemImg} />
         <LinearGradient
           key="backGround"
           colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 1)']}
@@ -288,28 +254,7 @@ PostDetail.propTypes = {
 
 PostDetail.defaultProps = {
   id: 0,
-  // postList: [],
-  postList: [
-    {
-      score: 0.70273256,
-      id: 1,
-      isFav: false,
-      title: '二手iphone',
-      description: '描述',
-      pic: '/url/test',
-      location: { lat: 23.9, lon: 120.1 },
-      distance: 1.3,
-    }, {
-      score: 0.70273256,
-      id: 2,
-      isFav: false,
-      title: '二手iphone',
-      description: '描述',
-      pic: '/url/test',
-      location: { lat: 23.9, lon: 120.1 },
-      distance: 100,
-    },
-  ],
+  postList: [],
 };
 
 function _injectPropsFromStore(state) {

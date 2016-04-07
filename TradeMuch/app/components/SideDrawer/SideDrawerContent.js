@@ -112,56 +112,27 @@ export default class SideDrawerContent extends Component {
   static contextTypes = {
     drawer: PropTypes.object.isRequired,
   };
+  constructor(props) {
+    super(props);
+    this.state = {
+      nowView: 'postList',
+    };
+  }
 
   onItemPress = (id) => {
     this.context.drawer.close();
-    Actions[id]();
+    if (this.state.nowView !== id) {
+      Actions[id]();
+    }
+    this.setState({
+      nowView: id,
+    });
   }
+
 
   profile() {
     this.context.drawer.close();
     Actions.editProfile.call();
-  }
-
-  postDetail() {
-    this.context.drawer.close();
-    // Actions.postDetail({
-    //   id: 1,
-    //   index: 1,
-    //   title: '[標題]',
-    //   description: '[描述]',
-    //   isFav: true,
-    //   location: { lat: 80.1, lon: 100 },
-    //   distance: 100,
-    //   pic: 'http://qa.trademuch.co.uk/img/human.png',
-    // });
-    // Actions.postDetail({
-    //   ...this.props.postList[index],
-    //   index: this.props.index,
-    //   postList: his.props.postList,
-    // });
-    const postList = [
-      {
-        score: 0.70273256,
-        id: 1,
-        isFav: false,
-        title: '二手iphone',
-        description: '描述',
-        pic: '/url/test',
-        location: { lat: 80.1, lon: 100 },
-        distance: 1.3,
-      }, {
-        score: 0.70273256,
-        id: 2,
-        isFav: true,
-        title: '二手iphone',
-        description: '描述',
-        pic: '/url/test',
-        location: { lat: 80.1, lon: 100 },
-        distance: 100,
-      },
-    ];
-    Actions.postDetail({ id: 1 });
   }
 
   render() {
@@ -176,11 +147,12 @@ export default class SideDrawerContent extends Component {
         </View>
         <View style={styles.contentBody}>
           <MenuItem id="nearByPosts" title="附近的好康物品" img="http://qa.trademuch.co.uk/img/map.png" notification="120" onItemPress={this.onItemPress} />
-          <MenuItem id="postList" title="物品清單" img="http://qa.trademuch.co.uk/img/map.png" notification="5" onItemPress={this.onItemPress} />
-          <MenuItem id="editProfile" title="Edit Profile" img="http://qa.trademuch.co.uk/img/login.png" notification="" onItemPress={this.onItemPress} />
-          <MenuItem id="createPost" title="Create Post" img="http://qa.trademuch.co.uk/img/add.png" notification="" onItemPress={this.onItemPress} />
-          <MenuItem id="postDetail" title="postDetail" img="http://qa.trademuch.co.uk/img/add.png" notification="" onItemPress={this.postDetail.bind(this)} />
+          <MenuItem id="postList" title="我撿的資源" img="http://qa.trademuch.co.uk/img/map.png" notification="5" onItemPress={this.onItemPress} />
+          <MenuItem id="postList" title="我追蹤的資源" img="http://qa.trademuch.co.uk/img/map.png" notification="5" onItemPress={this.onItemPress} />
           <MenuItem id="messenger" title="我的留言板" img="http://qa.trademuch.co.uk/img/chat%EF%BC%BF60x60.png" notification="" onItemPress={this.onItemPress} />
+          <MenuItem id="postList" title="我的倉庫" img="http://qa.trademuch.co.uk/img/map.png" notification="5" onItemPress={this.onItemPress} />
+          <MenuItem id="postList" title="尋寶去" img="http://qa.trademuch.co.uk/img/map.png" notification="5" onItemPress={this.onItemPress} />
+          <MenuItem id="createPost" title="Create Post" img="http://qa.trademuch.co.uk/img/add.png" notification="" onItemPress={this.onItemPress} />
           <MenuItem id="login" title="登入" img="http://qa.trademuch.co.uk/img/login.png" notification="" onItemPress={this.onItemPress} />
         </View>
       </View>

@@ -153,7 +153,7 @@ export default class PostDetail extends Component {
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.postFinishData !== this.props.postFinishData) {
-      Actions.postDetail({ id: nextProps.postFinishData.id });
+      Actions.createFinish({ id: nextProps.postFinishData.id });
     }
   }
 
@@ -200,14 +200,17 @@ export default class PostDetail extends Component {
   }
 
   render() {
-    const { photo, title, description } = this.props;
+    const { photo, title, description, postFinishData } = this.props;
     // if (postFinishData.id !== null) {
     //   Actions.postDetail({ id: postFinishData.id });
     // }
     let backImg;
     if (photo.uri) {
       backImg = [
-        <LoadSpinner key="loadSpinner" visible={this.props.imgSrc[0].src === ''} />,
+        <LoadSpinner
+          key="loadSpinner"
+          visible={this.props.imgSrc[0].src === '' && postFinishData.id === null }
+        />,
         <Image key="img" source={this.props.photo} style={styles.itemImg} />,
         <LinearGradient
           key="backGround"

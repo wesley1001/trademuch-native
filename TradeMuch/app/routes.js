@@ -145,7 +145,7 @@ export default class AppRoutes extends Component {
         </Route>
         <Route name="postList" schema="home" component={PostList} title="TradeMuch" />
         {/* ------------------- SideDrawer Router -------------------------- */}
-        <Route name="drawer" hideNavBar type="reset" initial>
+        <Route name="drawer" hideNavBar type="switch" initial>
           <SideDrawer ref={this.refSideDrawer}>
             <Router
               name="drawerRoot"
@@ -159,6 +159,7 @@ export default class AppRoutes extends Component {
                 name="createPost"
                 component={CreatePost}
                 schema="home"
+                type="reset"
                 title="發布"
                 hideNavBar={false}
               />
@@ -167,6 +168,13 @@ export default class AppRoutes extends Component {
                 component={PostDetail}
                 schema="interior"
                 title="物品檢視"
+                hideNavBar={false}
+              />
+              <Route
+                name="createFinish"
+                component={PostDetail}
+                schema="home"
+                title="完成"
                 hideNavBar={false}
               />
               <Route name="editProfile" component={EditProfile} schema="interior" title="確認個人資料" />

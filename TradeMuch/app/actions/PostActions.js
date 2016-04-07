@@ -1,6 +1,7 @@
 import {
   fetchWithAuth,
 } from '../utils/authFetch';
+import { receivedTakePhoto } from '../actions/TakePhotoActions';
 export const REQUEST_CREATE_POST = 'REQUEST_CREATE_POST';
 export const RECEIVED_CREATE_POST = 'RECEIVED_CREATE_POST';
 export const RECEIVED_UPLOAD_IMG = 'RECEIVED_UPLOAD_IMG';
@@ -23,9 +24,32 @@ function receivedCreate(data = {
 }
 
 function receivedAddToList(data) {
-  console.log("response!!!!!!!!!", data);
   return {
     type: RECEIVED_ADD_POSTLIST,
+    data,
+  };
+}
+
+function receivedInputDescription(data) {
+  return {
+    type: RECEIVED_INPUT_DESCRIPTION,
+    data,
+  };
+}
+
+function receivedInputTitle(data) {
+  return {
+    type: RECEIVED_INPUT_TITLE,
+    data,
+  };
+}
+
+function receivedUploadImg(data = [{
+  name: '',
+  src: '',
+}]) {
+  return {
+    type: RECEIVED_UPLOAD_IMG,
     data,
   };
 }
@@ -54,18 +78,12 @@ export async function requestCreate(data = {
   response.distance = 0;
   response.isFav = false;
   return (dispatch) => {
-    dispatch(receivedCreate(response));
     dispatch(receivedAddToList(response));
-  };
-}
-
-function receivedUploadImg(data = [{
-  name: '',
-  src: '',
-}]) {
-  return {
-    type: RECEIVED_UPLOAD_IMG,
-    data,
+    dispatch(receivedCreate(response));
+    dispatch(receivedInputTitle(''));
+    dispatch(receivedInputDescription(''));
+    dispatch(receivedUploadImg());
+    dispatch(receivedTakePhoto({ uri: '' }));
   };
 }
 
@@ -87,24 +105,9 @@ export async function requestUploadImg(data = {
   };
 }
 
-function receivedInputTitle(data) {
-  return {
-    type: RECEIVED_INPUT_TITLE,
-    data,
-  };
-}
-
 export async function requestInputTitle(title) {
   return (dispatch) => {
     dispatch(receivedInputTitle(title));
-  };
-}
-
-
-function receivedInputDescription(data) {
-  return {
-    type: RECEIVED_INPUT_DESCRIPTION,
-    data,
   };
 }
 

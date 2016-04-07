@@ -32,7 +32,7 @@ export function search(state = {}, action) {
     case RECEIVED_ADD_POSTLIST:
       return {
         ...state,
-        postList: state.postList.push(action.data),
+        postList: state.postList.concat([action.data]),
       };
     default:
       return state;
