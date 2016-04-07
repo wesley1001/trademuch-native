@@ -80,6 +80,11 @@ const styles = React.StyleSheet.create({
 
 export default function CreateFinish(props) {
   const { pic, itemTitle, description } = props;
+  function finishBtn(){
+    Actions.postList({
+      type: 'reset',
+    });
+  }
   return (
     <View style={styles.imageContainer}>
       <Image key="img" source={{ uri: pic }} style={styles.itemImg} />
@@ -98,7 +103,7 @@ export default function CreateFinish(props) {
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.button}
-            onPress={ Actions.postList }
+            onPress={ finishBtn }
           >
             <Text style={styles.buttonText} >完成</Text>
           </TouchableOpacity>

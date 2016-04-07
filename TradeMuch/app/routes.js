@@ -61,6 +61,7 @@ export default class AppRoutes extends Component {
     super(props);
     this.renderMenuButton = this.renderMenuButton.bind(this);
     this.renderLoginButton = this.renderLoginButton.bind(this);
+    this.renderNoneButton = this.renderNoneButton.bind(this);
   }
 
   componentWillMount() {
@@ -124,6 +125,9 @@ export default class AppRoutes extends Component {
       </TouchableOpacity>
     );
   }
+  renderNoneButton() {
+    return [];
+  }
 
 
   render() {
@@ -153,6 +157,12 @@ export default class AppRoutes extends Component {
           hideNavBar={false}
           renderLeftButton={this.renderBackButton}
         />
+        <Schema
+          name="none"
+          sceneConfig={Navigator.SceneConfigs.FloatFromRight}
+          hideNavBar={false}
+          renderLeftButton={this.renderNoneButton}
+        />
 
       {/* ------------------- All Routes ---------------------- */}
         <Route name="login" schema="boot" component={Login} title="登入" />
@@ -172,13 +182,12 @@ export default class AppRoutes extends Component {
               navigationBarStyle={styles.navBar}
               titleStyle={styles.navTitle}
             >
-              <Route name="postList" schema="home" component={PostList} title="附近的好康物品" rightTitle="123123"/>
+              <Route name="postList" schema="home" component={PostList} title="附近的好康物品" />
               <Route name="login" schema="interior" component={Login} title="登入" />
               <Route
                 name="createPost"
                 component={CreatePost}
-                schema="home"
-                type="reset"
+                schema="interior"
                 title="發布"
                 hideNavBar={false}
               />
@@ -192,7 +201,7 @@ export default class AppRoutes extends Component {
               <Route
                 name="createFinish"
                 component={CreateFinish}
-                schema="home"
+                schema="none"
                 title="完成"
                 hideNavBar={false}
               />

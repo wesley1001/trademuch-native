@@ -113,21 +113,13 @@ export default class SideDrawerContent extends Component {
   static contextTypes = {
     drawer: PropTypes.object.isRequired,
   };
-  constructor(props) {
-    super(props);
-    this.state = {
-      nowView: 'postList',
-    };
-  }
 
   onItemPress = (id) => {
     this.context.drawer.close();
-    if (this.state.nowView !== id) {
+    const { beforeRoute } = this.props;
+    if (beforeRoute !== id) {
       Actions[id]();
     }
-    this.setState({
-      nowView: id,
-    });
   }
 
 
@@ -165,11 +157,20 @@ export default class SideDrawerContent extends Component {
 SideDrawerContent.propTypes = {
   drawer: PropTypes.object,
   userInfo: PropTypes.object,
+  beforeRoute: PropTypes.string,
+  routeHistory: PropTypes.array,
 };
 
-function _injectPropsFromStore({ auth }) {
+SideDrawerContent.defaultProps = {
+  beforeRoute: 'postList',
+  routeHistory: ['postList'],
+};
+
+function _injectPropsFromStore({ auth, router }) {
   return {
     userInfo: auth.userInfo,
+    beforeRoute: router.beforeRoute,
+    routeHistory: router.routeHistory,
   };
 }
 
