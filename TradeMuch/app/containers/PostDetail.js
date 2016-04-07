@@ -142,19 +142,6 @@ export default class PostDetail extends Component {
     };
   }
 
-  componentWillMount() {
-    // const postList = this.props.postList;
-    // for (let i = 0; i < postList.length; i++) {
-    //   if (postList[i].id === this.props.id) {
-    //     console.log('postList[i]=>',postList[i]);
-    //     this.setState({
-    //       postItem: postList[i],
-    //     });
-    //   }
-    // }
-
-  }
-
   OpenChatRoomButtonHandle() {
     Actions.Messenger.call();
   }
@@ -182,12 +169,9 @@ export default class PostDetail extends Component {
     const lon = location.lon;
     const lat = location.lat;
     const url = `https://www.google.com.tw/maps/@${lat},${lon},13z`;
-    // console.log(`OpenMapButtonHandle url=>${url}`);
     Linking.canOpenURL(url).then(supported => {
       if (supported) {
         Linking.openURL(url);
-      } else {
-        // console.log(`Don\'t know how to open URI: ${url}`);
       }
     });
   }
@@ -197,20 +181,13 @@ export default class PostDetail extends Component {
     let postItem = {};
     for (let i = 0; i < postList.length; i++) {
       if (postList[i].id === this.props.id) {
-        // console.log('postList[i]=>',postList[i]);
-        // this.setState({
-        //   postItem: postList[i],
-        // });
         postItem = postList[i];
       }
     }
     const { title, description, pic, isFav } = postItem;
-    // console.log(`[title,description]=>[${title},${description}]`);
     if (title === null) {
       Actions.postList.call();
     }
-
-    console.log('postList=>',postList);
 
     let favButton = [];
     if (isFav === false) {
