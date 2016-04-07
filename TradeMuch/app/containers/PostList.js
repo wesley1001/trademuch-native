@@ -23,10 +23,7 @@ const styles = React.StyleSheet.create({
 export default class PostList extends Component {
   constructor(props) {
     super(props);
-    this.onChangeText = this.onChangeText.bind(this);
-    this.onListItemPress = this.onListItemPress.bind(this);
     this.getListItem = this.getListItem.bind(this);
-    this.loadMorePost = this.loadMorePost.bind(this);
     const dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
       dataSource,
@@ -54,7 +51,7 @@ export default class PostList extends Component {
     }
   }
 
-  onChangeText(value) {
+  onChangeText = (value) => {
     const { location } = this.props;
     this.props.requestSearchLoadMore(false);
     this.props.requestSearchPost(value, '60000km', {
@@ -63,7 +60,7 @@ export default class PostList extends Component {
     }, this.props.postList.length);
   }
 
-  onListItemPress(id) {
+  onListItemPress = (id) => {
     Actions.postDetail(id);
   }
 
@@ -79,7 +76,7 @@ export default class PostList extends Component {
       />
     );
   }
-  loadMorePost() {
+  loadMorePost = () => {
     const { postList, lastSeachApi } = this.props;
     this.props.requestSearchLoadMore(false);
     this.props.requestSearchPostNextPage(lastSeachApi, postList.length);
