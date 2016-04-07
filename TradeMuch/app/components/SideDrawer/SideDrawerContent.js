@@ -161,20 +161,7 @@ export default class SideDrawerContent extends Component {
         distance: 100,
       },
     ];
-    Actions.postDetail({
-      // ...postList,
-      id: 1,
-      title: '[標題]',
-      description: '[描述]',
-      isFav: true,
-      location: { lat: 80.1, lon: 100 },
-      distance: 100,
-      pic: 'http://qa.trademuch.co.uk/img/human.png',
-      // index,
-      index: 1,
-      // this.props.postList,
-      postList,
-    });
+    Actions.postDetail({ id: 1 });
   }
 
   render() {

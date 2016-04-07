@@ -61,7 +61,7 @@ export default class PostList extends Component {
   }
 
   onListItemPress = (id) => {
-    Actions.postDetail(id);
+    Actions.postDetail({ id });
   }
 
   getListItem(rowData) {
