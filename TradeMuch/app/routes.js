@@ -153,7 +153,7 @@ export default class AppRoutes extends Component {
               navigationBarStyle={styles.navBar}
               titleStyle={styles.navTitle}
             >
-              <Route name="postList" schema="home" component={PostList} title="TradeMuch" />
+              <Route name="postList" schema="home" component={PostList} title="附近的好康物品" />
               <Route name="login" schema="interior" component={Login} title="登入" />
               <Route
                 name="createPost"
