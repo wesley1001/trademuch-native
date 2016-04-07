@@ -33,7 +33,7 @@ export async function requestAddItemToFavList(data = {
   const response = await fetchWithAuth(favoriteApi, 'POST');
 
   let postList = [];
-  postList = data.postList;
+  postList = [...data.postList];
 
   console.log("id",data.id);
   console.log("postList",data.postList);
@@ -63,7 +63,7 @@ export async function requestDeleteItemToFavList(data = {
   const response = await fetchWithAuth(favoriteApi, 'DELETE');
 
   let postList = {};
-  postList = data.postList;
+  postList = [...data.postList];
 
   console.log("response=>",response);
 

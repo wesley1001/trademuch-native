@@ -6,6 +6,7 @@ export const RECEIVED_CREATE_POST = 'RECEIVED_CREATE_POST';
 export const RECEIVED_UPLOAD_IMG = 'RECEIVED_UPLOAD_IMG';
 export const RECEIVED_INPUT_TITLE = 'RECEIVED_INPUT_TITLE';
 export const RECEIVED_INPUT_DESCRIPTION = 'RECEIVED_INPUT_Description';
+export const RECEIVED_ADD_POSTLIST = 'RECEIVED_ADD_POSTLIST';
 
 function receivedCreate(data = {
   id: null,
@@ -20,6 +21,15 @@ function receivedCreate(data = {
     data,
   };
 }
+
+function receivedAddToList(data) {
+  console.log("response!!!!!!!!!", data);
+  return {
+    type: RECEIVED_ADD_POSTLIST,
+    data,
+  };
+}
+
 
 export async function requestCreate(data = {
   detail: {
@@ -36,8 +46,16 @@ export async function requestCreate(data = {
 }) {
   const postCreateApi = '/rest/post/create';
   const response = await fetchWithAuth(postCreateApi, 'POST', data);
+  response.location = {
+    lat: data.location.latitude,
+    lon: data.location.longitude,
+  };
+  response.pic = data.images;
+  response.distance = 0;
+  response.isFav = false;
   return (dispatch) => {
     dispatch(receivedCreate(response));
+    dispatch(receivedAddToList(response));
   };
 }
 

@@ -151,6 +151,11 @@ export default class PostDetail extends Component {
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
   }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.postFinishData !== this.props.postFinishData) {
+      Actions.postDetail({ id: nextProps.postFinishData.id });
+    }
+  }
 
   selectPhotoButtonHandle() {
     ImagePickerManager.showImagePicker(options, (response) => {
@@ -196,9 +201,9 @@ export default class PostDetail extends Component {
 
   render() {
     const { photo, title, description } = this.props;
-    if (this.props.postFinishData.id !== null) {
-      Actions.postList();
-    }
+    // if (postFinishData.id !== null) {
+    //   Actions.postDetail({ id: postFinishData.id });
+    // }
     let backImg;
     if (photo.uri) {
       backImg = [
