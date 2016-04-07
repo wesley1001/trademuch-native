@@ -56,7 +56,7 @@ const styles = React.StyleSheet.create({
     flex: 0.69,
   },
   title: {
-    marginTop: 100,
+    marginTop: 65,
     marginLeft: 20,
     color: 'rgba(255, 255, 255, 1)',
     fontSize: 25,
@@ -152,8 +152,14 @@ export default class PostDetail extends Component {
     );
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.postFinishData !== this.props.postFinishData) {
-      Actions.createFinish({ id: nextProps.postFinishData.id });
+    const { postFinishData } = nextProps;
+    console.log("!!!!!!postFinishData",postFinishData );
+    if (postFinishData !== this.props.postFinishData) {
+      Actions.createFinish({
+        itemTitle: postFinishData.title,
+        description: postFinishData.description,
+        pic: `http://localhost:1337/${postFinishData.pic}`
+      });
     }
   }
 

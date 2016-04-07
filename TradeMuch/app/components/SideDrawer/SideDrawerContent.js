@@ -10,6 +10,7 @@ import React, {
   Image,
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
 import MenuItem from '../Menu/MenuItem';
 const PIXEL_RATIO = PixelRatio.get();
 const windowSize = Dimensions.get('window');
@@ -137,13 +138,14 @@ export default class SideDrawerContent extends Component {
 
   render() {
     // const { drawer } = this.context
+    const { userInfo } = this.props;
     return (
       <View style={styles.contentWrapper}>
         <View style={styles.contentAvatar}>
           <TouchableOpacity style={styles.avatarBlock} onPress={ this.profile.bind(this) }>
-            <Image source={{ uri: 'http://qa.trademuch.co.uk/img/human.png' }} style={styles.avatarImage} />
+            <Image source={{ uri: userInfo.avatar }} style={styles.avatarImage} />
           </TouchableOpacity>
-          <Text style={styles.textUserName}>{'Gloria'}</Text>
+          <Text style={styles.textUserName}>{userInfo.userName}</Text>
         </View>
         <View style={styles.contentBody}>
           <MenuItem id="nearByPosts" title="附近的好康物品" img="http://qa.trademuch.co.uk/img/map.png" notification="120" onItemPress={this.onItemPress} />
@@ -162,4 +164,13 @@ export default class SideDrawerContent extends Component {
 
 SideDrawerContent.propTypes = {
   drawer: PropTypes.object,
+  userInfo: PropTypes.object,
 };
+
+function _injectPropsFromStore({ auth }) {
+  return {
+    userInfo: auth.userInfo,
+  };
+}
+
+export default connect(_injectPropsFromStore, {})(SideDrawerContent);

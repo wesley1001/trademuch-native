@@ -7,6 +7,7 @@ import React, {
 	Image,
   Component,
   PropTypes,
+  Text,
  } from 'react-native';
 import RNRF, {
    Route,
@@ -22,6 +23,7 @@ import EditProfile from './containers/EditProfile';
 import SideDrawer from './components/SideDrawer/SideDrawer';
 import PostList from './containers/PostList';
 import CreatePost from './containers/CreatePost';
+import CreateFinish from './components/CreateFinish';
 import PostDetail from './containers/PostDetail';
 import NearByPosts from './containers/NearByPosts';
 // import Messenger from './containers/Messenger';
@@ -58,6 +60,7 @@ export default class AppRoutes extends Component {
   constructor(props) {
     super(props);
     this.renderMenuButton = this.renderMenuButton.bind(this);
+    this.renderLoginButton = this.renderLoginButton.bind(this);
   }
 
   componentWillMount() {
@@ -91,6 +94,21 @@ export default class AppRoutes extends Component {
         />
       </TouchableOpacity>
     );
+  }
+
+  renderLoginButton() {
+    let loginButton = [];
+    if (!this.props.isLogin) {
+      loginButton = [
+        <TouchableOpacity key="loginbutton"
+          style={styles.leftButtonContainer}
+          onPress={Actions.login}
+        >
+        <Text>登入</Text>
+        </TouchableOpacity>,
+      ];
+    }
+    return loginButton;
   }
 
   renderBackButton() {
@@ -127,6 +145,7 @@ export default class AppRoutes extends Component {
           sceneConfig={Navigator.SceneConfigs.FloatFromRight}
           hideNavBar={false}
           renderLeftButton={this.renderMenuButton}
+          renderRightButton={this.renderLoginButton}
         />
         <Schema
           name="interior"
@@ -153,7 +172,7 @@ export default class AppRoutes extends Component {
               navigationBarStyle={styles.navBar}
               titleStyle={styles.navTitle}
             >
-              <Route name="postList" schema="home" component={PostList} title="附近的好康物品" />
+              <Route name="postList" schema="home" component={PostList} title="附近的好康物品" rightTitle="123123"/>
               <Route name="login" schema="interior" component={Login} title="登入" />
               <Route
                 name="createPost"
@@ -172,7 +191,7 @@ export default class AppRoutes extends Component {
               />
               <Route
                 name="createFinish"
-                component={PostDetail}
+                component={CreateFinish}
                 schema="home"
                 title="完成"
                 hideNavBar={false}
@@ -193,10 +212,14 @@ export default class AppRoutes extends Component {
 AppRoutes.propTypes = {
   renderMenuButton: React.PropTypes.func,
   renderBackButton: React.PropTypes.func,
+  isLogin: React.PropTypes.bool,
 };
 
-function _injectPropsFromStore() {
-  return {};
+
+function _injectPropsFromStore({ auth }) {
+  return {
+    isLogin: auth.isLogin,
+  };
 }
 
 const _injectPropsFormActions = {
