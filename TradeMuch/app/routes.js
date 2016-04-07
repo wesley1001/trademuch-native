@@ -135,7 +135,7 @@ export default class AppRoutes extends Component {
           renderLeftButton={this.renderBackButton}
         />
 
-        {/* ------------------- Facebook Login Routor ---------------------- */}
+      {/* ------------------- All Routes ---------------------- */}
         <Route name="login" schema="boot" component={Login} title="登入" />
         <Route name="policies" component={Policies} title="服務條款" />
         <Route name="editProfile">
@@ -143,8 +143,8 @@ export default class AppRoutes extends Component {
             <Route name="editProfileView" component={EditProfile} title="確認個人資料" />
           </Router>
         </Route>
-        {/* ------------------- SideDrawer Routor -------------------------- */}
-        <Route name="nearByPosts" component={NearByPosts} title="附近好康" />
+        <Route name="postList" schema="home" component={PostList} title="TradeMuch" />
+        {/* ------------------- SideDrawer Router -------------------------- */}
         <Route name="drawer" hideNavBar type="reset" initial>
           <SideDrawer ref={this.refSideDrawer}>
             <Router
