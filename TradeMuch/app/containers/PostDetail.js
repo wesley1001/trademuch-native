@@ -210,31 +210,29 @@ export default class PostDetail extends Component {
       Actions.postList.call();
     }
 
-    console.log('isFav=>',isFav);
+    console.log('postList=>',postList);
 
-    let favButton = '';
-    if (isFav !== null) {
-      if (isFav === false) {
-        favButton = [
-          <TouchableOpacity
-            key="favButton"
-            style={styles.button}
-            onPress={ this.AddItemToFavoriteButtonHandle }
-          >
-            <Text style={styles.buttonText} >追蹤</Text>
-          </TouchableOpacity>,
-        ];
-      } else if (isFav === true) {
-        favButton = [
-          <TouchableOpacity
-            key="favButton"
-            style={styles.button}
-            onPress={ this.DeleteFavoriteItemButtonHandle }
-          >
-            <Text style={styles.buttonText} >取消追蹤</Text>
-          </TouchableOpacity>,
-        ];
-      }
+    let favButton = [];
+    if (isFav === false) {
+      favButton = [
+        <TouchableOpacity
+          key="favButton"
+          style={styles.button}
+          onPress={ this.AddItemToFavoriteButtonHandle }
+        >
+          <Text style={styles.buttonText} >追蹤</Text>
+        </TouchableOpacity>,
+      ];
+    } else if (isFav === true) {
+      favButton = [
+        <TouchableOpacity
+          key="favButton"
+          style={styles.button}
+          onPress={ this.DeleteFavoriteItemButtonHandle }
+        >
+          <Text style={styles.buttonText} >取消追蹤</Text>
+        </TouchableOpacity>,
+      ];
     }
 
     return (

@@ -67,7 +67,7 @@ export default function PostListItem(props) {
 }
 
 PostListItem.propTypes = {
-  id: React.PropTypes.number,
+  id: React.PropTypes.number.isRequired,
   title: React.PropTypes.string,
   description: React.PropTypes.string,
   img: React.PropTypes.string,

@@ -45,8 +45,8 @@ export async function requestAddItemToFavList(data = {
 
     postList = findItemById(data.id, postList, true);
   } else {
-    const msg = `name:${response.name}\nmessage:${response.message}`;
-    Alert.alert(response.result, msg);
+    // const msg = `name:${response.name}\nmessage:${response.message}`;
+    Alert.alert("請先登入！");
   }
 
   return (dispatch) => {
@@ -71,8 +71,8 @@ export async function requestDeleteItemToFavList(data = {
     Alert.alert('刪除我的最愛成功!');
     postList = findItemById(data.id, postList, false);
   } else {
-    const msg = `name:${response.name}\nmessage:${response.message}`;
-    Alert.alert(response.result, msg);
+    // const msg = `name:${response.name}\nmessage:${response.message}`;
+    Alert.alert("請先登入！");
   }
 
   return (dispatch) => {
