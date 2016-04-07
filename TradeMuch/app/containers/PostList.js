@@ -27,7 +27,7 @@ export default class PostList extends Component {
     this.onListItemPress = this.onListItemPress.bind(this);
     this.getListItem = this.getListItem.bind(this);
     this.loadMorePost = this.loadMorePost.bind(this);
-    let dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    const dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
       dataSource,
     };
@@ -35,7 +35,6 @@ export default class PostList extends Component {
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        console.log(position);
         this.props.requestSetLocation(position);
         this.props.requestSearchLoadMore(false);
         this.props.requestSearchPost(null, '300km', {
@@ -49,15 +48,8 @@ export default class PostList extends Component {
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.postList !== this.props.postList) {
-      const postList = nextProps.postList.map((post, i) => {
-        const item = {
-          ...post,
-          index: i,
-        };
-        return item;
-      });
       this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(postList),
+        dataSource: this.state.dataSource.cloneWithRows(nextProps.postList),
       });
     }
   }
@@ -71,19 +63,14 @@ export default class PostList extends Component {
     }, this.props.postList.length);
   }
 
-  onListItemPress(index) {
-    const { postList } = this.props;
-    Actions.postDetail({
-      ...postList[index],
-      index,
-      isFav: false,
-      postList,
-    });
+  onListItemPress(id) {
+    Actions.postDetail(id);
   }
 
   getListItem(rowData) {
     return (
       <ListItem
+        id={rowData.id}
         index={rowData.index}
         title={rowData.title}
         img={`http://localhost:1337${rowData.pic}`}

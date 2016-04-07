@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
 
 export default function PostListItem(props) {
   function onItemPress() {
-    props.onItemPress(props.index);
+    props.onItemPress(props.id);
   }
   return (
     <View>
@@ -67,7 +67,7 @@ export default function PostListItem(props) {
 }
 
 PostListItem.propTypes = {
-  index: React.PropTypes.number,
+  id: React.PropTypes.number.isRequired,
   title: React.PropTypes.string,
   description: React.PropTypes.string,
   img: React.PropTypes.string,
@@ -75,7 +75,6 @@ PostListItem.propTypes = {
 };
 
 PostListItem.defaultProps = {
-  index: 0,
   title: '',
   description: '',
   img: 'https://unsplash.it/200/300/?random',
