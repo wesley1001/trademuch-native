@@ -321,6 +321,9 @@
 				LastUpgradeCheck = 610;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = TWVFHTEDSF;
+					};
 					C88173AD1B6FBB4E001330B7 = {
 						CreatedOnToolsVersion = 6.3.2;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
@@ -529,13 +532,17 @@
 			baseConfigurationReference = 294D3745670740567B660B09 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = iOS/Info.plist;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/TradeMuch\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.TrunkStudio.TradeMuch.com;
+				PRODUCT_BUNDLE_IDENTIFIER = com.trunksys.trademuch;
 				PRODUCT_NAME = TradeMuch;
+				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos9.3;
 			};
 			name = Debug;
 		};
@@ -544,13 +551,18 @@
 			baseConfigurationReference = 7DD7F15DFCA46BA0E76CD8B2 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = iOS/Info.plist;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/TradeMuch\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.TrunkStudio.TradeMuch.com;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.trunksys.trademuch;
 				PRODUCT_NAME = TradeMuch;
+				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos9.3;
 			};
 			name = Release;
 		};
@@ -588,7 +600,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -623,7 +635,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
