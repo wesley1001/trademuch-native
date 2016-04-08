@@ -76,16 +76,25 @@ export async function registFbToken(userIdentities) {
 }
 
 export async function logout() {
+  console.log("!!!!!!!!!!!!!!!!!!!");
   await Promise.all([
     asyncStorage.removeItem('userId'),
-    asyncStorage.removeItem('userName'),
+    asyncStorage.setItem('userName', '請登入'),
     asyncStorage.removeItem('email'),
-    asyncStorage.removeItem('avatar'),
+    asyncStorage.setItem('avatar', 'https://s.mxmcdn.net/site/images/avatar-placeholder.png'),
     asyncStorage.removeItem('isFirstLogin'),
     asyncStorage.removeItem('isAgreePolicies'),
     asyncStorage.removeItem('jwt'),
   ]);
   return dispatch => {
+    console.log("2222222222222222222");
+    dispatch(receivedUserInfo({
+      userId: '',
+      userName: '請登入',
+      email: '',
+      avatar: 'https://s.mxmcdn.net/site/images/avatar-placeholder.png',
+      jwt: '',
+    }));
     dispatch(updateLoginStatus(false));
   };
 }
@@ -112,8 +121,7 @@ export async function loginValidation() {
       dispatch(updateLoginStatus(true));
     };
   }
-  logout();
-  return () => {};
+  return await logout();
 }
 
 export async function requestAgreePolicies() {

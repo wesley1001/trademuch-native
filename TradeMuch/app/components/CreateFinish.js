@@ -80,7 +80,7 @@ const styles = React.StyleSheet.create({
 
 export default function CreateFinish(props) {
   const { pic, itemTitle, description } = props;
-  function finishBtn(){
+  function finishBtn() {
     Actions.postList({
       type: 'reset',
     });

@@ -125,12 +125,17 @@ export default class SideDrawerContent extends Component {
 
   profile() {
     this.context.drawer.close();
-    Actions.editProfile.call();
+    if (this.props.isLogin) {
+      Actions.editProfile.call();
+    } else {
+      Actions.login.call();
+    }
   }
 
   render() {
     // const { drawer } = this.context
-    const { userInfo } = this.props;
+    const { userInfo, isLogin } = this.props;
+    const loginBtnTitle = isLogin ? '登出' : '登入';
     return (
       <View style={styles.contentWrapper}>
         <View style={styles.contentAvatar}>
@@ -147,7 +152,7 @@ export default class SideDrawerContent extends Component {
           <MenuItem id="postList" title="我的倉庫" img="http://qa.trademuch.co.uk/img/map.png" notification="5" onItemPress={this.onItemPress} />
           <MenuItem id="postList" title="尋寶去" img="http://qa.trademuch.co.uk/img/map.png" notification="5" onItemPress={this.onItemPress} />
           <MenuItem id="createPost" title="Create Post" img="http://qa.trademuch.co.uk/img/add.png" notification="" onItemPress={this.onItemPress} />
-          <MenuItem id="login" title="登入" img="http://qa.trademuch.co.uk/img/login.png" notification="" onItemPress={this.onItemPress} />
+          <MenuItem id="login" title={loginBtnTitle} img="http://qa.trademuch.co.uk/img/login.png" notification="" onItemPress={this.onItemPress} />
         </View>
       </View>
 		);
@@ -157,6 +162,7 @@ export default class SideDrawerContent extends Component {
 SideDrawerContent.propTypes = {
   drawer: PropTypes.object,
   userInfo: PropTypes.object,
+  isLogin: PropTypes.bool,
   beforeRoute: PropTypes.string,
   routeHistory: PropTypes.array,
 };
@@ -169,6 +175,7 @@ SideDrawerContent.defaultProps = {
 function _injectPropsFromStore({ auth, router }) {
   return {
     userInfo: auth.userInfo,
+    isLogin: auth.isLogin,
     beforeRoute: router.beforeRoute,
     routeHistory: router.routeHistory,
   };
