@@ -1,7 +1,7 @@
 export const RECEIVED_MESSAGES = 'RECEIVED_MESSAGES';
 export const RECEIVED_NEW_MESSAGE = 'RECEIVED_NEW_MESSAGE';
 
-export function receivedMessages(srcMessages) {
+export async function receivedMessages(srcMessages) {
   const storeMessages = [];
   for (const message of srcMessages) {
     storeMessages.push({

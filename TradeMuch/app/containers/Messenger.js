@@ -1,73 +1,13 @@
 import React, { Component, StyleSheet, Dimensions, View, Text } from 'react-native';
 import { connect } from 'react-redux';
-window.navigator.userAgent = 'react-native';
-const io = require('socket.io-client/socket.io');
 import GiftedMessenger from 'react-native-gifted-messenger';
+import { messengerSocket, joinRoom, sendMessage, getChatHistory } from '../utils/socket';
 import {
   receivedMessages,
   receivedNewMessage,
 } from '../actions/MessageActions';
-import config from '../config/config';
 
-const socket = io(`ws://${config.domain}?__sails_io_sdk_version=0.13.5`, { jsonp: false });
-
-function composeRequestWithAuthToken(url, data) {
-  return {
-    url,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    data: {
-      ...data,
-      user: {
-        age: 0,
-        createdAt: '2016-03-24T04:10:10.000Z',
-        email: 'test@gmail.com',
-        firstName: null,
-        fullName: null,
-        gender: 'none',
-        id: 1,
-        isFirstLogin: true,
-        lastName: null,
-        telephone: null,
-        updatedAt: '2016-03-24T04:10:10.000Z',
-        username: 'testuser',
-        uuid: null,
-      },
-    },
-  };
-}
-
-async function joinRoom(chatRoomId) {
-  const url = `/rest/room/${chatRoomId}/users`;
-  const request = composeRequestWithAuthToken(url);
-  return new Promise((resolve) => {
-    socket.emit('post', request, (response) => {
-      resolve(response);
-    });
-  });
-}
-
-async function sendMessage(chatRoomId, message) {
-  const url = `/rest/chat/${chatRoomId}/public`;
-  const request = composeRequestWithAuthToken(url, message);
-  return new Promise((resolve) => {
-    socket.emit('post', request, (response) => {
-      resolve(response);
-    });
-  });
-}
-
-async function getChatHistory(chatRoomId) {
-  const url = `/rest/chat/${chatRoomId}/history`;
-  const request = composeRequestWithAuthToken(url);
-  return new Promise((resolve) => {
-    socket.emit('get', request, (response) => {
-      resolve(response.body.result);
-    });
-  });
-}
+const socket = messengerSocket;
 
 const styles = StyleSheet.create({
   nav: {
@@ -82,31 +22,59 @@ const styles = StyleSheet.create({
   },
 });
 
-
 export default class Messenger extends Component {
 
   static propTypes = {
     receivedMessages: React.PropTypes.func,
     receivedNewMessage: React.PropTypes.func,
-    messages: React.PropTypes.object,
+    messages: React.PropTypes.array,
+    postId: React.PropTypes.number.required,
   };
 
+  constructor(props) {
+    super(props);
+    this.handleGetHistoryMessage = this.handleGetHistoryMessage.bind(this);
+    this.handleNewMessage = this.handleCatchNewMessage.bind(this);
+    this.handleSend = this.handleSend.bind(this);
+  }
+
   componentWillMount() {
-    socket.on('connect', async () => {
-      // const token = await getAuthToken();
-      await joinRoom(1);
-      const messageHistory = await getChatHistory(1);
-      this.props.receivedMessages(messageHistory);
-      socket.on('public', (response) => {
-        this.props.receivedNewMessage(response);
-      });
+    // this.props.joinRoom(this.props.postId);
+    console.log('i want see postId here ',this.props.postId);
+    this.handleGetHistoryMessage();
+    this.handleCatchNewMessage();
+    //=====
+    // socket.on('public', (response) => {
+    //   console.log("=== new message ===");
+    //   this.props.receivedNewMessage(response);
+    // });
+    // socket.on('connect', async () => {
+    //   // const token = await getAuthToken();
+    //   console.log('=== Socket Connected ===', this.props);
+    //   await joinRoom(this.props.postId);
+    //   const messageHistory = await getChatHistory(this.props.postId);
+    //   this.props.receivedMessages(messageHistory);
+    // });
+  }
+
+  async handleGetHistoryMessage() {
+    const srcMessages = await getChatHistory(socket, this.props.postId);
+    this.props.receivedMessages(srcMessages);
+  }
+
+  async handleCatchNewMessage() {
+    await joinRoom(socket, this.props.postId);
+    console.log("joined");
+    socket.on('public', (response) => {
+      console.log("=== new message ===");
+      this.props.receivedNewMessage(response);
     });
   }
 
   async handleSend(message = {}, /* rowID = null*/) {
     // Send message.text to your server
     // {text: "123", name: "Sender", image: null, position: "right", date: Fri Mar 25 2016 01:15:14 GMT+0800 (CST)…}
-    await sendMessage(1, {
+    await sendMessage(socket, this.props.postId, {
       content: message.text,
     });
   }
@@ -123,10 +91,10 @@ export default class Messenger extends Component {
         </View>
         <GiftedMessenger
           ref={this.messengerRef}
-          style={{ marginTop: 20 }}
+          style={{ marginTop: 0 }}
           messages={this.props.messages}
           handleSend={this.handleSend}
-          maxHeight={Dimensions.get('window').height - 64} // 64 for the navBar
+          maxHeight={Dimensions.get('window').height - 110} // 64 for the navBar
           styles={{
             bubbleLeft: {
               backgroundColor: '#e6e6eb',
