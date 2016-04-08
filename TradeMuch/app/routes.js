@@ -24,8 +24,7 @@ import PostList from './containers/PostList';
 import CreatePost from './containers/CreatePost';
 import PostDetail from './containers/PostDetail';
 import NearByPosts from './containers/NearByPosts';
-// import Messenger from './containers/Messenger';
-// import NHSample from './containers/sampleApp';
+import Messenger from './containers/Messenger';
 
 const styles = StyleSheet.create({
   navBar: {
@@ -138,6 +137,7 @@ export default class AppRoutes extends Component {
       {/* ------------------- All Routes ---------------------- */}
         <Route name="login" schema="boot" component={Login} title="登入" />
         <Route name="policies" component={Policies} title="服務條款" />
+        <Route name="messenger" component={Messenger} title="Messenger" />
         <Route name="editProfile">
           <Router name="editProfileRouter">
             <Route name="editProfileView" component={EditProfile} title="確認個人資料" />
@@ -153,6 +153,7 @@ export default class AppRoutes extends Component {
               navigationBarStyle={styles.navBar}
               titleStyle={styles.navTitle}
             >
+              <Route name="messenger" component={Messenger} schema="home" title="Messenger" />
               <Route name="postList" schema="home" component={PostList} title="附近的好康物品" />
               <Route name="login" schema="interior" component={Login} title="登入" />
               <Route
