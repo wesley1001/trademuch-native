@@ -12,6 +12,7 @@ export function errorHandle(data) {
           onPress: () => Actions.login(),
         }]
       );
+      // TODO: 這部分 Alert 後會執行到，可在這 return dispatch
       break;
     case 400:
     case 500:
