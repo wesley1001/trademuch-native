@@ -45,6 +45,6 @@ Cannot set property userAgent of #<workernavigator> which has only a getter
 
 pod install failed: undefined method 'to_ary'
 
-> sol: rvm install 2.2.3 --default
-> sudo gem install cocoapods
+> sol: rvm install 2.2.3 --default  
+> sudo gem install cocoapods  
 > pod install
