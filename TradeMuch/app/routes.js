@@ -7,6 +7,7 @@ import React, {
 	Image,
   Component,
   PropTypes,
+  Text,
  } from 'react-native';
 import RNRF, {
    Route,
@@ -22,6 +23,7 @@ import EditProfile from './containers/EditProfile';
 import SideDrawer from './components/SideDrawer/SideDrawer';
 import PostList from './containers/PostList';
 import CreatePost from './containers/CreatePost';
+import CreateFinish from './components/CreateFinish';
 import PostDetail from './containers/PostDetail';
 import NearByPosts from './containers/NearByPosts';
 // import Messenger from './containers/Messenger';
@@ -58,6 +60,8 @@ export default class AppRoutes extends Component {
   constructor(props) {
     super(props);
     this.renderMenuButton = this.renderMenuButton.bind(this);
+    this.renderLoginButton = this.renderLoginButton.bind(this);
+    this.renderNoneButton = this.renderNoneButton.bind(this);
   }
 
   componentWillMount() {
@@ -93,6 +97,21 @@ export default class AppRoutes extends Component {
     );
   }
 
+  renderLoginButton() {
+    let loginButton = [];
+    if (!this.props.isLogin) {
+      loginButton = [
+        <TouchableOpacity key="loginbutton"
+          style={styles.leftButtonContainer}
+          onPress={Actions.login}
+        >
+        <Text>登入</Text>
+        </TouchableOpacity>,
+      ];
+    }
+    return loginButton;
+  }
+
   renderBackButton() {
     return (
       <TouchableOpacity
@@ -105,6 +124,9 @@ export default class AppRoutes extends Component {
         />
       </TouchableOpacity>
     );
+  }
+  renderNoneButton() {
+    return [];
   }
 
 
@@ -127,6 +149,7 @@ export default class AppRoutes extends Component {
           sceneConfig={Navigator.SceneConfigs.FloatFromRight}
           hideNavBar={false}
           renderLeftButton={this.renderMenuButton}
+          renderRightButton={this.renderLoginButton}
         />
         <Schema
           name="interior"
@@ -134,18 +157,18 @@ export default class AppRoutes extends Component {
           hideNavBar={false}
           renderLeftButton={this.renderBackButton}
         />
+        <Schema
+          name="none"
+          sceneConfig={Navigator.SceneConfigs.FloatFromRight}
+          hideNavBar={false}
+          renderLeftButton={this.renderNoneButton}
+        />
 
-        {/* ------------------- Facebook Login Routor ---------------------- */}
+      {/* ------------------- All Routes ---------------------- */}
         <Route name="login" schema="boot" component={Login} title="登入" />
-        <Route name="policies" component={Policies} title="服務條款" />
-        <Route name="editProfile">
-          <Router name="editProfileRouter">
-            <Route name="editProfileView" component={EditProfile} title="確認個人資料" />
-          </Router>
-        </Route>
-        {/* ------------------- SideDrawer Routor -------------------------- */}
-        <Route name="nearByPosts" component={NearByPosts} title="附近好康" />
-        <Route name="drawer" hideNavBar type="reset" initial>
+        <Route name="postList" schema="home" component={PostList} title="TradeMuch" />
+        {/* ------------------- SideDrawer Router -------------------------- */}
+        <Route name="drawer" hideNavBar type="switch" initial>
           <SideDrawer ref={this.refSideDrawer}>
             <Router
               name="drawerRoot"
@@ -158,7 +181,7 @@ export default class AppRoutes extends Component {
               <Route
                 name="createPost"
                 component={CreatePost}
-                schema="home"
+                schema="interior"
                 title="發布"
                 hideNavBar={false}
               />
@@ -169,6 +192,15 @@ export default class AppRoutes extends Component {
                 title="物品檢視"
                 hideNavBar={false}
               />
+              <Route
+                name="createFinish"
+                component={CreateFinish}
+                schema="none"
+                title="完成"
+                hideNavBar={false}
+              />
+              <Route schema="none" name="policies" component={Policies} title="服務條款" />
+              <Route schema="none" name="firstEditProfile" component={EditProfile} title="確認個人資料" />
               <Route name="editProfile" component={EditProfile} schema="interior" title="確認個人資料" />
               <Route name="nearByPosts" component={NearByPosts} schema="interior" title="附近好康" />
               {/*
@@ -185,10 +217,14 @@ export default class AppRoutes extends Component {
 AppRoutes.propTypes = {
   renderMenuButton: React.PropTypes.func,
   renderBackButton: React.PropTypes.func,
+  isLogin: React.PropTypes.bool,
 };
 
-function _injectPropsFromStore() {
-  return {};
+
+function _injectPropsFromStore({ auth }) {
+  return {
+    isLogin: auth.isLogin,
+  };
 }
 
 const _injectPropsFormActions = {

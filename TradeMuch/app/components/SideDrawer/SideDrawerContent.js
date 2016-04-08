@@ -10,6 +10,7 @@ import React, {
   Image,
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
 import MenuItem from '../Menu/MenuItem';
 const PIXEL_RATIO = PixelRatio.get();
 const windowSize = Dimensions.get('window');
@@ -115,33 +116,44 @@ export default class SideDrawerContent extends Component {
 
   onItemPress = (id) => {
     this.context.drawer.close();
-    Actions[id]();
+    const { beforeRoute } = this.props;
+    if (beforeRoute !== id) {
+      Actions[id]();
+    }
   }
+
 
   profile() {
     this.context.drawer.close();
-    Actions.editProfile.call();
+    if (this.props.isLogin) {
+      Actions.editProfile.call();
+    } else {
+      Actions.login.call();
+    }
   }
 
   render() {
     // const { drawer } = this.context
+    const { userInfo, isLogin } = this.props;
+    const loginBtnTitle = isLogin ? '登出' : '登入';
     return (
       <View style={styles.contentWrapper}>
         <View style={styles.contentAvatar}>
           <TouchableOpacity style={styles.avatarBlock} onPress={ this.profile.bind(this) }>
-            <Image source={{ uri: 'http://qa.trademuch.co.uk/img/human.png' }} style={styles.avatarImage} />
+            <Image source={{ uri: userInfo.avatar }} style={styles.avatarImage} />
           </TouchableOpacity>
-          <Text style={styles.textUserName}>{'Gloria'}</Text>
+          <Text style={styles.textUserName}>{userInfo.userName}</Text>
         </View>
         <View style={styles.contentBody}>
-          <MenuItem id="nearByPosts" title="附近的好康物品" img="http://qa.trademuch.co.uk/img/map.png" notification="120" onItemPress={this.onItemPress} />
+          {/*<MenuItem id="nearByPosts" title="附近的好康物品" img="http://qa.trademuch.co.uk/img/map.png" notification="120" onItemPress={this.onItemPress} />*/}
+          <MenuItem id="postList" title="附近的好康物品" img="http://qa.trademuch.co.uk/img/map.png" notification="5" onItemPress={this.onItemPress} />
           <MenuItem id="postList" title="我撿的資源" img="http://qa.trademuch.co.uk/img/map.png" notification="5" onItemPress={this.onItemPress} />
           <MenuItem id="postList" title="我追蹤的資源" img="http://qa.trademuch.co.uk/img/map.png" notification="5" onItemPress={this.onItemPress} />
           <MenuItem id="messenger" title="我的留言板" img="http://qa.trademuch.co.uk/img/chat%EF%BC%BF60x60.png" notification="" onItemPress={this.onItemPress} />
           <MenuItem id="postList" title="我的倉庫" img="http://qa.trademuch.co.uk/img/map.png" notification="5" onItemPress={this.onItemPress} />
           <MenuItem id="postList" title="尋寶去" img="http://qa.trademuch.co.uk/img/map.png" notification="5" onItemPress={this.onItemPress} />
           <MenuItem id="createPost" title="Create Post" img="http://qa.trademuch.co.uk/img/add.png" notification="" onItemPress={this.onItemPress} />
-          <MenuItem id="login" title="登入" img="http://qa.trademuch.co.uk/img/login.png" notification="" onItemPress={this.onItemPress} />
+          <MenuItem id="login" title={loginBtnTitle} img="http://qa.trademuch.co.uk/img/login.png" notification="" onItemPress={this.onItemPress} />
         </View>
       </View>
 		);
@@ -150,4 +162,24 @@ export default class SideDrawerContent extends Component {
 
 SideDrawerContent.propTypes = {
   drawer: PropTypes.object,
+  userInfo: PropTypes.object,
+  isLogin: PropTypes.bool,
+  beforeRoute: PropTypes.string,
+  routeHistory: PropTypes.array,
 };
+
+SideDrawerContent.defaultProps = {
+  beforeRoute: 'postList',
+  routeHistory: ['postList'],
+};
+
+function _injectPropsFromStore({ auth, router }) {
+  return {
+    userInfo: auth.userInfo,
+    isLogin: auth.isLogin,
+    beforeRoute: router.beforeRoute,
+    routeHistory: router.routeHistory,
+  };
+}
+
+export default connect(_injectPropsFromStore, {})(SideDrawerContent);

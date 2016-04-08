@@ -1,4 +1,5 @@
 import { fetchWithAuth } from '../utils/authFetch.js';
+import { errorHandle } from '../utils/errorHandle';
 export const REQUEST_SEARCH_POST = 'REQUEST_SEARCH_POST';
 export const RECEIVED_SEARCH_POST = 'RECEIVED_SEARCH_POST';
 export const RECEIVED_SEARCH_POST_NEXT = 'RECEIVED_SEARCH_POST_NEXT';
@@ -46,14 +47,19 @@ export async function requestSearchPost(keyword, distance, location) {
   }
   const param = paramArray.join('&');
   const searchApi = `/rest/post/search?${param}`;
-  const postList = await fetchWithAuth(searchApi);
-  return (dispatch) => {
-    dispatch(receivedLastSearchApi(searchApi));
-    if (postList.items.length > 0) {
-      dispatch(receivedSearchLoadMore(true));
-    }
-    dispatch(receivedSearchPost(postList));
-  };
+  try {
+    const postList = await fetchWithAuth(searchApi);
+    return (dispatch) => {
+      dispatch(receivedLastSearchApi(searchApi));
+      if (postList.items.length > 0) {
+        dispatch(receivedSearchLoadMore(true));
+      }
+      dispatch(receivedSearchPost(postList));
+    };
+  } catch (e) {
+    errorHandle(e.message);
+    return () => {};
+  }
 }
 
 export function receivedSearchPostNextPage(postList) {
@@ -69,11 +75,16 @@ export async function requestSearchPostNextPage(lastSearchApi, from) {
   paramArray.push(`from=${from}`);
   const param = paramArray.join('&');
   const searchApi = `/rest/post/search?${param}`;
-  const postList = await fetchWithAuth(searchApi);
-  return (dispatch) => {
-    if (postList.items.length > 0) {
-      dispatch(receivedSearchLoadMore(true));
-    }
-    dispatch(receivedSearchPostNextPage(postList));
-  };
+  try {
+    const postList = await fetchWithAuth(searchApi);
+    return (dispatch) => {
+      if (postList.items.length > 0) {
+        dispatch(receivedSearchLoadMore(true));
+      }
+      dispatch(receivedSearchPostNextPage(postList));
+    };
+  } catch (e) {
+    errorHandle(e.message);
+    return () => {};
+  }
 }

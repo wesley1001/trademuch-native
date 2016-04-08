@@ -5,6 +5,8 @@ import {
   RECEIVED_SEARCH_LOAD_MORE,
 } from '../actions/SearchPostActions';
 
+import { RECEIVED_ADD_POSTLIST } from '../actions/PostActions';
+
 export function search(state = {}, action) {
   switch (action.type) {
     case RECEIVED_SEARCH_POST:
@@ -26,6 +28,11 @@ export function search(state = {}, action) {
       return {
         ...state,
         canLoadMore: action.data,
+      };
+    case RECEIVED_ADD_POSTLIST:
+      return {
+        ...state,
+        postList: state.postList.concat([action.data]),
       };
     default:
       return state;
