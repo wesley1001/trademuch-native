@@ -153,7 +153,6 @@ export default class PostDetail extends Component {
   }
   componentWillReceiveProps(nextProps) {
     const { postFinishData } = nextProps;
-    console.log("!!!!!!postFinishData",postFinishData );
     if (postFinishData !== this.props.postFinishData) {
       Actions.createFinish({
         itemTitle: postFinishData.title,
@@ -207,9 +206,6 @@ export default class PostDetail extends Component {
 
   render() {
     const { photo, title, description, postFinishData } = this.props;
-    // if (postFinishData.id !== null) {
-    //   Actions.postDetail({ id: postFinishData.id });
-    // }
     let backImg;
     if (photo.uri) {
       backImg = [

@@ -6,13 +6,11 @@ export function router(state = {}, action) {
   let array = [];
   switch (action.type) {
     case Actions.BEFORE_ROUTE:
-      console.log("BEFORE_ROUTE:", action);
       return {
         ...state,
         beforeRoute: action.name,
       };
     case Actions.AFTER_ROUTE:
-      console.log("AFTER_ROUTE!!!!!!!!!!!!!!:", action, state.routeHistory);
       if (state.routeHistory) {
         array = [...state.routeHistory];
       }
@@ -22,7 +20,6 @@ export function router(state = {}, action) {
         routeHistory: array,
       };
     case Actions.AFTER_POP:
-      console.log("AFTER_POP:", action);
       if (state.routeHistory) {
         array = [...state.routeHistory];
       }
