@@ -1,6 +1,7 @@
 import {
   fetchWithAuth,
 } from '../utils/authFetch';
+import { errorHandle } from '../utils/errorHandle';
 export const REQUEST_CREATE_POST = 'REQUEST_CREATE_POST';
 export const RECEIVED_CREATE_POST = 'RECEIVED_CREATE_POST';
 export const RECEIVED_UPLOAD_IMG = 'RECEIVED_UPLOAD_IMG';
@@ -35,10 +36,15 @@ export async function requestCreate(data = {
   images: '',
 }) {
   const postCreateApi = '/rest/post/create';
-  const response = await fetchWithAuth(postCreateApi, 'POST', data);
-  return (dispatch) => {
-    dispatch(receivedCreate(response));
-  };
+  try {
+    const response = await fetchWithAuth(postCreateApi, 'POST', data);
+    return (dispatch) => {
+      dispatch(receivedCreate(response));
+    };
+  } catch (e) {
+    errorHandle(e.message);
+    return () => {};
+  }
 }
 
 function receivedUploadImg(data = [{

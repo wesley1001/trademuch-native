@@ -13,6 +13,11 @@ export function errorHandle(data) {
         }]
       );
       break;
+    case 400:
+    case 500:
+    case 404:
+      Alert.alert('請稍候再試');
+      break;
     default:
       break;
   }

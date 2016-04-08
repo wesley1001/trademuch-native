@@ -1,4 +1,5 @@
 import { fetchWithAuth } from '../utils/authFetch';
+import { errorHandle } from '../utils/errorHandle';
 import * as asyncStorage from '../utils/asyncStorage';
 
 export const REQUEST_USER_INFO = 'REQUEST_USER_INFO';
@@ -50,15 +51,20 @@ export async function requestUpdateUserInfo(data = {
   },
 }) {
   const updateEmail = '/rest/user';
-  const responseJson = await fetchWithAuth(updateEmail, 'PUT', data);
-  if (responseJson.success) {
-    await asyncStorage.setItem('isFirstLogin', false);
-  }
-  return (dispatch) => {
+  try {
+    const responseJson = await fetchWithAuth(updateEmail, 'PUT', data);
     if (responseJson.success) {
-      dispatch(updateUserInfo({ isFirstLogin: false }));
+      await asyncStorage.setItem('isFirstLogin', false);
     }
-  };
+    return (dispatch) => {
+      if (responseJson.success) {
+        dispatch(updateUserInfo({ isFirstLogin: false }));
+      }
+    };
+  } catch (e) {
+    errorHandle(e.message);
+    return () => {};
+  }
 }
 
 export async function registFbToken(userIdentities) {
@@ -67,12 +73,17 @@ export async function registFbToken(userIdentities) {
     FBToken: userIdentities.tokenString,
   };
   const registUrl = '/rest/auth/app/register';
-  const loginInfo = await fetchWithAuth(registUrl, 'post', registData);
-  await setAsyncStorageLoginInfo(loginInfo);
-  return dispatch => {
-    dispatch(updateLoginStatus(true));
-    dispatch(receivedUserInfo(loginInfo));
-  };
+  try {
+    const loginInfo = await fetchWithAuth(registUrl, 'post', registData);
+    await setAsyncStorageLoginInfo(loginInfo);
+    return dispatch => {
+      dispatch(updateLoginStatus(true));
+      dispatch(receivedUserInfo(loginInfo));
+    };
+  } catch (e) {
+    errorHandle(e.message);
+    return () => {};
+  }
 }
 
 export async function logout() {
@@ -123,13 +134,18 @@ export async function loginValidation() {
 }
 
 export async function requestAgreePolicies() {
-  const response = await fetchWithAuth('/rest/user/agree-policies', 'post');
-  if (response) {
-    const key = Object.keys(response)[0];
-    await asyncStorage.setItem(key, response[key]);
-    return dispatch => {
-      dispatch(updateUserInfo(response));
-    };
+  try {
+    const response = await fetchWithAuth('/rest/user/agree-policies', 'post');
+    if (response) {
+      const key = Object.keys(response)[0];
+      await asyncStorage.setItem(key, response[key]);
+      return dispatch => {
+        dispatch(updateUserInfo(response));
+      };
+    }
+    return () => {};
+  } catch (e) {
+    errorHandle(e.message);
+    return () => {};
   }
-  return () => {};
 }
