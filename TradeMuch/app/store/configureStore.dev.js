@@ -15,7 +15,7 @@ const devTools = createDevTools({
 });
 
 const createStoreWithMiddleware = compose(
-  applyMiddleware(thunk, promise, logger), devTools
+  applyMiddleware(thunk, promise, logger)//, devTools
 )(createStore);
 
 export default function configureStore(initialState) {
