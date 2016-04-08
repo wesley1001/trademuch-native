@@ -76,7 +76,6 @@ export async function registFbToken(userIdentities) {
 }
 
 export async function logout() {
-  console.log("!!!!!!!!!!!!!!!!!!!");
   await Promise.all([
     asyncStorage.removeItem('userId'),
     asyncStorage.setItem('userName', '請登入'),
@@ -87,7 +86,6 @@ export async function logout() {
     asyncStorage.removeItem('jwt'),
   ]);
   return dispatch => {
-    console.log("2222222222222222222");
     dispatch(receivedUserInfo({
       userId: '',
       userName: '請登入',
