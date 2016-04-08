@@ -1,7 +1,7 @@
 import { Alert } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 export function errorHandle(data) {
-  switch (JSON.parse(data).status) {
+  switch (JSON.parse(data).requestStatus) {
     case 403:
       Alert.alert(
         '需要登入喔',
