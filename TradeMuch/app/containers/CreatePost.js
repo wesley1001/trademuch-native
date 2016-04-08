@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Dimensions from 'Dimensions';
 import LoadSpinner from 'react-native-loading-spinner-overlay';
+import config from '../config/index';
 import { ImagePickerManager } from 'NativeModules';
 import { requestTakePhoto } from '../actions/TakePhotoActions';
 import { requestSetLocation } from '../actions/GeoActions';
@@ -157,7 +158,7 @@ export default class PostDetail extends Component {
       Actions.createFinish({
         itemTitle: postFinishData.title,
         description: postFinishData.description,
-        pic: `http://localhost:1337/${postFinishData.pic}`
+        pic: `${config.serverDomain}/${postFinishData.pic}`
       });
     }
   }
