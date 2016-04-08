@@ -166,12 +166,6 @@ export default class AppRoutes extends Component {
 
       {/* ------------------- All Routes ---------------------- */}
         <Route name="login" schema="boot" component={Login} title="登入" />
-        <Route name="policies" component={Policies} title="服務條款" />
-        <Route name="editProfile">
-          <Router name="editProfileRouter">
-            <Route name="editProfileView" component={EditProfile} title="確認個人資料" />
-          </Router>
-        </Route>
         <Route name="postList" schema="home" component={PostList} title="TradeMuch" />
         {/* ------------------- SideDrawer Router -------------------------- */}
         <Route name="drawer" hideNavBar type="switch" initial>
@@ -205,6 +199,8 @@ export default class AppRoutes extends Component {
                 title="完成"
                 hideNavBar={false}
               />
+              <Route schema="none" name="policies" component={Policies} title="服務條款" />
+              <Route schema="none" name="firstEditProfile" component={EditProfile} title="確認個人資料" />
               <Route name="editProfile" component={EditProfile} schema="interior" title="確認個人資料" />
               <Route name="nearByPosts" component={NearByPosts} schema="interior" title="附近好康" />
               {/*
