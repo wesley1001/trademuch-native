@@ -145,7 +145,8 @@ export default class SideDrawerContent extends Component {
           <Text style={styles.textUserName}>{userInfo.userName}</Text>
         </View>
         <View style={styles.contentBody}>
-          <MenuItem id="nearByPosts" title="附近的好康物品" img="http://qa.trademuch.co.uk/img/map.png" notification="120" onItemPress={this.onItemPress} />
+          {/*<MenuItem id="nearByPosts" title="附近的好康物品" img="http://qa.trademuch.co.uk/img/map.png" notification="120" onItemPress={this.onItemPress} />*/}
+          <MenuItem id="postList" title="附近的好康物品" img="http://qa.trademuch.co.uk/img/map.png" notification="5" onItemPress={this.onItemPress} />
           <MenuItem id="postList" title="我撿的資源" img="http://qa.trademuch.co.uk/img/map.png" notification="5" onItemPress={this.onItemPress} />
           <MenuItem id="postList" title="我追蹤的資源" img="http://qa.trademuch.co.uk/img/map.png" notification="5" onItemPress={this.onItemPress} />
           <MenuItem id="messenger" title="我的留言板" img="http://qa.trademuch.co.uk/img/chat%EF%BC%BF60x60.png" notification="" onItemPress={this.onItemPress} />
