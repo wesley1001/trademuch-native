@@ -1,5 +1,6 @@
 import { getItem } from './asyncStorage';
-const domain = 'http://localhost:1337';
+import config from '../config/';
+const domain = config.serverDomain;
 const newUser = {
   email: 'test@gmail.com',
   password: 'testuser',
