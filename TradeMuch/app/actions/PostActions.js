@@ -1,6 +1,5 @@
-import {
-  fetchWithAuth,
-} from '../utils/authFetch';
+import { fetchWithAuth } from '../utils/authFetch';
+import { errorHandle } from '../utils/errorHandle';
 import { receivedTakePhoto } from '../actions/TakePhotoActions';
 export const REQUEST_CREATE_POST = 'REQUEST_CREATE_POST';
 export const RECEIVED_CREATE_POST = 'RECEIVED_CREATE_POST';
@@ -69,22 +68,27 @@ export async function requestCreate(data = {
   images: '',
 }) {
   const postCreateApi = '/rest/post/create';
-  const response = await fetchWithAuth(postCreateApi, 'POST', data);
-  response.location = {
-    lat: data.location.latitude,
-    lon: data.location.longitude,
-  };
-  response.pic = data.images;
-  response.distance = 0;
-  response.isFav = false;
-  return (dispatch) => {
-    dispatch(receivedAddToList(response));
-    dispatch(receivedCreate(response));
-    dispatch(receivedInputTitle(''));
-    dispatch(receivedInputDescription(''));
-    dispatch(receivedUploadImg());
-    dispatch(receivedTakePhoto({ uri: '' }));
-  };
+  try {
+    const response = await fetchWithAuth(postCreateApi, 'POST', data);
+    response.location = {
+      lat: data.location.latitude,
+      lon: data.location.longitude,
+    };
+    response.pic = data.images;
+    response.distance = 0;
+    response.isFav = false;
+    return (dispatch) => {
+      dispatch(receivedAddToList(response));
+      dispatch(receivedCreate(response));
+      dispatch(receivedInputTitle(''));
+      dispatch(receivedInputDescription(''));
+      dispatch(receivedUploadImg());
+      dispatch(receivedTakePhoto({ uri: '' }));
+    };
+  } catch (e) {
+    errorHandle(e.message);
+    return () => {};
+  }
 }
 
 export async function requestUploadImg(data = {
