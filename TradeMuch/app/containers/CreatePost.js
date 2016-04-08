@@ -56,7 +56,7 @@ const styles = React.StyleSheet.create({
     flex: 0.69,
   },
   title: {
-    marginTop: 100,
+    marginTop: 65,
     marginLeft: 20,
     color: 'rgba(255, 255, 255, 1)',
     fontSize: 25,
@@ -151,6 +151,16 @@ export default class PostDetail extends Component {
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
   }
+  componentWillReceiveProps(nextProps) {
+    const { postFinishData } = nextProps;
+    if (postFinishData !== this.props.postFinishData) {
+      Actions.createFinish({
+        itemTitle: postFinishData.title,
+        description: postFinishData.description,
+        pic: `http://localhost:1337/${postFinishData.pic}`
+      });
+    }
+  }
 
   selectPhotoButtonHandle() {
     ImagePickerManager.showImagePicker(options, (response) => {
@@ -195,14 +205,14 @@ export default class PostDetail extends Component {
   }
 
   render() {
-    const { photo, title, description } = this.props;
-    if (this.props.postFinishData.id !== null) {
-      Actions.postList();
-    }
+    const { photo, title, description, postFinishData } = this.props;
     let backImg;
     if (photo.uri) {
       backImg = [
-        <LoadSpinner key="loadSpinner" visible={this.props.imgSrc[0].src === ''} />,
+        <LoadSpinner
+          key="loadSpinner"
+          visible={this.props.imgSrc[0].src === '' && postFinishData.id === null }
+        />,
         <Image key="img" source={this.props.photo} style={styles.itemImg} />,
         <LinearGradient
           key="backGround"
