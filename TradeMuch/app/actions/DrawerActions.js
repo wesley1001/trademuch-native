@@ -1,6 +1,8 @@
 import {
   fetchWithAuth,
 } from '../utils/authFetch';
+import config from '../config/index';
+import { errorHandle } from '../utils/errorHandle';
 export const REQUEST_CREATE_POST = 'REQUEST_CREATE_POST';
 export const RECEIVED_CREATE_POST = 'RECEIVED_CREATE_POST';
 export const RECEIVED_UPLOAD_IMG = 'RECEIVED_UPLOAD_IMG';
@@ -35,10 +37,15 @@ export async function requestCreate(data = {
   images: '',
 }) {
   const postCreateApi = '/rest/post/create';
-  const response = await fetchWithAuth(postCreateApi, 'POST', data);
-  return (dispatch) => {
-    dispatch(receivedCreate(response));
-  };
+  try {
+    const response = await fetchWithAuth(postCreateApi, 'POST', data);
+    return (dispatch) => {
+      dispatch(receivedCreate(response));
+    };
+  } catch (e) {
+    errorHandle(e.message);
+    return () => {};
+  }
 }
 
 function receivedUploadImg(data = [{
@@ -54,7 +61,7 @@ function receivedUploadImg(data = [{
 export async function requestUploadImg(data = {
   picBase64: '',
 }) {
-  const upLoadImgApi = 'http://localhost:1337/rest/image/upload';
+  const upLoadImgApi = `${config.serverDomain}/rest/image/upload`;
   const response = await fetch(upLoadImgApi, {
     method: 'POST',
     headers: {

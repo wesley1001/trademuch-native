@@ -3,6 +3,7 @@ import InfiniteScrollView from 'react-native-infinite-scroll-view';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import ListItem from '../components/PostList/ListItem';
+import config from '../config/index';
 import SearchBar from '../components/SearchBar';
 import {
   requestSearchLoadMore,
@@ -70,7 +71,7 @@ export default class PostList extends Component {
         id={rowData.id}
         index={rowData.index}
         title={rowData.title}
-        img={`http://localhost:1337${rowData.pic}`}
+        img={`${config.serverDomain}${rowData.pic}`}
         description={rowData.distance !== -1 ? `${rowData.distance} km` : ''}
         onItemPress={this.onListItemPress}
       />

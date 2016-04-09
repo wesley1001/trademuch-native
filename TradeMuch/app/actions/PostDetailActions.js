@@ -1,6 +1,7 @@
 import {
   fetchWithAuth,
 } from '../utils/authFetch';
+import { errorHandle } from '../utils/errorHandle';
 import { Alert } from 'react-native';
 export const RECEIVED_SEARCH_POST = 'RECEIVED_SEARCH_POST';
 
@@ -29,24 +30,29 @@ export async function requestAddItemToFavList(data = {
   postList: [],
 }) {
   const favoriteApi = `/rest/favorite/${data.id}`;
-  const response = await fetchWithAuth(favoriteApi, 'POST');
+  try{
+    const response = await fetchWithAuth(favoriteApi, 'POST');
 
-  let postList = [];
-  postList = [...data.postList];
+    let postList = [];
+    postList = [...data.postList];
 
-  if (response.result) {
-    // const msg = `user_id:${response.item[0].user_id}/post_id:${response.item[0].post_id}`;
-    Alert.alert('result', '加入我的最愛成功!');
+    if (response.result) {
+      // const msg = `user_id:${response.item[0].user_id}/post_id:${response.item[0].post_id}`;
+      Alert.alert('result', '加入我的最愛成功!');
 
-    postList = findItemById(data.id, postList, true);
-  } else {
-    // const msg = `name:${response.name}\nmessage:${response.message}`;
-    Alert.alert("請先登入！");
+      postList = findItemById(data.id, postList, true);
+    } else {
+      // const msg = `name:${response.name}\nmessage:${response.message}`;
+      Alert.alert("請先登入！");
+    }
+
+    return (dispatch) => {
+      dispatch(receivedSearchPost(postList));
+    };
+  } catch (e) {
+    errorHandle(e.message);
+    return () => {};
   }
-
-  return (dispatch) => {
-    dispatch(receivedSearchPost(postList));
-  };
 }
 
 // ---------------------------------------------- delete item from favorite list
@@ -55,20 +61,25 @@ export async function requestDeleteItemToFavList(data = {
   postList: [],
 }) {
   const favoriteApi = `/rest/favorite/${data.id}`;
-  const response = await fetchWithAuth(favoriteApi, 'DELETE');
+  try {
+    const response = await fetchWithAuth(favoriteApi, 'DELETE');
 
-  let postList = [];
-  postList = [...data.postList];
+    let postList = [];
+    postList = [...data.postList];
 
-  if (response.result) {
-    Alert.alert('result', '刪除我的最愛成功!');
-    postList = findItemById(data.id, postList, false);
-  } else {
-    // const msg = `name:${response.name}\nmessage:${response.message}`;
-    Alert.alert('result', "請先登入！");
+    if (response.result) {
+      Alert.alert('result', '刪除我的最愛成功!');
+      postList = findItemById(data.id, postList, false);
+    } else {
+      // const msg = `name:${response.name}\nmessage:${response.message}`;
+      Alert.alert('result', "請先登入！");
+    }
+
+    return (dispatch) => {
+      dispatch(receivedSearchPost(postList));
+    };
+  } catch (e) {
+    errorHandle(e.message);
+    return () => {};
   }
-
-  return (dispatch) => {
-    dispatch(receivedSearchPost(postList));
-  };
 }

@@ -8,6 +8,7 @@ import React, {
   PixelRatio,
 } from 'react-native';
 import { connect } from 'react-redux';
+import config from '../config/index';
 import LinearGradient from 'react-native-linear-gradient';
 import Dimensions from 'Dimensions';
 import {
@@ -217,7 +218,7 @@ export default class PostDetail extends Component {
 
     return (
       <View style={styles.imageContainer}>
-        <Image source={{ uri: `http://localhost:1337/${pic}` }} style={styles.itemImg} />
+        <Image source={{ uri: `${config.serverDomain}/${pic}` }} style={styles.itemImg} />
         <LinearGradient
           key="backGround"
           colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 1)']}

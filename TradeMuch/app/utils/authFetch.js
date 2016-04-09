@@ -1,13 +1,12 @@
 import { getItem } from './asyncStorage';
 import config from '../config/';
-const domain = config.serverDomain;
 const newUser = {
   email: 'test@gmail.com',
   password: 'testuser',
 };
 
 export async function getAuthToken() {
-  const url = `${domain}/auth/token`;
+  const url = `${config.serverDomain}/auth/token`;
   const requestOption = {
     method: 'post',
     headers: {
@@ -36,7 +35,14 @@ export async function fetchWithAuth(url, method = 'get', data = null) {
   if (data) {
     requestOption.body = JSON.stringify(data);
   }
-
-  const response = await fetch(domain + url, requestOption);
-  return await response.json();
+  try {
+    const response = await fetch(config.serverDomain + url, requestOption);
+    const responseJson = await response.json();
+    if (responseJson.requestStatus !== 200) {
+      throw new Error(JSON.stringify(responseJson));
+    }
+    return responseJson;
+  } catch (e) {
+    throw e;
+  }
 }
