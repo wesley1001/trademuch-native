@@ -171,9 +171,7 @@ export default class AppRoutes extends Component {
               />
               <Route name="editProfile" component={EditProfile} schema="interior" title="確認個人資料" />
               <Route name="nearByPosts" component={NearByPosts} schema="interior" title="附近好康" />
-              {/*
-              <Route name="messenger" component={Messenger} schema="home" title="Messenger" />
-              */}
+              <Route name="messenger" component={Messenger} schema="interior" title="Messenger" />
             </Router>
           </SideDrawer>
         </Route>
