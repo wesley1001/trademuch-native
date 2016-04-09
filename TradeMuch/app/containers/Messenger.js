@@ -10,7 +10,7 @@ import {
 import { getItem } from '../utils/asyncStorage';
 import config from '../config/index';
 
-const socket = io(`ws://${config.socketDomain}?__sails_io_sdk_version=0.13.5`, { jsonp: false });
+const socket = io(`ws://${config.socketDomain}?__sails_io_sdk_version=0.13.5`, { jsonp: false, transports: ['websocket'] });
 
 async function composeRequestWithAuthToken(url, data) {
   const token = await getItem('jwt');
