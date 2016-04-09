@@ -1,5 +1,3 @@
-'use strict';
-
 import React, {
   View,
   Image,
@@ -131,8 +129,17 @@ const styles = React.StyleSheet.create({
 
 export default class PostDetail extends Component {
 
+  constructor(props) {
+    super(props);
+    this.postItem = this.findPostItemById();
+  }
+
   getItNowButtonHandle = () => {
-    Actions.messenger({});
+    Actions.messenger({
+      title: this.postItem.title,
+      postId: this.props.id,
+      sendMessageInitial: '我想要！',
+    });
   }
 
   deleteFavoriteItemButtonHandle = () => {
@@ -151,6 +158,7 @@ export default class PostDetail extends Component {
 
   openChatRoomButtonHandle = () => {
     Actions.messenger({
+      title: this.postItem.title,
       postId: this.props.id,
     });
   }
@@ -167,7 +175,7 @@ export default class PostDetail extends Component {
     });
   }
 
-  render() {
+  findPostItemById = () => {
     const postList = this.props.postList;
     let postItem = {};
     for (let i = 0; i < postList.length; i++) {
@@ -175,7 +183,11 @@ export default class PostDetail extends Component {
         postItem = postList[i];
       }
     }
-    const { title, description, pic, isFav } = postItem;
+    return postItem;
+  }
+
+  render() {
+    const { title, description, pic, isFav } = this.postItem;
     if (title === null) {
       Actions.postList.call();
     }
