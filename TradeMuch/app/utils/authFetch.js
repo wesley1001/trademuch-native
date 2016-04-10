@@ -1,5 +1,5 @@
 import { getItem } from './asyncStorage';
-import config from '../config/index';
+import config from '../config/';
 const newUser = {
   email: 'test@gmail.com',
   password: 'testuser',

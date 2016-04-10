@@ -14,10 +14,9 @@ const devTools = createDevTools({
   port: 5678,
 });
 
-// const createStoreWithMiddleware = compose(
-//   applyMiddleware(thunk, promise, logger), devTools
-// )(createStore);
-const createStoreWithMiddleware = applyMiddleware(thunk, promise, logger)(createStore);
+const createStoreWithMiddleware = compose(
+  applyMiddleware(thunk, promise, logger)//, devTools
+)(createStore);
 
 export default function configureStore(initialState) {
   return createStoreWithMiddleware(rootReducer, initialState);

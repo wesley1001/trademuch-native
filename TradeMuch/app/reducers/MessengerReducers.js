@@ -1,9 +1,9 @@
 import {
   RECEIVED_MESSAGES,
   RECEIVED_NEW_MESSAGE,
-} from '../actions/MessageActions';
+} from '../actions/MessengerActions';
 
-export function messenger(state = {}, action) {
+export function messenger(state = { messages: [] }, action) {
   switch (action.type) {
     case RECEIVED_MESSAGES:
       return {

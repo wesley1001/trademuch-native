@@ -1,5 +1,5 @@
 export default {
   envMode: 'dev', // production
-  domain: 'localhost:1337',
-  serverDomain: 'http://qa.trademuch.co.uk',
+  serverDomain: 'http://localhost:1337',
+  socketDomain: 'localhost:1337',
 };

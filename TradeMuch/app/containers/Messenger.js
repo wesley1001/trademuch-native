@@ -1,4 +1,4 @@
-import React, { Component, StyleSheet, Dimensions, View, Text } from 'react-native';
+import React, { Component, StyleSheet, Dimensions, View } from 'react-native';
 import { connect } from 'react-redux';
 window.navigator.userAgent = 'react-native';
 const io = require('socket.io-client/socket.io');
@@ -6,42 +6,28 @@ import GiftedMessenger from 'react-native-gifted-messenger';
 import {
   receivedMessages,
   receivedNewMessage,
-} from '../actions/MessageActions';
-import config from '../config/config';
+} from '../actions/MessengerActions';
+import { getItem } from '../utils/asyncStorage';
+import config from '../config/index';
 
-const socket = io(`ws://${config.domain}?__sails_io_sdk_version=0.13.5`, { jsonp: false });
+const socket = io(`ws://${config.socketDomain}?__sails_io_sdk_version=0.13.5`, { jsonp: false, transports: ['websocket'] });
 
-function composeRequestWithAuthToken(url, data) {
+async function composeRequestWithAuthToken(url, data) {
+  const token = await getItem('jwt');
   return {
     url,
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
+      jwt: token,
     },
-    data: {
-      ...data,
-      user: {
-        age: 0,
-        createdAt: '2016-03-24T04:10:10.000Z',
-        email: 'test@gmail.com',
-        firstName: null,
-        fullName: null,
-        gender: 'none',
-        id: 1,
-        isFirstLogin: true,
-        lastName: null,
-        telephone: null,
-        updatedAt: '2016-03-24T04:10:10.000Z',
-        username: 'testuser',
-        uuid: null,
-      },
-    },
+    data,
   };
 }
 
 async function joinRoom(chatRoomId) {
   const url = `/rest/room/${chatRoomId}/users`;
-  const request = composeRequestWithAuthToken(url);
+  const request = await composeRequestWithAuthToken(url);
   return new Promise((resolve) => {
     socket.emit('post', request, (response) => {
       resolve(response);
@@ -51,7 +37,7 @@ async function joinRoom(chatRoomId) {
 
 async function sendMessage(chatRoomId, message) {
   const url = `/rest/chat/${chatRoomId}/public`;
-  const request = composeRequestWithAuthToken(url, message);
+  const request = await composeRequestWithAuthToken(url, message);
   return new Promise((resolve) => {
     socket.emit('post', request, (response) => {
       resolve(response);
@@ -61,7 +47,7 @@ async function sendMessage(chatRoomId, message) {
 
 async function getChatHistory(chatRoomId) {
   const url = `/rest/chat/${chatRoomId}/history`;
-  const request = composeRequestWithAuthToken(url);
+  const request = await composeRequestWithAuthToken(url);
   return new Promise((resolve) => {
     socket.emit('get', request, (response) => {
       resolve(response.body.result);
@@ -88,26 +74,43 @@ export default class Messenger extends Component {
   static propTypes = {
     receivedMessages: React.PropTypes.func,
     receivedNewMessage: React.PropTypes.func,
-    messages: React.PropTypes.object,
+    messages: React.PropTypes.array,
+    postId: React.PropTypes.number,
+    sendMessageInitial: React.PropTypes.string,
   };
 
+  constructor(props) {
+    super(props);
+    this.handleSend = this.handleSend.bind(this);
+    this.handleInitial = this.handleInitial.bind(this);
+  }
+
   componentWillMount() {
-    socket.on('connect', async () => {
-      // const token = await getAuthToken();
-      await joinRoom(1);
-      const messageHistory = await getChatHistory(1);
-      this.props.receivedMessages(messageHistory);
-      socket.on('public', (response) => {
-        this.props.receivedNewMessage(response);
-      });
+    this.handleInitial();
+  }
+
+  async handleInitial() {
+    const messageHistory = await getChatHistory(this.props.postId);
+    this.props.receivedMessages(messageHistory);
+    await joinRoom(this.props.postId);
+    socket.on('public', (response) => {
+      this.props.receivedNewMessage(response);
     });
+    if (this.props.sendMessageInitial) {
+      const message = {
+        text: this.props.sendMessageInitial,
+      };
+      this.handleSend(message);
+    }
   }
 
   async handleSend(message = {}, /* rowID = null*/) {
-    // Send message.text to your server
-    // {text: "123", name: "Sender", image: null, position: "right", date: Fri Mar 25 2016 01:15:14 GMT+0800 (CST)…}
-    await sendMessage(1, {
+    const newMessage = await sendMessage(this.props.postId, {
       content: message.text,
+    });
+    this.props.receivedNewMessage({
+      content: newMessage.body.chat.content,
+      user: newMessage.body.user,
     });
   }
 
@@ -118,15 +121,18 @@ export default class Messenger extends Component {
   render() {
     return (
       <View>
-        <View style={styles.nav}>
-          <Text style={styles.navText}>Kent</Text>
-        </View>
+        {/*
+        // <View style={styles.nav}>
+        //   <Text style={styles.navText}>Kent</Text>
+        // </View>
+        */}
         <GiftedMessenger
+          autoScroll
           ref={this.messengerRef}
           style={{ marginTop: 20 }}
           messages={this.props.messages}
           handleSend={this.handleSend}
-          maxHeight={Dimensions.get('window').height - 64} // 64 for the navBar
+          maxHeight={Dimensions.get('window').height - 45} // 64 for the navBar
           styles={{
             bubbleLeft: {
               backgroundColor: '#e6e6eb',

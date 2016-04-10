@@ -1,7 +1,9 @@
 export const RECEIVED_MESSAGES = 'RECEIVED_MESSAGES';
 export const RECEIVED_NEW_MESSAGE = 'RECEIVED_NEW_MESSAGE';
+import { getItem } from '../utils/asyncStorage';
+const userId = getItem('userId');
 
-export function receivedMessages(srcMessages) {
+export async function receivedMessages(srcMessages) {
   const storeMessages = [];
   for (const message of srcMessages) {
     storeMessages.push({
@@ -10,7 +12,7 @@ export function receivedMessages(srcMessages) {
       image: {
         uri: 'https://facebook.github.io/react/img/logo_og.png',
       },
-      position: (message.user.username === 'testuser') ? 'right' : 'left',
+      position: (message.user.id === userId) ? 'right' : 'left',
       date: new Date(2015, 0, 16, 19, 0),
     });
   }
@@ -29,7 +31,7 @@ export function receivedNewMessage(srcMessage) {
     image: {
       uri: 'https://facebook.github.io/react/img/logo_og.png',
     },
-    position: (srcMessage.user.username === 'testuser') ? 'right' : 'left',
+    position: (srcMessage.user.id === userId) ? 'right' : 'left',
     date: new Date(2015, 0, 16, 19, 0),
   };
   return (dispatch) => {
