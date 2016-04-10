@@ -26,8 +26,7 @@ import CreatePost from './containers/CreatePost';
 import CreateFinish from './components/CreateFinish';
 import PostDetail from './containers/PostDetail';
 import NearByPosts from './containers/NearByPosts';
-// import Messenger from './containers/Messenger';
-// import NHSample from './containers/sampleApp';
+import Messenger from './containers/Messenger';
 
 const styles = StyleSheet.create({
   navBar: {
@@ -166,6 +165,13 @@ export default class AppRoutes extends Component {
 
       {/* ------------------- All Routes ---------------------- */}
         <Route name="login" schema="boot" component={Login} title="登入" />
+        <Route name="policies" component={Policies} title="服務條款" />
+        <Route name="messenger" component={Messenger} title="Messenger" />
+        <Route name="editProfile">
+          <Router name="editProfileRouter">
+            <Route name="editProfileView" component={EditProfile} title="確認個人資料" />
+          </Router>
+        </Route>
         <Route name="postList" schema="home" component={PostList} title="TradeMuch" />
         {/* ------------------- SideDrawer Router -------------------------- */}
         <Route name="drawer" hideNavBar type="switch" initial>
@@ -203,9 +209,7 @@ export default class AppRoutes extends Component {
               <Route schema="none" name="firstEditProfile" component={EditProfile} title="確認個人資料" />
               <Route name="editProfile" component={EditProfile} schema="interior" title="確認個人資料" />
               <Route name="nearByPosts" component={NearByPosts} schema="interior" title="附近好康" />
-              {/*
-              <Route name="messenger" component={Messenger} schema="home" title="Messenger" />
-              */}
+              <Route name="messenger" component={Messenger} schema="interior" title="Messenger" />
             </Router>
           </SideDrawer>
         </Route>
