@@ -165,9 +165,8 @@ export default class PostDetail extends Component {
   }
 
   openMapButtonHandle() {
-    const { location } = this.state.postItem;
-    const lon = location.lon;
-    const lat = location.lat;
+    const lon = this.postItem.location.lon;
+    const lat = this.postItem.location.lat;
     const url = `https://www.google.com.tw/maps/@${lat},${lon},13z`;
     Linking.canOpenURL(url).then(supported => {
       if (supported) {
@@ -188,6 +187,7 @@ export default class PostDetail extends Component {
   }
 
   render() {
+    console.log("this.postItem=>",this.postItem);
     const { title, description, pic, isFav } = this.postItem;
     if (title === null) {
       Actions.postList.call();
