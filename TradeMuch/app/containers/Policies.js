@@ -30,13 +30,20 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 1)',
   },
   policiesContainer: {
-    flex: 6,
+    flex: 5.5,
     marginTop: 50,
     marginRight: 20,
     marginLeft: 20,
     borderRadius: 9,
     padding: 20,
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
+  },
+  checkBoxContainer: {
+    marginTop: 5,
+    marginLeft: 25,
+  },
+  checkBox: {
+    color: 'rgba(255, 255, 255, 1)',
   },
   buttonContainer: {
     flex: 1,
@@ -101,12 +108,15 @@ export default class Policies extends Component {
             有關您對「服務」的使用，我們會向您發送服務公告、行政管理訊息和其他資訊；您可取消接收其中某些通訊內容。{"\n\n"}
             TradeMuch 的部分「服務」可以在行動裝置上使用。但請勿在會分散注意力的情況下使用這些「服務」，以免違反交通或安全法規。{"\n\n"}
           </Text>
+        </ScrollView>
+        <View style={styles.checkBoxContainer} >
           <Checkbox
             label="Agree"
+            labelStyle={styles.checkBox}
             checked={this.state.isAgreePolicies}
             onChange={this.handleCheck}
           />
-        </ScrollView>
+        </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={ this.cancel }>
             <Text style={styles.buttonText}>取消</Text>

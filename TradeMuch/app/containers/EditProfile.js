@@ -98,7 +98,9 @@ export default class EditProfile extends Component {
   }
 
   updateEmail() {
-    this.props.requestUpdateUserInfo();
+    this.props.requestUpdateUserInfo({
+      email: this.props.userInfo.email,
+    });
   }
 
   inputEmailHandle(email) {

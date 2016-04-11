@@ -1,5 +1,3 @@
-'use strict';
-
 import React, {
   View,
   Image,
@@ -132,30 +130,43 @@ const styles = React.StyleSheet.create({
 
 export default class PostDetail extends Component {
 
-  OpenChatRoomButtonHandle = () => {
-    Actions.Messenger.call();
+  constructor(props) {
+    super(props);
+    this.postItem = this.findPostItemById();
+    console.log("!!!!!!!!!!!!!!!", this.postItem);
   }
 
-  AddItemToFavoriteButtonHandle = () => {
-    this.props.requestAddItemToFavList({
-      id: this.props.id,
-      postList: this.props.postList,
+  getItNowButtonHandle = () => {
+    Actions.messenger({
+      title: this.postItem.title,
+      postId: this.props.id,
+      sendMessageInitial: '我想要！',
     });
   }
 
-  DeleteFavoriteItemButtonHandle = () => {
+  deleteFavoriteItemButtonHandle = () => {
     this.props.requestDeleteItemToFavList({
       id: this.props.id,
       postList: this.props.postList,
     });
   }
 
-  GetItNowButtonHandle = () => {
-    Actions.Messenger({});
+  addItemToFavoriteButtonHandle = () => {
+    this.props.requestAddItemToFavList({
+      id: this.props.id,
+      postList: this.props.postList,
+    });
   }
 
-  OpenMapButtonHandle() {
-    const { location } = this.state.postItem;
+  openChatRoomButtonHandle = () => {
+    Actions.messenger({
+      title: this.postItem.title,
+      postId: this.props.id,
+    });
+  }
+
+  openMapButtonHandle = () => {
+    const { location } = this.postItem;
     const lon = location.lon;
     const lat = location.lat;
     const url = `https://www.google.com.tw/maps/@${lat},${lon},13z`;
@@ -166,7 +177,7 @@ export default class PostDetail extends Component {
     });
   }
 
-  render() {
+  findPostItemById = () => {
     const postList = this.props.postList;
     let postItem = {};
     for (let i = 0; i < postList.length; i++) {
@@ -174,7 +185,11 @@ export default class PostDetail extends Component {
         postItem = postList[i];
       }
     }
-    const { title, description, pic, isFav } = postItem;
+    return postItem;
+  }
+
+  render() {
+    const { title, description, pic, isFav } = this.postItem;
     if (title === null) {
       Actions.postList.call();
     }
@@ -185,7 +200,7 @@ export default class PostDetail extends Component {
         <TouchableOpacity
           key="favButton"
           style={styles.button}
-          onPress={ this.AddItemToFavoriteButtonHandle }
+          onPress={ this.addItemToFavoriteButtonHandle }
         >
           <Text style={styles.buttonText} >追蹤</Text>
         </TouchableOpacity>,
@@ -195,7 +210,7 @@ export default class PostDetail extends Component {
         <TouchableOpacity
           key="favButton"
           style={styles.button}
-          onPress={ this.DeleteFavoriteItemButtonHandle }
+          onPress={ this.deleteFavoriteItemButtonHandle }
         >
           <Text style={styles.buttonText} >取消追蹤</Text>
         </TouchableOpacity>,
@@ -213,7 +228,7 @@ export default class PostDetail extends Component {
         <View style={styles.buttonChatContainer}>
           <TouchableOpacity
             style={styles.openChatRoomButton}
-            onPress={ this.OpenChatRoomButtonHandle }
+            onPress={ this.openChatRoomButtonHandle }
           >
             <Text style={styles.openChatRoomText} >對話</Text>
           </TouchableOpacity>
@@ -228,13 +243,13 @@ export default class PostDetail extends Component {
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={styles.button}
-              onPress={ this.GetItNowButtonHandle }
+              onPress={ this.getItNowButtonHandle }
             >
               <Text style={styles.buttonText} >立即交易</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.button}
-              onPress={ this.OpenMapButtonHandle }
+              onPress={ this.openMapButtonHandle }
             >
               <Text style={styles.buttonText} >地圖</Text>
             </TouchableOpacity>
