@@ -169,7 +169,7 @@ export default class PostDetail extends Component {
     const { location } = this.postItem;
     const lon = location.lon;
     const lat = location.lat;
-    const url = `https://www.google.com.tw/maps/@${lat},${lon},13z`;
+    const url = `https://www.google.com.tw/maps/place/@${lat},${lon}`;
     Linking.canOpenURL(url).then(supported => {
       if (supported) {
         Linking.openURL(url);
