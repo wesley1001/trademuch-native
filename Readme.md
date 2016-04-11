@@ -28,7 +28,7 @@ open `Counter.xcworkspace` in Xcode and run
 
 # 實體 iPhone 開發
 
-### bundel.js
+### bundle.js
 
 Counter/AppDelegate.m
 http://localhost:8081/
