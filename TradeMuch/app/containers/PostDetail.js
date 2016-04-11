@@ -165,7 +165,7 @@ export default class PostDetail extends Component {
   }
 
   openMapButtonHandle() {
-    const { location } = this.state.postItem;
+    const { location } = this.postItem;
     const lon = location.lon;
     const lat = location.lat;
     const url = `https://www.google.com.tw/maps/@${lat},${lon},13z`;
@@ -188,6 +188,7 @@ export default class PostDetail extends Component {
   }
 
   render() {
+    console.log("this.postItem=>",this.postItem);
     const { title, description, pic, isFav } = this.postItem;
     if (title === null) {
       Actions.postList.call();
