@@ -24,6 +24,8 @@ import {
   requestInputDescription,
  } from '../actions/PostActions';
 import { Actions } from 'react-native-router-flux';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
+
 const windowSize = Dimensions.get('window');
 
 const options = {
@@ -237,51 +239,54 @@ export default class PostDetail extends Component {
     }
 
     return (
-      <View style={styles.imageContainer}>
-        {backImg}
-        <View style={styles.titleContainer}>
-          {/*<TouchableOpacity onPress={ this.selectPhotoButtonHandle } >
-            <Image source={{uri: 'https://googledrive.com/host/0B-XkApzKpJ7QWHZNeFRXRzNZcHM'}} style={styles.cameraButton}/>
-          </TouchableOpacity>*/}
-          <TextInput
-            style={styles.title}
-            placeholder="點擊輸入標題"
-            placeholderTextColor="#FFF"
-            value={title}
-            onChangeText= { this.inputTitleHandle }
-          />
-        </View>
-        <View style={styles.itemDescriptionContainer}>
-          <TextInput
-            style={styles.description}
-            placeholder="點擊輸入描述"
-            placeholderTextColor="#FFF"
-            value={description}
-            onChangeText= { this.inputDescriptionHandle }
-          />
-        </View>
-        <View style={styles.footContainer}>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={ Actions.postList }
-            >
-              <Text style={styles.buttonText} >取消</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={ this.postCreateButtonHandle }
-            >
-              <Text style={styles.buttonText} >完成</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={ this.selectPhotoButtonHandle }
-            >
-              <Text style={styles.buttonText} >拍照</Text>
-            </TouchableOpacity>
+      <View style={{flex: 1}}>
+        <View style={styles.imageContainer}>
+          {backImg}
+          <View style={styles.titleContainer}>
+            {/*<TouchableOpacity onPress={ this.selectPhotoButtonHandle } >
+              <Image source={{uri: 'https://googledrive.com/host/0B-XkApzKpJ7QWHZNeFRXRzNZcHM'}} style={styles.cameraButton}/>
+            </TouchableOpacity>*/}
+            <TextInput
+              style={styles.title}
+              placeholder="點擊輸入標題"
+              placeholderTextColor="#FFF"
+              value={title}
+              onChangeText= { this.inputTitleHandle }
+            />
+          </View>
+          <View style={styles.itemDescriptionContainer}>
+            <TextInput
+              style={styles.description}
+              placeholder="點擊輸入描述"
+              placeholderTextColor="#FFF"
+              value={description}
+              onChangeText= { this.inputDescriptionHandle }
+            />
+          </View>
+          <View style={styles.footContainer}>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={ Actions.postList }
+              >
+                <Text style={styles.buttonText} >取消</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={ this.postCreateButtonHandle }
+              >
+                <Text style={styles.buttonText} >完成</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={ this.selectPhotoButtonHandle }
+              >
+                <Text style={styles.buttonText} >拍照</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
+        <KeyboardSpacer />
       </View>
     );
   }

@@ -14,7 +14,8 @@ import {
   requestInputEmail,
 } from '../actions/AuthActions';
 import Dimensions from 'Dimensions';
-import { Actions } from 'react-native-router-flux';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
+
 const windowSize = Dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
     height: 100,
   },
   username: {
-    marginTop: 10,
+    marginTop: 15,
     color: '#fff',
   },
   header: {
@@ -129,9 +130,10 @@ export default class EditProfile extends Component {
             value={userInfo.email}
             onChangeText= { this.inputEmailHandle }
           />
-        <TouchableOpacity onPress={ this.updateEmail } style={styles.button}>
+          <TouchableOpacity onPress={ this.updateEmail } style={styles.button}>
             <Text style={styles.buttonText}>確認</Text>
           </TouchableOpacity>
+          <KeyboardSpacer />
         </View>
       </View>
     );
