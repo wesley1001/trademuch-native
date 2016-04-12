@@ -190,7 +190,7 @@ export default class AppRoutes extends Component {
                 schema="interior"
                 title="發布"
                 hideNavBar={false}
-                />
+              />
               <Route
                 name="postDetail"
                 component={PostDetail}
