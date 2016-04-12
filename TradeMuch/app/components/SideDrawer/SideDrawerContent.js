@@ -8,7 +8,9 @@ import React, {
   TouchableOpacity,
   Text,
   Image,
+  ScrollView,
 } from 'react-native';
+import { ORANGE, GRAY } from '../../style/color';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import MenuItem from '../Menu/MenuItem';
@@ -29,12 +31,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   contentAvatar: {
-    backgroundColor: '#999999',
+    backgroundColor: ORANGE,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
     width: windowSize.width,
-    height: 70 * PIXEL_RATIO,
+    flex: 0.29,
   },
   textUserName: {
     justifyContent: 'center',
@@ -87,14 +89,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   contentWrapper: {
-    backgroundColor: '#333333',
+    backgroundColor: GRAY,
     flex: 1,
     flexDirection: 'column',
   },
   contentBody: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+    flex: 0.71,
   },
   contentBlock: {
     // backgroundColor: '#333333',
@@ -144,7 +144,7 @@ export default class SideDrawerContent extends Component {
           </TouchableOpacity>
           <Text style={styles.textUserName}>{userInfo.userName}</Text>
         </View>
-        <View style={styles.contentBody}>
+        <ScrollView style={styles.contentBody}>
           <MenuItem id="postList" title="附近的好康物品" img="http://qa.trademuch.co.uk/img/map.png" notification="" onItemPress={this.onItemPress} />
           <MenuItem id="postList" title="我撿的資源" img="http://qa.trademuch.co.uk/img/map.png" notification="" onItemPress={this.onItemPress} />
           <MenuItem id="postList" title="我追蹤的資源" img="http://qa.trademuch.co.uk/img/map.png" notification="" onItemPress={this.onItemPress} />
@@ -153,7 +153,7 @@ export default class SideDrawerContent extends Component {
           <MenuItem id="postList" title="尋寶去" img="http://qa.trademuch.co.uk/img/map.png" notification="" onItemPress={this.onItemPress} />
           <MenuItem id="createPost" title="Create Post" img="http://qa.trademuch.co.uk/img/add.png" notification="" onItemPress={this.onItemPress} />
           <MenuItem id="login" title={loginBtnTitle} img="http://qa.trademuch.co.uk/img/login.png" notification="" onItemPress={this.onItemPress} />
-        </View>
+        </ScrollView>
       </View>
 		);
   }
