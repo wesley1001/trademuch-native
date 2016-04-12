@@ -118,7 +118,7 @@ const styles = React.StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 15 * PIXEL_RATIO,
-    borderWidth: 1 * PIXEL_RATIO,
+    borderWidth: 0.5 * PIXEL_RATIO,
     width: 30 * PIXEL_RATIO,
     height: 30 * PIXEL_RATIO,
     top: 15 * PIXEL_RATIO,
@@ -187,7 +187,7 @@ export default class PostDetail extends Component {
   }
 
   render() {
-    console.log("this.postItem=>",this.postItem);
+    // console.log("this.postItem=>",this.postItem);
     const { title, description, pic, isFav } = this.postItem;
     if (title === null) {
       Actions.postList.call();

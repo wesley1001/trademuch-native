@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
   },
   backImg: {
-    backgroundColor: 'rgb(246, 246, 246)',
     position: 'absolute',
     left: 0,
     top: 0,
@@ -48,7 +47,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   bodyContainer: {
-    // backgroundColor: 'rgb(255, 251, 237)',
     flex: 1,
     alignItems: 'center',
     flexDirection: 'column',
