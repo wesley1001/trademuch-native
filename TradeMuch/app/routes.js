@@ -124,6 +124,7 @@ export default class AppRoutes extends Component {
       </TouchableOpacity>
     );
   }
+
   renderNoneButton() {
     return [];
   }
@@ -132,7 +133,6 @@ export default class AppRoutes extends Component {
   render() {
     return (
       <Router name="root" hideNavBar>
-
         {/* ------------------- Schemas ------------------------------------ */}
         <Schema name="default" sceneConfig={ Navigator.SceneConfigs.FloatFromRight } />
         <Schema name="left" sceneConfig={Navigator.SceneConfigs.FloatFromLeft} />
