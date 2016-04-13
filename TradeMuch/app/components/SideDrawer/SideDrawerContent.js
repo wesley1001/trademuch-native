@@ -122,11 +122,10 @@ export default class SideDrawerContent extends Component {
     }
   }
 
-
   profile() {
     this.context.drawer.close();
     if (this.props.isLogin) {
-      Actions.editProfile.call();
+      Actions.profile.call();
     } else {
       Actions.login.call();
     }
@@ -151,7 +150,6 @@ export default class SideDrawerContent extends Component {
           <MenuItem id="messenger" title="我的留言板" img="http://qa.trademuch.co.uk/img/chat%EF%BC%BF60x60.png" notification="" onItemPress={this.onItemPress} />
           <MenuItem id="postList" title="我的倉庫" img="http://qa.trademuch.co.uk/img/map.png" notification="5" onItemPress={this.onItemPress} />
           <MenuItem id="postList" title="尋寶去" img="http://qa.trademuch.co.uk/img/map.png" notification="5" onItemPress={this.onItemPress} />
-          <MenuItem id="createPost" title="Create Post" img="http://qa.trademuch.co.uk/img/add.png" notification="" onItemPress={this.onItemPress} />
           <MenuItem id="login" title={loginBtnTitle} img="http://qa.trademuch.co.uk/img/login.png" notification="" onItemPress={this.onItemPress} />
         </View>
       </View>

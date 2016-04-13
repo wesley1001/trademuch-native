@@ -20,8 +20,7 @@ const Router = connect()(RNRF.Router);
 // View
 import Login from './containers/Login';
 import Policies from './containers/Policies';
-import ConfirmProfile from './containers/ConfirmProfile';
-import EditProfile from './containers/EditProfile';
+import Profile from './containers/Profile';
 import SideDrawer from './components/SideDrawer/SideDrawer';
 import PostList from './containers/PostList';
 import CreatePost from './containers/CreatePost';
@@ -206,13 +205,7 @@ export default class AppRoutes extends Component {
                 hideNavBar={false}
               />
               <Route schema="none" name="policies" component={Policies} title="服務條款" />
-              <Route
-                schema="none"
-                name="confirmProfile"
-                component={ConfirmProfile}
-                title="確認個人資料"
-              />
-              <Route name="editProfile" component={EditProfile} schema="interior" title="個人資料" />
+              <Route name="profile" component={Profile} schema="interior" title="個人資料" />
               <Route name="nearByPosts" component={NearByPosts} schema="interior" title="附近好康" />
               <Route name="messenger" component={Messenger} schema="interior" title="Messenger" />
             </Router>
