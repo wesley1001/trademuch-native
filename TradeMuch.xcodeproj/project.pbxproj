@@ -537,7 +537,7 @@
 				INFOPLIST_FILE = iOS/Info.plist;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/TradeMuch\"",
+					"\"$(SRCROOT)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.trunksys.trademuch;
 				PRODUCT_NAME = TradeMuch;
@@ -556,7 +556,7 @@
 				INFOPLIST_FILE = iOS/Info.plist;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/TradeMuch\"",
+					"\"$(SRCROOT)\"",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.trunksys.trademuch;
