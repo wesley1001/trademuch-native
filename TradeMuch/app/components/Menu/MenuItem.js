@@ -8,13 +8,14 @@ import React, {
   Dimensions,
   PropTypes,
 } from 'react-native';
+import { NOTIFICATION_COLOR } from '../../style/color';
 const windowSize = Dimensions.get('window');
 const PIXEL_RATIO = PixelRatio.get();
 const styles = StyleSheet.create({
   cellBorder: {
     backgroundColor: 'rgba(164, 164, 164, 0.5)',
     // Trick to get the thinest line the device can display
-    height: 1 / PixelRatio.get(),
+    height: 2 / PixelRatio.get(),
     marginLeft: 4,
     width: windowSize.width,
   },
@@ -24,24 +25,25 @@ const styles = StyleSheet.create({
   },
   blockIcon: {
     alignItems: 'flex-end',
-    width: 15 * PIXEL_RATIO,
+    width: 10 * PIXEL_RATIO,
   },
   blockTitle: {
     flex: 1,
+    marginLeft: 10 * PIXEL_RATIO,
     width: 60 * PIXEL_RATIO,
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'center',
   },
   titleText: {
     color: '#FFF',
-    fontSize: 7 * PIXEL_RATIO,
+    fontSize: 8 * PIXEL_RATIO,
     fontWeight: 'bold',
   },
   contentBlock: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    height: 18 * PIXEL_RATIO,
+    height: 33 * PIXEL_RATIO,
   },
   blockNotification: {
     width: 10 * PIXEL_RATIO,
@@ -49,7 +51,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   notificationCircle: {
-    backgroundColor: 'rgba(255, 0, 0, 0.7)',
+    backgroundColor: NOTIFICATION_COLOR,
     borderRadius: 6 * PIXEL_RATIO,
     width: 12 * PIXEL_RATIO,
     height: 12 * PIXEL_RATIO,
