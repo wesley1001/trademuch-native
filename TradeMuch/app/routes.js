@@ -167,11 +167,7 @@ export default class AppRoutes extends Component {
         <Route name="login" schema="boot" component={Login} title="登入" />
         <Route name="policies" component={Policies} title="服務條款" />
         <Route name="messenger" component={Messenger} title="Messenger" />
-        <Route name="editProfile">
-          <Router name="editProfileRouter">
-            <Route name="editProfileView" component={EditProfile} title="確認個人資料" />
-          </Router>
-        </Route>
+        <Route name="firstEditProfile" component={EditProfile} schema="none" title="確認個人資料" />
         <Route name="postList" schema="home" component={PostList} title="TradeMuch" />
         {/* ------------------- SideDrawer Router -------------------------- */}
         <Route name="drawer" hideNavBar type="switch" initial>

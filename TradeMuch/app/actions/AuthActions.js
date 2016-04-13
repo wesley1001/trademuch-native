@@ -1,7 +1,7 @@
 import { fetchWithAuth } from '../utils/authFetch';
 import { errorHandle } from '../utils/errorHandle';
 import * as asyncStorage from '../utils/asyncStorage';
-
+import { Alert } from 'react-native';
 export const REQUEST_USER_INFO = 'REQUEST_USER_INFO';
 export const RECEIVED_USER_INFO = 'RECEIVED_USER_INFO';
 export const UPDATE_LOGIN_STATUS = 'UPDATE_LOGIN_STATUS';
@@ -44,7 +44,7 @@ export async function requestInputEmail(userInfo) {
 }
 
 export async function requestUpdateUserInfo(data = {
-  email: '123123@gmail.com',
+  email: 'default@gmail.com',
   location: {
     latitude: 10,
     longitude: -10,
@@ -55,6 +55,7 @@ export async function requestUpdateUserInfo(data = {
     const responseJson = await fetchWithAuth(updateEmail, 'PUT', data);
     if (responseJson.success) {
       await asyncStorage.setItem('isFirstLogin', false);
+      Alert.alert('Updated');
     }
     return (dispatch) => {
       if (responseJson.success) {
