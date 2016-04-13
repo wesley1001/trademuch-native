@@ -15,8 +15,7 @@ import {
   requestInputEmail,
 } from '../actions/AuthActions';
 import Dimensions from 'Dimensions';
-import KeyboardSpacer from 'react-native-keyboard-spacer';
-
+import { Actions } from 'react-native-router-flux';
 const windowSize = Dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -38,7 +37,7 @@ const styles = StyleSheet.create({
     height: 100,
   },
   username: {
-    marginTop: 15,
+    marginTop: 10,
     color: '#fff',
   },
   header: {
@@ -100,7 +99,9 @@ export default class EditProfile extends Component {
   updateEmail = () => {
     const isValid = this.validateEmail(this.props.userInfo.email);
     if (isValid) {
-      this.props.requestUpdateUserInfo();
+      this.props.requestUpdateUserInfo({
+        email: this.props.userInfo.email,
+      });
     } else {
       Alert.alert('輸入的信箱格式錯誤');
     }
@@ -132,10 +133,9 @@ export default class EditProfile extends Component {
             value={userInfo.email}
             onChangeText= { this.inputEmailHandle }
           />
-          <TouchableOpacity onPress={ this.updateEmail } style={styles.button}>
+        <TouchableOpacity onPress={ this.updateEmail } style={styles.button}>
             <Text style={styles.buttonText}>確認</Text>
           </TouchableOpacity>
-          <KeyboardSpacer />
         </View>
       </View>
     );

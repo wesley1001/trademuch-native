@@ -15,6 +15,7 @@ import Dimensions from 'Dimensions';
 import LoadSpinner from 'react-native-loading-spinner-overlay';
 import config from '../config/index';
 import { ImagePickerManager } from 'NativeModules';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { requestTakePhoto } from '../actions/TakePhotoActions';
 import { requestSetLocation } from '../actions/GeoActions';
 import {
@@ -58,13 +59,18 @@ const styles = React.StyleSheet.create({
   titleContainer: {
     flex: 0.69,
   },
-  title: {
+  titlePosition: {
     marginTop: 65,
     marginLeft: 20,
+    flexDirection: 'row',
+  },
+  title: {
     color: 'rgba(255, 255, 255, 1)',
+    marginLeft: 10,
     fontSize: 25,
     textAlign: 'left',
     height: 30,
+    width: windowSize.width - 50,
   },
   imageContainer: {
     flex: 1,
@@ -77,10 +83,14 @@ const styles = React.StyleSheet.create({
     width: windowSize.width,
     height: windowSize.height,
   },
-  noneImg: {
+  noneImgContainer: {
     position: 'absolute',
     left: windowSize.width / 2 - 50,
     top: windowSize.width / 2,
+    width: 100,
+    height: 100,
+  },
+  noneImg: {
     width: 100,
     height: 100,
     borderColor: 'rgba(255, 255, 255, 1)',
@@ -88,13 +98,16 @@ const styles = React.StyleSheet.create({
   itemDescriptionContainer: {
     marginLeft: 20,
     marginBottom: 15,
+    flexDirection: 'row',
   },
   description: {
     color: 'rgba(255, 255, 255, 1)',
     fontSize: 25,
+    marginLeft: 10,
     marginBottom: 5,
     textAlign: 'left',
     height: 30,
+    width: windowSize.width - 40,
   },
   price: {
     color: 'rgba(255, 255, 255, 1)',
@@ -140,9 +153,12 @@ export default class PostDetail extends Component {
   constructor(props) {
     super(props);
     this.selectPhotoButtonHandle = this.selectPhotoButtonHandle.bind(this);
-    this.inputTitleHandle = this.inputTitleHandle.bind(this);
     this.postCreateButtonHandle = this.postCreateButtonHandle.bind(this);
     this.inputDescriptionHandle = this.inputDescriptionHandle.bind(this);
+    this.state = {
+      title: '',
+      description: '',
+    };
   }
 
   componentDidMount() {
@@ -199,17 +215,29 @@ export default class PostDetail extends Component {
     }
   }
 
-  inputTitleHandle(text) {
-    this.props.requestInputTitle(text);
+  inputTitleHandle = (text) => {
+    this.setState({
+      title: text,
+    });
+  }
+
+  inputTitleOnEndHandle = () => {
+    this.props.requestInputTitle(this.state.title);
   }
 
   inputDescriptionHandle(text) {
-    this.props.requestInputDescription(text);
+    this.setState({
+      description: text,
+    });
+  }
+  inputDescriptionOnEndHandle = () => {
+    this.props.requestInputDescription(this.state.description);
   }
 
   render() {
     const { photo, title, description, postFinishData } = this.props;
     let backImg;
+    let noneImg;
     if (photo.uri) {
       backImg = [
         <LoadSpinner
@@ -230,11 +258,19 @@ export default class PostDetail extends Component {
           colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 1)']}
           style={styles.footBackColor}
         />,
-        <Image
-          key="img"
-          source={{ uri: 'https://googledrive.com/host/0B-XkApzKpJ7QWHZNeFRXRzNZcHM' }}
-          style={styles.noneImg}
-        />,
+      ];
+      noneImg = [
+        <TouchableOpacity
+          key="cameraBtn"
+          style={styles.noneImgContainer}
+          onPress={ this.selectPhotoButtonHandle }
+        >
+          <Image
+            key="img"
+            source={{ uri: 'https://googledrive.com/host/0B-XkApzKpJ7QWHZNeFRXRzNZcHM' }}
+            style={styles.noneImg}
+          />
+        </TouchableOpacity>,
       ];
     }
 
@@ -246,23 +282,40 @@ export default class PostDetail extends Component {
             {/*<TouchableOpacity onPress={ this.selectPhotoButtonHandle } >
               <Image source={{uri: 'https://googledrive.com/host/0B-XkApzKpJ7QWHZNeFRXRzNZcHM'}} style={styles.cameraButton}/>
             </TouchableOpacity>*/}
-            <TextInput
-              style={styles.title}
-              placeholder="點擊輸入標題"
-              placeholderTextColor="#FFF"
-              value={title}
-              onChangeText= { this.inputTitleHandle }
-            />
+            <View style={styles.titlePosition}>
+              <Icon
+                name="pencil"
+                size={25}
+                color={'rgba(255, 255, 255, 0.8)'}
+              />
+              <TextInput
+                style={styles.title}
+                placeholder="點擊輸入標題"
+                placeholderTextColor="#FFF"
+                defaultValue={title}
+                onChangeText= { this.inputTitleHandle }
+                onEndEditing= { this.inputTitleOnEndHandle }
+                returnKeyType={'done'}
+              />
+            </View>
           </View>
           <View style={styles.itemDescriptionContainer}>
+            <Icon
+              name="pencil"
+              size={25}
+              color={'rgba(255, 255, 255, 0.8)'}
+            />
             <TextInput
               style={styles.description}
               placeholder="點擊輸入描述"
               placeholderTextColor="#FFF"
-              value={description}
+              defaultValue={description}
               onChangeText= { this.inputDescriptionHandle }
+              onEndEditing= { this.inputDescriptionOnEndHandle }
+              returnKeyType={'done'}
             />
           </View>
+          {noneImg}
           <View style={styles.footContainer}>
             <View style={styles.buttonContainer}>
               <TouchableOpacity
