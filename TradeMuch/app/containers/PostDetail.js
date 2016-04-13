@@ -187,7 +187,7 @@ export default class PostDetail extends Component {
   }
 
   render() {
-    console.log("this.postItem=>",this.postItem);
+    // console.log("this.postItem=>",this.postItem);
     const { title, description, pic, isFav } = this.postItem;
     if (title === null) {
       Actions.postList.call();
