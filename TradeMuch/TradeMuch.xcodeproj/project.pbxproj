@@ -542,7 +542,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.trunksys.trademuch;
 				PRODUCT_NAME = TradeMuch;
 				PROVISIONING_PROFILE = "";
-				SDKROOT = iphoneos9.3;
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -558,11 +558,11 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/TradeMuch\"",
 				);
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.trunksys.trademuch;
 				PRODUCT_NAME = TradeMuch;
 				PROVISIONING_PROFILE = "";
-				SDKROOT = iphoneos9.3;
+				SDKROOT = iphoneos;
 			};
 			name = Release;
 		};
