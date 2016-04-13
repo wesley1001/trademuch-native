@@ -133,7 +133,6 @@ export default class PostDetail extends Component {
   constructor(props) {
     super(props);
     this.postItem = this.findPostItemById();
-    console.log("!!!!!!!!!!!!!!!", this.postItem);
   }
 
   getItNowButtonHandle = () => {
