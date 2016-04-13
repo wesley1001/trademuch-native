@@ -11,6 +11,7 @@ import { LIST_ITEM_COLOR1, LIST_ITEM_COLOR2 } from '../style/color';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import ListItem from '../components/PostList/ListItem';
+import ActionButton from '../components/ActionButton';
 import config from '../config/index';
 // import SearchBar from '../components/SearchBar';
 import SearchBar from 'react-native-search-bar';
@@ -29,6 +30,9 @@ const styles = React.StyleSheet.create({
     flex: 1,
     marginTop: 20,
     backgroundColor: '#fff',
+  },
+  ButtomButton: {
+
   },
 });
 
@@ -130,6 +134,10 @@ export default class PostList extends Component {
     this.setState({ showsCancelButton: true });
   }
 
+  handleActionButtonPress = () => {
+    Actions.createPost.call();
+  }
+
   render() {
     return (
       <View style={styles.content}>
@@ -149,6 +157,11 @@ export default class PostList extends Component {
           renderRow={this.getListItem}
           onLoadMoreAsync={this.loadMorePost}
           canLoadMore={this.props.canLoadMore}
+        />
+        <ActionButton
+          text="我要上架"
+          img="http://qa.trademuch.co.uk/img/add.png"
+          onPress={this.handleActionButtonPress}
         />
     </View>
     );

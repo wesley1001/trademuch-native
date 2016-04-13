@@ -118,7 +118,7 @@ const styles = React.StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 15 * PIXEL_RATIO,
-    borderWidth: 1 * PIXEL_RATIO,
+    borderWidth: 0.5 * PIXEL_RATIO,
     width: 30 * PIXEL_RATIO,
     height: 30 * PIXEL_RATIO,
     top: 15 * PIXEL_RATIO,
@@ -165,10 +165,9 @@ export default class PostDetail extends Component {
   }
 
   openMapButtonHandle = () => {
-    const { location } = this.postItem;
-    const lon = location.lon;
-    const lat = location.lat;
-    const url = `https://www.google.com.tw/maps/place/@${lat},${lon}`;
+    const lon = this.postItem.location.lon;
+    const lat = this.postItem.location.lat;
+    const url = `https://www.google.com.tw/maps/place/${lat},${lon}`;
     Linking.canOpenURL(url).then(supported => {
       if (supported) {
         Linking.openURL(url);

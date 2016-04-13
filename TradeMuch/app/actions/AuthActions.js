@@ -55,6 +55,7 @@ export async function requestUpdateUserInfo(data = {
     const responseJson = await fetchWithAuth(updateEmail, 'PUT', data);
     if (responseJson.success) {
       await asyncStorage.setItem('isFirstLogin', false);
+      await asyncStorage.setItem('email', data.email);
       Alert.alert('Updated');
     }
     return (dispatch) => {
