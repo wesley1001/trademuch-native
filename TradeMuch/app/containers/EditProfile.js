@@ -7,6 +7,7 @@ import React, {
   Text,
   TouchableOpacity,
   TextInput,
+  Alert,
 } from 'react-native';
 import { connect } from 'react-redux';
 import {
@@ -91,15 +92,18 @@ export default class EditProfile extends Component {
     this.inputEmailHandle = this.inputEmailHandle.bind(this);
   }
 
-  componentWillUpdate(nextProps) {
-    // const { isFirstLogin } = nextProps;
-    // if (!isFirstLogin) {
-    //   Actions.postList();
-    // }
+  validateEmail = (email) => {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
   }
 
-  updateEmail() {
-    this.props.requestUpdateUserInfo();
+  updateEmail = () => {
+    const isValid = this.validateEmail(this.props.userInfo.email);
+    if (isValid) {
+      this.props.requestUpdateUserInfo();
+    } else {
+      Alert.alert('輸入的信箱格式錯誤');
+    }
   }
 
   inputEmailHandle(email) {
