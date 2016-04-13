@@ -12,8 +12,8 @@ import { LIST_TITLE_COLOR } from '../../style/color';
 const styles = StyleSheet.create({
   commentContent: {
     height: 42 * PIXEL_RATIO,
-    padding: 10,
-    marginLeft: 8 * PIXEL_RATIO,
+    paddingTop: 3.5 * PIXEL_RATIO,
+    marginLeft: 13 * PIXEL_RATIO,
     // flex: 1,
     flexDirection: 'row',
     alignItems: 'flex-start',
@@ -35,12 +35,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 2 * PIXEL_RATIO,
   },
-  cellBorder: {
-    backgroundColor: 'rgba(0, 0, 0, 0.2)',
-    // Trick to get the thinest line the device can display
-    height: 1 / PIXEL_RATIO,
-    marginLeft: 4,
-  },
   itemImg: {
     borderRadius: 3,
     width: 42 * PIXEL_RATIO,
@@ -53,7 +47,7 @@ export default function PostListItem(props) {
     props.onItemPress(props.id);
   }
   return (
-    <View>
+    <View style={props.bakColor}>
       <TouchableOpacity underlayColor={"#f3f3f3"} onPress={onItemPress}>
         <View>
           <View style={styles.commentContent}>
@@ -67,7 +61,6 @@ export default function PostListItem(props) {
               </Text>
             </View>
           </View>
-          <View style={styles.cellBorder} />
         </View>
       </TouchableOpacity>
     </View>
@@ -80,6 +73,7 @@ PostListItem.propTypes = {
   description: React.PropTypes.string,
   img: React.PropTypes.string,
   onItemPress: React.PropTypes.func,
+  bakColor: React.PropTypes.object,
 };
 
 PostListItem.defaultProps = {
@@ -87,4 +81,5 @@ PostListItem.defaultProps = {
   description: '',
   img: 'https://unsplash.it/200/300/?random',
   onItemPress: () => {},
+  bakColor: { backgroundColor: 'rgba(255, 255, 255, 1)' },
 };
