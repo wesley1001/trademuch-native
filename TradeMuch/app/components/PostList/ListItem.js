@@ -6,37 +6,39 @@ import React, {
   TouchableOpacity,
   Image,
 } from 'react-native';
+const PIXEL_RATIO = PixelRatio.get();
+import { LIST_TITLE_COLOR } from '../../style/color';
 
 const styles = StyleSheet.create({
   commentContent: {
-    padding: 10,
-    flex: 1,
+    height: 42 * PIXEL_RATIO,
+    paddingTop: 3.5 * PIXEL_RATIO,
+    marginLeft: 13 * PIXEL_RATIO,
+    // flex: 1,
     flexDirection: 'row',
     alignItems: 'flex-start',
   },
-  userName: {
+  title: {
     fontWeight: '700',
+    color: LIST_TITLE_COLOR,
+    padding: 2 * PIXEL_RATIO,
+    fontSize: 8 * PIXEL_RATIO,
   },
   commentBody: {
     flex: 1,
+    marginLeft: 8 * PIXEL_RATIO,
     flexDirection: 'column',
     justifyContent: 'center',
   },
   commentText: {
     flex: 1,
     flexDirection: 'row',
+    padding: 2 * PIXEL_RATIO,
   },
-  cellBorder: {
-    backgroundColor: 'rgba(0, 0, 0, 0.2)',
-    // Trick to get the thinest line the device can display
-    height: 1 / PixelRatio.get(),
-    marginLeft: 4,
-  },
-  avatar: {
+  itemImg: {
     borderRadius: 3,
-    width: 40,
-    height: 40,
-    marginRight: 10,
+    width: 42 * PIXEL_RATIO,
+    height: 35 * PIXEL_RATIO,
   },
 });
 
@@ -45,13 +47,13 @@ export default function PostListItem(props) {
     props.onItemPress(props.id);
   }
   return (
-    <View>
+    <View style={props.bakColor}>
       <TouchableOpacity underlayColor={"#f3f3f3"} onPress={onItemPress}>
         <View>
           <View style={styles.commentContent}>
-              <Image source={{ uri: props.img }} style={styles.avatar} />
+              <Image source={{ uri: props.img }} style={styles.itemImg} />
             <View style={styles.commentBody}>
-              <Text style={styles.userName}>
+              <Text style={styles.title}>
                 {props.title}
               </Text>
               <Text style={styles.commentText}>
@@ -59,7 +61,6 @@ export default function PostListItem(props) {
               </Text>
             </View>
           </View>
-          <View style={styles.cellBorder} />
         </View>
       </TouchableOpacity>
     </View>
@@ -72,6 +73,7 @@ PostListItem.propTypes = {
   description: React.PropTypes.string,
   img: React.PropTypes.string,
   onItemPress: React.PropTypes.func,
+  bakColor: React.PropTypes.object,
 };
 
 PostListItem.defaultProps = {
@@ -79,4 +81,5 @@ PostListItem.defaultProps = {
   description: '',
   img: 'https://unsplash.it/200/300/?random',
   onItemPress: () => {},
+  bakColor: { backgroundColor: 'rgba(255, 255, 255, 1)' },
 };

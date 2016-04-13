@@ -8,15 +8,16 @@ import createDevTools from 'remote-redux-devtools';
 import rootReducer from '../reducers';
 
 const logger = createLogger();
-const devTools = createDevTools({
-  name: Platform.OS,
-  hostname: 'localhost',
-  port: 5678,
-});
+// const devTools = createDevTools({
+//   name: Platform.OS,
+//   hostname: 'localhost',
+//   port: 5678,
+// });
 
-const createStoreWithMiddleware = compose(
-  applyMiddleware(thunk, promise, logger)//, devTools
-)(createStore);
+// const createStoreWithMiddleware = compose(
+//   applyMiddleware(thunk, promise, logger)//, devTools
+// )(createStore);
+const createStoreWithMiddleware = applyMiddleware(thunk, promise, logger)(createStore);
 
 export default function configureStore(initialState) {
   return createStoreWithMiddleware(rootReducer, initialState);

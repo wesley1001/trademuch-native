@@ -7,6 +7,7 @@ import React, {
   Alert,
 } from 'react-native';
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
+import { LIST_ITEM_COLOR1, LIST_ITEM_COLOR2 } from '../style/color';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import ListItem from '../components/PostList/ListItem';
@@ -82,15 +83,30 @@ export default class PostList extends Component {
     Actions.postDetail({ id });
   }
 
-  getListItem(rowData) {
+  getListItem(rowData, sectionID, rowID, highlightRow) {
+    let bakColor = {};
+    if (rowID % 2 === 0) {
+      bakColor = { backgroundColor: LIST_ITEM_COLOR1 };
+    } else {
+      bakColor = { backgroundColor: LIST_ITEM_COLOR2 };
+    }
+    let distance = '';
+    if (rowData.distance !== -1) {
+      if (rowData.distance <= 1) {
+        distance = `${rowData.distance * 1000} m`;
+      } else {
+        distance = `${rowData.distance} km`;
+      }
+    }
     return (
       <ListItem
         id={rowData.id}
         index={rowData.index}
         title={rowData.title}
         img={`${config.serverDomain}${rowData.pic}`}
-        description={rowData.distance !== -1 ? `${rowData.distance} km` : ''}
+        description={distance}
         onItemPress={this.onListItemPress}
+        bakColor={bakColor}
       />
     );
   }
@@ -134,15 +150,14 @@ export default class PostList extends Component {
           onCancelButtonPress={this.handleSearchCancelPress}
           showsCancelButton={this.state.showsCancelButton}
         />
-        <ScrollView keyboardDismissMode="on-drag">
-          <ListView
-            renderScrollComponent={props => <InfiniteScrollView {...props} />}
-            dataSource={this.state.dataSource}
-            renderRow={this.getListItem}
-            onLoadMoreAsync={this.loadMorePost}
-            canLoadMore={this.props.canLoadMore}
-          />
-        </ScrollView>
+        <ListView
+          keyboardDismissMode="on-drag"
+          renderScrollComponent={props => <InfiniteScrollView {...props} />}
+          dataSource={this.state.dataSource}
+          renderRow={this.getListItem}
+          onLoadMoreAsync={this.loadMorePost}
+          canLoadMore={this.props.canLoadMore}
+        />
         <ActionButton
           text="我要上架"
           img="http://qa.trademuch.co.uk/img/add.png"

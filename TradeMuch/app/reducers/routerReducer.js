@@ -30,7 +30,7 @@ export function router(state = {}, action) {
         routeHistory: array,
       };
     case Actions.BEFORE_POP:
-      console.log("BEFORE_POP:", action);
+      // console.log("BEFORE_POP:", action);
       return state;
     case Actions.AFTER_DISMISS:
       //console.log("AFTER_DISMISS:", action);

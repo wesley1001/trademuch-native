@@ -5,20 +5,20 @@ import React, {
   Component,
   Image,
   Text,
-  TouchableOpacity,
   PixelRatio,
   TextInput,
+  Alert,
 } from 'react-native';
 import { connect } from 'react-redux';
 import {
   requestUpdateUserInfo,
   requestInputEmail,
 } from '../actions/AuthActions';
-import Dimensions from 'Dimensions';
+// import Dimensions from 'Dimensions';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import ActionButton from '../components/ActionButton';
 
-const windowSize = Dimensions.get('window');
+// const windowSize = Dimensions.get('window');
 const PIXEL_RATIO = PixelRatio.get();
 
 const styles = StyleSheet.create({
@@ -29,18 +29,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
-  backImg: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    width: windowSize.width,
-    height: windowSize.height,
-  },
   avatar: {
-    borderRadius: 50,
+    borderRadius: 60,
     marginTop: 100,
-    width: 100,
-    height: 100,
+    width: 120,
+    height: 120,
   },
   username: {
     fontSize: 18,
@@ -49,14 +42,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   header: {
+    height: 300,
     alignItems: 'center',
-    paddingBottom: 50,
     backgroundColor: 'transparent',
   },
   body: {
-    // backgroundColor: 'rgb(227, 227, 227)',
     width: 145 * PIXEL_RATIO,
-    height: 66 * PIXEL_RATIO,
+    // height: 66 * PIXEL_RATIO, // hide for now, cuz' now has only one row.
     padding: 20,
     borderRadius: 20,
     alignItems: 'center',
@@ -79,7 +71,7 @@ const styles = StyleSheet.create({
   },
   text: {
     // fontSize: 20,
-    marginBottom: 10,
+    paddingBottom: 10,
     color: '#fff',
   },
   input: {
@@ -101,6 +93,7 @@ export default class Profile extends Component {
     this.inputEmailHandle = this.inputEmailHandle.bind(this);
     this.state = {
       isConfirm: false,
+      email: this.props.userInfo.email,
     };
   }
 
@@ -110,24 +103,26 @@ export default class Profile extends Component {
     });
   }
 
-  componentWillUpdate(nextProps) {
-    // const { isFirstLogin } = nextProps;
-    // if (!isFirstLogin) {
-    //   Actions.postList();
-    // }
+  validateEmail = (email) => {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
   }
 
-  updateEmail() {
-    this.props.requestUpdateUserInfo();
+  updateEmail = () => {
+    const isValid = this.validateEmail(this.state.email);
+    if (isValid) {
+      this.props.requestUpdateUserInfo({
+        email: this.state.email,
+      });
+    } else {
+      Alert.alert('輸入的信箱格式錯誤');
+    }
   }
 
   inputEmailHandle(email) {
-    let userInfo = {};
-    userInfo = {
-      ...this.props.userInfo,
-    };
-    userInfo.email = email;
-    this.props.requestInputEmail(userInfo);
+    this.setState({
+      email,
+    });
   }
 
   inputEditable = () => {
@@ -186,15 +181,13 @@ export default class Profile extends Component {
               style={[styles.input, this.inputBorderStyle()]}
               placeholder="點擊輸入Email"
               placeholderTextColor="rgb(69, 135, 119)"
-              value={userInfo.email}
+              value={this.state.email}
               onChangeText= { this.inputEmailHandle }
+              returnKeyType={'done'}
             />
           </View>
-          {/*<TouchableOpacity onPress={ this.updateEmail } style={styles.button}>
-            <Text style={styles.buttonText}>確認</Text>
-          </TouchableOpacity>*/}
-          <KeyboardSpacer />
         </View>
+        <KeyboardSpacer />
         <ActionButton
           text={this.buttonText()}
           onPress={this.handleActionButtonPress}
