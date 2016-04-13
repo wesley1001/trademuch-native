@@ -1,10 +1,21 @@
-import React, { View, TouchableOpacity, Component, ListView, Alert } from 'react-native';
+import React, {
+  NativeModules,
+  ScrollView,
+  View,
+  Component,
+  ListView,
+  Alert,
+} from 'react-native';
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import ListItem from '../components/PostList/ListItem';
 import config from '../config/index';
-import SearchBar from '../components/SearchBar';
+// import SearchBar from '../components/SearchBar';
+import SearchBar from 'react-native-search-bar';
+const {
+  RNSearchBarManager,
+} = NativeModules;
 import {
   requestSearchLoadMore,
   requestSearchPost,
@@ -28,6 +39,7 @@ export default class PostList extends Component {
     const dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
       dataSource,
+      showsCancelButton: false,
     };
   }
   componentDidMount() {
@@ -62,6 +74,7 @@ export default class PostList extends Component {
   }
 
   onListItemPress = (id) => {
+    this.handleSearchCancelPress();
     Actions.postDetail({ id });
   }
 
@@ -77,24 +90,52 @@ export default class PostList extends Component {
       />
     );
   }
+
+  handleSearchButtonPress = () => {
+    this.searchBarDissmissKeyBoard();
+  }
+
+  searchBarDissmissKeyBoard = () => {
+    RNSearchBarManager.blur(React.findNodeHandle(this.refs.postSearchBar));
+  }
+
   loadMorePost = () => {
     const { postList, lastSeachApi } = this.props;
     this.props.requestSearchLoadMore(false);
     this.props.requestSearchPostNextPage(lastSeachApi, postList.length);
   }
+
+  handleSearchCancelPress = () => {
+    this.searchBarDissmissKeyBoard();
+    this.setState({ showsCancelButton: false });
+  }
+
+  handleSearchBarOnFocus = () => {
+    this.setState({ showsCancelButton: true });
+  }
+
   render() {
     return (
       <View style={styles.content}>
-        <SearchBar onChangeText={this.onChangeText} />
-        <ListView
-          renderScrollComponent={props => <InfiniteScrollView {...props} />}
-          dataSource={this.state.dataSource}
-          renderRow={this.getListItem}
-          onLoadMoreAsync={this.loadMorePost}
-          canLoadMore={this.props.canLoadMore}
+        <SearchBar
+          ref="postSearchBar"
+          onBlur={this.handleSearchCancelPress}
+          onFocus={this.handleSearchBarOnFocus}
+          onChangeText={this.onChangeText}
+          onSearchButtonPress={this.handleSearchButtonPress}
+          onCancelButtonPress={this.handleSearchCancelPress}
+          showsCancelButton={this.state.showsCancelButton}
         />
-        <TouchableOpacity onPress={Actions.PostDetail} />
-      </View>
+        <ScrollView keyboardDismissMode="on-drag">
+          <ListView
+            renderScrollComponent={props => <InfiniteScrollView {...props} />}
+            dataSource={this.state.dataSource}
+            renderRow={this.getListItem}
+            onLoadMoreAsync={this.loadMorePost}
+            canLoadMore={this.props.canLoadMore}
+          />
+        </ScrollView>
+    </View>
     );
   }
 }
