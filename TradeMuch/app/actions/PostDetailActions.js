@@ -30,7 +30,7 @@ export async function requestAddItemToFavList(data = {
   postList: [],
 }) {
   const favoriteApi = `/rest/favorite/${data.id}`;
-  try{
+  try {
     const response = await fetchWithAuth(favoriteApi, 'POST');
 
     let postList = [];
@@ -43,7 +43,7 @@ export async function requestAddItemToFavList(data = {
       postList = findItemById(data.id, postList, true);
     } else {
       // const msg = `name:${response.name}\nmessage:${response.message}`;
-      Alert.alert("請先登入！");
+      Alert.alert('請先登入！');
     }
 
     return (dispatch) => {
@@ -72,7 +72,7 @@ export async function requestDeleteItemToFavList(data = {
       postList = findItemById(data.id, postList, false);
     } else {
       // const msg = `name:${response.name}\nmessage:${response.message}`;
-      Alert.alert('result', "請先登入！");
+      Alert.alert('result', '請先登入！');
     }
 
     return (dispatch) => {
