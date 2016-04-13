@@ -97,7 +97,7 @@
 		8B08C5EB1CA00E6000961C8F /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
 		8B856B9D1CAE55B000FE2959 /* RCTGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTGeolocation.xcodeproj; path = "node_modules/react-native/Libraries/Geolocation/RCTGeolocation.xcodeproj"; sourceTree = "<group>"; };
 		8BB48A851C9AB9B6006D5BA2 /* RNSearchBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSearchBar.xcodeproj; path = "node_modules/react-native-search-bar/RNSearchBar.xcodeproj"; sourceTree = "<group>"; };
-		8BC4C9B01CB7D8E200F2A6AD /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.jsbundle; path = ../main.jsbundle; sourceTree = "<group>"; };
+		8BC4C9B01CB7D8E200F2A6AD /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		8F4C4D06AA3D42238E90B110 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		C87A08241B683A3800075643 /* plutoBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plutoBack.png; sourceTree = "<group>"; };
 		C88173AE1B6FBB4E001330B7 /* TradeMuchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TradeMuchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -537,7 +537,7 @@
 				INFOPLIST_FILE = iOS/Info.plist;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/TradeMuch\"",
+					"\"$(SRCROOT)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.trunksys.trademuch;
 				PRODUCT_NAME = TradeMuch;
@@ -556,7 +556,7 @@
 				INFOPLIST_FILE = iOS/Info.plist;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/TradeMuch\"",
+					"\"$(SRCROOT)\"",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.trunksys.trademuch;
