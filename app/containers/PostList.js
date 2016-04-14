@@ -107,6 +107,7 @@ export default class PostList extends Component {
         description={distance}
         onItemPress={this.onListItemPress}
         bakColor={bakColor}
+        rightText={''}
       />
     );
   }
