@@ -42,13 +42,18 @@ const styles = React.StyleSheet.create({
     height: 100 * PIXEL_RATIO,
     borderColor: 'rgba(255, 255, 255, 1)',
   },
-  titleContainer: {
+  textContainer: {
     top: 15 * PIXEL_RATIO,
     position: 'absolute',
-    flex: 0.5,
+    height: windowSize.height * 0.67,
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     paddingLeft: 10 * PIXEL_RATIO,
+    // flex: 1,
+  },
+  titleContainer: {
+    justifyContent: 'flex-start',
+    flex: 0.5,
   },
   title: {
     color: 'rgba(255, 255, 255, 1)',
@@ -65,14 +70,13 @@ const styles = React.StyleSheet.create({
   },
   descriptionContainer: {
     justifyContent: 'flex-end',
-    height: 135 * PIXEL_RATIO,
+    flex: 0.5,
   },
   description: {
     color: 'rgba(255, 255, 255, 1)',
     fontSize: 23,
     marginBottom: 5 * PIXEL_RATIO,
     textAlign: 'left',
-    height: 30 * PIXEL_RATIO,
     shadowColor: '#000000',
     shadowOpacity: 0.25,
     shadowRadius: 5,
@@ -261,8 +265,10 @@ export default class PostDetail extends Component {
           colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 1)']}
           style={styles.footBackColor}
         />
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>{title}</Text>
+        <View style={styles.textContainer}>
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>{title}</Text>
+          </View>
           <View style={styles.descriptionContainer}>
             <Text style={styles.description}>{description}</Text>
           </View>
