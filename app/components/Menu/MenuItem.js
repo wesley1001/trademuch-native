@@ -20,8 +20,8 @@ const styles = StyleSheet.create({
     width: windowSize.width,
   },
   icon: {
-    width: 12 * PIXEL_RATIO,
-    height: 11 * PIXEL_RATIO,
+    width: 11 * PIXEL_RATIO,
+    height: 10 * PIXEL_RATIO,
   },
   blockIcon: {
     justifyContent: 'center',
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   },
   titleText: {
     color: '#FFF',
-    fontSize: 10 * PIXEL_RATIO,
+    fontSize: 8 * PIXEL_RATIO,
     fontWeight: 'bold',
   },
   contentBlock: {
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     justifyContent: 'space-around',
     alignItems: 'center',
-    height: 35 * PIXEL_RATIO,
+    height: 30 * PIXEL_RATIO,
   },
   blockNotification: {
     width: 10 * PIXEL_RATIO,

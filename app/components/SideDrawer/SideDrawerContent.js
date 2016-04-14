@@ -18,14 +18,14 @@ const PIXEL_RATIO = PixelRatio.get();
 const windowSize = Dimensions.get('window');
 const styles = StyleSheet.create({
   avatarImage: {
-    borderRadius: 53/2 * PIXEL_RATIO,
-    width: 53 * PIXEL_RATIO,
-    height: 53 * PIXEL_RATIO,
+    borderRadius: 20 * PIXEL_RATIO,
+    width: 40 * PIXEL_RATIO,
+    height: 40 * PIXEL_RATIO,
     flexDirection: 'row',
   },
   avatarBlock: {
-    width: 53 * PIXEL_RATIO,
-    height: 53 * PIXEL_RATIO,
+    width: 50 * PIXEL_RATIO,
+    height: 50 * PIXEL_RATIO,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
-    height: 98 * PIXEL_RATIO,
+    flex: 0.29,
   },
   textUserName: {
     marginTop: 3 * PIXEL_RATIO,
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     color: '#fff',
     fontWeight: '700',
-    fontSize: 10 * PIXEL_RATIO,
+    fontSize: 9 * PIXEL_RATIO,
   },
   textNotification: {
     color: '#fff',
