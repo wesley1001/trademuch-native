@@ -17,6 +17,7 @@
 		4130FBD745514CFCBCC5A4F7 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6C0814D5C4CB4DF38BD717EB /* MaterialIcons.ttf */; };
 		51898EAC8A9E4F79ABD06331 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 73505FE73B2F4879A54B9EB4 /* Octicons.ttf */; };
 		565653FC1CB4D7F500436083 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 565653F91CB4D7EC00436083 /* libRCTLinking.a */; };
+		6DA693B71CBF71B500B42EE4 /* Orientation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DA693B61CBF71B500B42EE4 /* Orientation.m */; };
 		7DD16E341A0E42C8BB666D4A /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2271A41F1F4340AEB0EF98B4 /* EvilIcons.ttf */; };
 		8B08C5F21CA00E7600961C8F /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B08C5F01CA00E6000961C8F /* libBVLinearGradient.a */; };
 		8B856BA51CAE55C300FE2959 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B856BA31CAE55B000FE2959 /* libRCTGeolocation.a */; };
@@ -90,6 +91,8 @@
 		2A61B272EAD74DEFB26FFA16 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		565653F21CB4D7EC00436083 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		6C0814D5C4CB4DF38BD717EB /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
+		6DA693B51CBF71B500B42EE4 /* Orientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Orientation.h; sourceTree = "<group>"; };
+		6DA693B61CBF71B500B42EE4 /* Orientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Orientation.m; sourceTree = "<group>"; };
 		73505FE73B2F4879A54B9EB4 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		7DD7F15DFCA46BA0E76CD8B2 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		81205198C36449819B8EB261 /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
@@ -161,6 +164,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		6DA693B41CBF71B500B42EE4 /* RCTOrientation */ = {
+			isa = PBXGroup;
+			children = (
+				6DA693B51CBF71B500B42EE4 /* Orientation.h */,
+				6DA693B61CBF71B500B42EE4 /* Orientation.m */,
+			);
+			name = RCTOrientation;
+			path = "node_modules/react-native-orientation/RCTOrientation";
+			sourceTree = "<group>";
+		};
 		79B6DD139250441AAEB944D5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -188,6 +201,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				6DA693B41CBF71B500B42EE4 /* RCTOrientation */,
 				8BB48A841C9AB8C9006D5BA2 /* Libraries */,
 				C87A08241B683A3800075643 /* plutoBack.png */,
 				C88173AF1B6FBB4E001330B7 /* TradeMuchTests */,
@@ -493,6 +507,7 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				6DA693B71CBF71B500B42EE4 /* Orientation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
