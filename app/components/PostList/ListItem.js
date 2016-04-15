@@ -53,6 +53,15 @@ export default function PostListItem(props) {
   function onItemPress() {
     props.onItemPress(props.id);
   }
+
+  let rightBlock = null;
+  if (props.rightText) {
+    rightBlock = (
+      <View style={styles.rightBlock}>
+        <Text>{props.rightText}</Text>
+      </View>
+    );
+  }
   return (
     <View style={props.bakColor}>
       <TouchableOpacity underlayColor={"#f3f3f3"} onPress={onItemPress}>
@@ -67,9 +76,7 @@ export default function PostListItem(props) {
                 {props.description}
               </Text>
             </View>
-            <View style={styles.rightBlock}>
-              <Text>{props.rightText}</Text>
-            </View>
+            {rightBlock}
           </View>
         </View>
       </TouchableOpacity>
