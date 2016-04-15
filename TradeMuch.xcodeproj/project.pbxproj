@@ -17,8 +17,8 @@
 		4130FBD745514CFCBCC5A4F7 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6C0814D5C4CB4DF38BD717EB /* MaterialIcons.ttf */; };
 		51898EAC8A9E4F79ABD06331 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 73505FE73B2F4879A54B9EB4 /* Octicons.ttf */; };
 		565653FC1CB4D7F500436083 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 565653F91CB4D7EC00436083 /* libRCTLinking.a */; };
-		6DA693B71CBF71B500B42EE4 /* Orientation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DA693B61CBF71B500B42EE4 /* Orientation.m */; };
 		569A9F8E1CBF4AC600F47FFA /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 569A9F8D1CBF4AC600F47FFA /* main.jsbundle */; };
+		6DA693B71CBF71B500B42EE4 /* Orientation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DA693B61CBF71B500B42EE4 /* Orientation.m */; };
 		7DD16E341A0E42C8BB666D4A /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2271A41F1F4340AEB0EF98B4 /* EvilIcons.ttf */; };
 		8B08C5F21CA00E7600961C8F /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B08C5F01CA00E6000961C8F /* libBVLinearGradient.a */; };
 		8B856BA51CAE55C300FE2959 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B856BA31CAE55B000FE2959 /* libRCTGeolocation.a */; };
