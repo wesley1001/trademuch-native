@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
   commentContent: {
     height: 42 * PIXEL_RATIO,
     paddingTop: 3.5 * PIXEL_RATIO,
+    paddingBottom: 3.5 * PIXEL_RATIO,
     marginLeft: 13 * PIXEL_RATIO,
     // flex: 1,
     flexDirection: 'row',
@@ -40,6 +41,12 @@ const styles = StyleSheet.create({
     width: 42 * PIXEL_RATIO,
     height: 35 * PIXEL_RATIO,
   },
+  rightBlock: {
+    flex: 1,
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 export default function PostListItem(props) {
@@ -51,7 +58,7 @@ export default function PostListItem(props) {
       <TouchableOpacity underlayColor={"#f3f3f3"} onPress={onItemPress}>
         <View>
           <View style={styles.commentContent}>
-              <Image source={{ uri: props.img }} style={styles.itemImg} />
+            <Image source={{ uri: props.img }} style={styles.itemImg} />
             <View style={styles.commentBody}>
               <Text style={styles.title}>
                 {props.title}
@@ -59,6 +66,9 @@ export default function PostListItem(props) {
               <Text style={styles.commentText}>
                 {props.description}
               </Text>
+            </View>
+            <View style={styles.rightBlock}>
+              <Text>{props.rightText}</Text>
             </View>
           </View>
         </View>
@@ -74,6 +84,7 @@ PostListItem.propTypes = {
   img: React.PropTypes.string,
   onItemPress: React.PropTypes.func,
   bakColor: React.PropTypes.object,
+  rightText: React.PropTypes.string,
 };
 
 PostListItem.defaultProps = {
